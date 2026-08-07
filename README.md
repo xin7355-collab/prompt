@@ -46,8 +46,29 @@ npm run build:web-single      # 產出單一檔案 spellbox-web.html（約 2.5 M
 整個 App（含 353 則提示詞）會內嵌成一個 HTML 檔，**不需要伺服器、不連任何外部網址**，
 存到手機「檔案」App 後用 Safari 開就能用。資料存在瀏覽器的 localStorage，關掉再開還在。
 
-要一般的多檔部署版本（GitHub Pages、Netlify 之類）用 `npm run build:web`，
-輸出在 `dist-web/`。注意部署在子路徑時要設 `experiments.baseUrl`。
+### 公開網址（GitHub Pages）
+
+repo 裡有 `Deploy web to GitHub Pages` workflow，會把網頁版發佈到
+
+```
+https://8rknrz2dbw-ai.github.io/PROMPT-VAULT/
+```
+
+**第一次要先手動開啟 Pages 一次**（Actions 的 token 沒有建立 Pages 站台的權限）：
+
+1. repo → **Settings → Pages**
+2. **Build and deployment → Source** 選 **GitHub Actions**
+3. 回到 **Actions → Deploy web to GitHub Pages → Run workflow**
+
+之後每次推送都會自動更新，不用再手動處理。
+
+網址是公開的，任何人點都能開，也能加到 iPhone 主畫面當成 App 用。
+
+### 自己部署到別的地方
+
+`npm run build:web` 輸出在 `dist-web/`。部署在**子路徑**時要設 `EXPO_BASE_URL`
+（例：`EXPO_BASE_URL=/my-app npm run build:web`），否則所有資源與路由都會對到網域根目錄而 404。
+另外要把 `index.html` 複製一份成 `404.html` 當 SPA fallback，重新整理深層網址才不會壞。
 
 網頁版與 App 的差異：觸覺回饋沒有作用，成品圖存成 data URI 而不是檔案，
 其餘（組裝、連發、角色鎖定、匯出入）行為相同。
