@@ -42,6 +42,7 @@ function Navigation() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="edit" options={{ presentation: 'modal', title: '提示詞' }} />
         <Stack.Screen name="character" options={{ presentation: 'modal', title: '角色設定' }} />
+        <Stack.Screen name="forge" options={{ title: '角色工坊' }} />
         <Stack.Screen name="pack" options={{ presentation: 'modal', title: '組合包' }} />
         <Stack.Screen name="reverse" options={{ presentation: 'modal', title: '從照片反推' }} />
         <Stack.Screen name="guide" options={{ title: '心法筆記' }} />

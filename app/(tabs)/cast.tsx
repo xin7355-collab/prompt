@@ -34,9 +34,14 @@ export default function CastScreen() {
       </Text>
 
       <Button
-        label="＋ 新增角色"
+        label="🎭 角色工坊 — 一項一項點出一個角色"
         tone="primary"
         style={{ marginTop: space.lg }}
+        onPress={() => router.push('/forge')}
+      />
+      <Button
+        label="＋ 自己寫角色設定"
+        style={{ marginTop: space.sm }}
         onPress={() => router.push('/character')}
       />
 
@@ -44,7 +49,7 @@ export default function CastScreen() {
         <View style={{ marginTop: space.xl }}>
           <EmptyState
             title="還沒有角色"
-            body={'建立第一個角色，把臉固定下來。\n再搭配「角色變體」分類，就能同一張臉換 12 種場合。'}
+            body={'用「角色工坊」點幾下就能生一個，或自己寫。\n存好之後每張圖都會帶上同一張臉，只換服裝場景。'}
           />
         </View>
       ) : (

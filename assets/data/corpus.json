@@ -179,6 +179,11 @@
    "id": "taiwan",
    "zh": "台灣在地風情",
    "en": "TAIWAN"
+  },
+  {
+   "id": "charmake",
+   "zh": "角色工坊·建角設定",
+   "en": "CHARACTER FORGE"
   }
  ],
  "catColor": {
@@ -217,7 +222,8 @@
   "music": "#B03030",
   "concept": "#1B6E9B",
   "localbiz": "#A85C2B",
-  "taiwan": "#2E6B4F"
+  "taiwan": "#2E6B4F",
+  "charmake": "#7A3FA0"
  },
  "prompts": [
   {

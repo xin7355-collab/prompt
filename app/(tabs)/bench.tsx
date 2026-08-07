@@ -236,6 +236,7 @@ export default function BenchScreen() {
                 onLongPress={() => router.push({ pathname: '/character', params: { id: ch.id } })}
               />
             ))}
+            <Chip label="🎭 角色工坊" dashed onPress={() => router.push('/forge')} />
             <Chip label="＋ 新角色" dashed onPress={() => router.push('/character')} />
           </View>
         </Section>
