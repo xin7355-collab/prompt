@@ -135,6 +135,9 @@ export const categoryAccent: Record<string, { light: string; dark: string }> = {
   localbiz: { light: '#7A5B2E', dark: '#CBA96C' },
   taiwan: { light: '#B03B2E', dark: '#EA7B6C' },
   charmake: { light: '#7A3FA0', dark: '#B491E0' },
+  tryon: { light: '#2F7D8C', dark: '#5FC2D2' },
+  figure: { light: '#8A6D3B', dark: '#D6B173' },
+  creative: { light: '#B5522E', dark: '#F09268' },
 };
 
 /** 4pt base scale — every margin and gap in the app is one of these. */

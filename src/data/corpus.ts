@@ -1,17 +1,18 @@
 import raw from '../../assets/data/corpus.json';
+import { EXTRA_CATEGORIES, EXTRA_PACKS, EXTRA_PROMPTS } from './addendum';
 import type { Category, Mode, ModifierGroup, Pack, Prompt, RatioSpec, Site } from './types';
 
 /**
  * The bundled corpus, generated from the original single-file prototype by
  * `tools/extract-data.mjs`. Re-run `npm run extract-data <html> <out.json>` to refresh it.
  */
-export const CATEGORIES = raw.cats as Category[];
-export const PROMPTS = raw.prompts as Prompt[];
+export const CATEGORIES: Category[] = [...(raw.cats as Category[]), ...EXTRA_CATEGORIES];
+export const PROMPTS: Prompt[] = [...(raw.prompts as Prompt[]), ...EXTRA_PROMPTS];
 export const MODIFIERS = raw.mods as ModifierGroup[];
 export const RATIOS = raw.ratios as RatioSpec[];
 export const MODES = raw.modes as Mode[];
 export const SITES = raw.sites as Site[];
-export const PACKS = raw.packs as Pack[];
+export const PACKS: Pack[] = [...(raw.packs as Pack[]), ...EXTRA_PACKS];
 export const NEGATIVES = raw.negs as [string, string][];
 
 /** Placeholder scaffold for a locked character's fixed appearance. */
