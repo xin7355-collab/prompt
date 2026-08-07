@@ -91,8 +91,12 @@ export function composeForge(selection: ForgeSelection): ForgeResult {
     const props = get('props').join('、');
     if (props) wardrobe.push(props);
 
+    // Foot detail rides with the pose, and skin state with the body, so they read as
+    // one description instead of a list of unrelated clauses.
+    const action = [one('pose'), one('footPose')].filter(Boolean).join('，');
     const framing = [
-      one('pose'), one('mood'), one('scene'), one('shot'), one('light'), one('style'),
+      action, one('mood'), one('skin'), one('scene'),
+      one('shot'), one('camera'), one('light'), one('style'),
     ].filter(Boolean);
 
     const appearance = [person, body, head, hair, marks].filter(Boolean);
@@ -137,8 +141,10 @@ export function composeForge(selection: ForgeSelection): ForgeResult {
     const props = get('props').join(', ');
     if (props) wardrobe.push(props);
 
+    const action = [one('pose'), one('footPose')].filter(Boolean).join(', ');
     const framing = [
-      one('pose'), one('mood'), one('scene'), one('shot'), one('light'), one('style'),
+      action, one('mood'), one('skin'), one('scene'),
+      one('shot'), one('camera'), one('light'), one('style'),
     ].filter(Boolean);
 
     const appearance = [person, body, head, hair, marks].filter(Boolean);
