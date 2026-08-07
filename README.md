@@ -35,6 +35,22 @@ npm run web          # 瀏覽器
 npm run typecheck    # TypeScript 檢查
 ```
 
+## 拿 APK（Android 測試安裝）
+
+不用自己裝任何東西 —— repo 裡的 GitHub Actions 會直接建置：
+
+1. 開 repo 的 **Actions → Build Android APK → Run workflow**
+2. 跑完（約 10–20 分鐘）後，APK 會出現在兩個地方：
+   - 該次執行頁面最下方的 **Artifacts**
+   - **Releases** 頁的 `apk-xxxxxxx` 預發布版（手機可以直接點連結下載）
+3. 手機安裝時允許「安裝未知來源的應用程式」即可
+
+推任何程式碼異動也會自動觸發建置，方便隨時拿到最新版。
+
+> 這個 APK 用 React Native 範本內建的 debug keystore 簽章 —— 所以不需要任何
+> repository secret 就能裝。**測試可以，上架不行**：正式版要換成自己的 keystore，
+> 否則之後無法用同一支金鑰更新。
+
 ## 打包上架
 
 `expo-image-picker` 需要原生模組，Expo Go 只能用來開發，正式版要自己建置：
