@@ -40,12 +40,12 @@ npm run typecheck    # TypeScript 檢查
 不用自己裝任何東西 —— repo 裡的 GitHub Actions 會直接建置：
 
 1. 開 repo 的 **Actions → Build Android APK → Run workflow**
-2. 跑完（約 10–20 分鐘）後，APK 會出現在兩個地方：
-   - 該次執行頁面最下方的 **Artifacts**
-   - **Releases** 頁的 `apk-xxxxxxx` 預發布版（手機可以直接點連結下載）
-3. 手機安裝時允許「安裝未知來源的應用程式」即可
+2. 跑完（約 12 分鐘）後到 **Releases** 頁，會有一個 `apk-xxxxxxx` 預發布版，
+   手機直接點連結就能下載
+3. 安裝時允許「安裝未知來源的應用程式」即可
 
-推任何程式碼異動也會自動觸發建置，方便隨時拿到最新版。
+推任何程式碼異動也會自動建置，但**只有手動按 Run workflow 才會發佈到 Releases**；
+自動建置的產物放在該次執行頁面最下方的 **Artifacts**（要登入 GitHub 才能下載）。
 
 > 這個 APK 用 React Native 範本內建的 debug keystore 簽章 —— 所以不需要任何
 > repository secret 就能裝。**測試可以，上架不行**：正式版要換成自己的 keystore，
