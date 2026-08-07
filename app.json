@@ -22,7 +22,6 @@
     },
     "android": {
       "package": "com.spellbox.app",
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "adaptiveIcon": {
         "backgroundColor": "#12171A",

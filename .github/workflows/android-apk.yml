@@ -1,0 +1,92 @@
+name: Build Android APK
+
+# Produces a sideloadable APK. Runs on demand, and on any push that touches
+# the app so a broken build is caught early.
+on:
+  workflow_dispatch:
+  push:
+    branches: ['**']
+    paths:
+      - 'app/**'
+      - 'src/**'
+      - 'assets/**'
+      - 'app.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/android-apk.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # The runner image ships the Android SDK; this only exposes it to Gradle.
+      - uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # android/ is not committed — it is generated from app.json every build,
+      # so the native project can never drift from the Expo config.
+      - name: Generate the native Android project
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Build release APK
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: Name the artifact
+        id: name
+        run: echo "stem=spellbox-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Rename APK
+        run: |
+          mkdir -p out
+          cp android/app/build/outputs/apk/release/app-release.apk \
+             "out/${{ steps.name.outputs.stem }}.apk"
+          ls -lh out/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.name.outputs.stem }}
+          path: out/*.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      # A release gives a plain download URL, which is easier to open on a phone
+      # than an Actions artifact (those require being signed in to GitHub).
+      - name: Publish to a prerelease
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="apk-${GITHUB_SHA::7}"
+          printf '%s\n\n%s\n\n%s\n' \
+            '以 debug keystore 簽章的測試版，手機下載後允許「安裝未知來源的應用程式」即可安裝。' \
+            '正式上架請改用自己的 keystore（見 README 的打包上架段落）。' \
+            "commit: $GITHUB_SHA" > notes.md
+          gh release create "$TAG" out/*.apk \
+            --title "咒語盒 Spellbox — 測試版 APK ($TAG)" \
+            --notes-file notes.md \
+            --prerelease \
+            --repo "$GITHUB_REPOSITORY" || \
+          gh release upload "$TAG" out/*.apk --clobber --repo "$GITHUB_REPOSITORY"
