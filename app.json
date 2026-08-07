@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "咒語盒 Spellbox",
+    "slug": "spellbox",
+    "scheme": "spellbox",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.spellbox.app",
+      "infoPlist": {
+        "CFBundleDisplayName": "咒語盒",
+        "NSPhotoLibraryUsageDescription": "選擇參考圖來反推提示詞，或把生成的成品圖存回卡片。圖片只留在這台裝置上。",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.spellbox.app",
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "adaptiveIcon": {
+        "backgroundColor": "#12171A",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "選擇參考圖來反推提示詞，或把生成的成品圖存回卡片。圖片只留在這台裝置上。"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

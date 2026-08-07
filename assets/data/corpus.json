@@ -1,0 +1,3808 @@
+{
+ "cats": [
+  {
+   "id": "headshot",
+   "zh": "大頭照·證件照",
+   "en": "HEADSHOT"
+  },
+  {
+   "id": "business",
+   "zh": "商業形象",
+   "en": "BUSINESS"
+  },
+  {
+   "id": "life",
+   "zh": "生活寫真",
+   "en": "LIFESTYLE"
+  },
+  {
+   "id": "style",
+   "zh": "攝影·藝術風格",
+   "en": "ART STYLE"
+  },
+  {
+   "id": "char",
+   "zh": "虛擬人物·角色",
+   "en": "CHARACTER"
+  },
+  {
+   "id": "finance",
+   "zh": "股票·總經視覺",
+   "en": "FINANCE"
+  },
+  {
+   "id": "festival",
+   "zh": "節慶·台灣民俗",
+   "en": "FESTIVAL"
+  },
+  {
+   "id": "morning",
+   "zh": "早安圖·長輩圖",
+   "en": "GREETING"
+  },
+  {
+   "id": "birthday",
+   "zh": "生日·祝賀",
+   "en": "BIRTHDAY"
+  },
+  {
+   "id": "product",
+   "zh": "商品·電商",
+   "en": "PRODUCT"
+  },
+  {
+   "id": "food",
+   "zh": "美食·餐飲",
+   "en": "FOOD"
+  },
+  {
+   "id": "agri",
+   "zh": "農業·在地產業",
+   "en": "AGRICULTURE"
+  },
+  {
+   "id": "social",
+   "zh": "社群·封面·縮圖",
+   "en": "SOCIAL"
+  },
+  {
+   "id": "logo",
+   "zh": "LOGO·圖示",
+   "en": "LOGO"
+  },
+  {
+   "id": "scene",
+   "zh": "風景·旅遊·建築",
+   "en": "SCENERY"
+  },
+  {
+   "id": "render",
+   "zh": "3D·等距·資訊圖",
+   "en": "3D / INFO"
+  },
+  {
+   "id": "pet",
+   "zh": "寵物·動物",
+   "en": "PET"
+  },
+  {
+   "id": "sticker",
+   "zh": "貼圖·插畫·表情包",
+   "en": "STICKER"
+  },
+  {
+   "id": "wedding",
+   "zh": "婚紗·全家福",
+   "en": "WEDDING"
+  },
+  {
+   "id": "fashion",
+   "zh": "穿搭·時尚",
+   "en": "FASHION"
+  },
+  {
+   "id": "interior",
+   "zh": "居家·空間·房產",
+   "en": "INTERIOR"
+  },
+  {
+   "id": "poster",
+   "zh": "海報·文字入圖",
+   "en": "POSTER"
+  },
+  {
+   "id": "edu",
+   "zh": "教育·簡報插圖",
+   "en": "EDUCATION"
+  },
+  {
+   "id": "health",
+   "zh": "醫療·健康",
+   "en": "HEALTH"
+  },
+  {
+   "id": "auto",
+   "zh": "汽車·交通",
+   "en": "AUTOMOTIVE"
+  },
+  {
+   "id": "wall",
+   "zh": "桌布·背景圖",
+   "en": "WALLPAPER"
+  },
+  {
+   "id": "milestone",
+   "zh": "賀詞·人生里程碑",
+   "en": "MILESTONE"
+  },
+  {
+   "id": "charvar",
+   "zh": "角色變體·換裝換景",
+   "en": "VARIANTS"
+  },
+  {
+   "id": "shop",
+   "zh": "網拍·賣場經營",
+   "en": "ONLINE SHOP"
+  },
+  {
+   "id": "trend",
+   "zh": "潮流·最新風格",
+   "en": "TRENDING"
+  },
+  {
+   "id": "retouch",
+   "zh": "修圖·後製指令",
+   "en": "RETOUCH"
+  },
+  {
+   "id": "game",
+   "zh": "遊戲·卡牌美術",
+   "en": "GAME ART"
+  },
+  {
+   "id": "music",
+   "zh": "音樂·專輯封面",
+   "en": "MUSIC"
+  },
+  {
+   "id": "concept",
+   "zh": "科技·未來概念",
+   "en": "CONCEPT"
+  },
+  {
+   "id": "localbiz",
+   "zh": "在地商家·服務業",
+   "en": "LOCAL BIZ"
+  },
+  {
+   "id": "taiwan",
+   "zh": "台灣在地風情",
+   "en": "TAIWAN"
+  }
+ ],
+ "catColor": {
+  "headshot": "#1F4B3F",
+  "business": "#2E5F8A",
+  "life": "#C9743B",
+  "style": "#7A4A8C",
+  "char": "#B03A6E",
+  "finance": "#1D6B63",
+  "festival": "#C0392B",
+  "morning": "#D9962B",
+  "birthday": "#D4557F",
+  "product": "#4A5A6B",
+  "food": "#B5601F",
+  "agri": "#4C7A2E",
+  "social": "#8B4FB0",
+  "logo": "#2F3E46",
+  "scene": "#2A7A8C",
+  "render": "#5566C4",
+  "pet": "#A8722C",
+  "sticker": "#D06B2C",
+  "wedding": "#B08BA5",
+  "fashion": "#8A2E4D",
+  "interior": "#7A6A52",
+  "poster": "#334A5E",
+  "edu": "#3E7C59",
+  "health": "#2D8B8B",
+  "auto": "#4A4F58",
+  "wall": "#6B5B95",
+  "milestone": "#8C3B2E",
+  "charvar": "#9B4B8A",
+  "shop": "#0F6E7A",
+  "trend": "#C24E1E",
+  "retouch": "#3B6E8F",
+  "game": "#6B3FA0",
+  "music": "#B03030",
+  "concept": "#1B6E9B",
+  "localbiz": "#A85C2B",
+  "taiwan": "#2E6B4F"
+ },
+ "prompts": [
+  {
+   "i": "h01",
+   "c": "headshot",
+   "t": "標準證件照",
+   "k": "證件,白底,正式",
+   "zh": "一位 {{年齡}} 歲的{{性別}}證件照，純白背景，正面直視鏡頭，自然微笑，深色西裝外套與白襯衫，柔和均勻的正面棚燈，無陰影，皮膚紋理真實，五官清晰銳利，頭肩構圖，2 吋規格。",
+   "en": "ID photo of a {{age}}-year-old {{gender}}, pure white seamless background, facing camera directly, subtle natural smile, dark suit jacket with white shirt, soft even frontal studio lighting, no harsh shadows, realistic skin texture, sharp facial detail, head-and-shoulders crop, passport format."
+  },
+  {
+   "i": "h02",
+   "c": "headshot",
+   "t": "LinkedIn 專業大頭照",
+   "k": "職場,淺灰底,可信",
+   "zh": "{{職業}}的專業形象大頭照，淺灰漸層背景，四分之三側身、目光看向鏡頭，自信而親和的表情，柔光箱主燈加反光板補光，85mm 鏡頭 f/2.0 淺景深，皮膚質感自然不過度磨皮，商務休閒穿著。",
+   "en": "Professional LinkedIn headshot of a {{profession}}, light grey gradient backdrop, three-quarter body angle with eyes to camera, confident approachable expression, softbox key light with reflector fill, 85mm lens at f/2.0 shallow depth of field, natural unretouched skin texture, business casual attire."
+  },
+  {
+   "i": "h03",
+   "c": "headshot",
+   "t": "戶外自然光大頭照",
+   "k": "戶外,逆光,溫暖",
+   "zh": "{{主體}}的戶外形象照，黃昏公園背景虛化成柔和光斑，逆光形成髮絲輪廓光，臉部由反光板補上暖光，放鬆的笑容，135mm 長焦壓縮，暖色調，自然真實。",
+   "en": "Outdoor portrait of {{subject}}, park at golden hour blurred into soft bokeh, backlight creating a rim light on the hair, face filled with warm bounced light, relaxed genuine smile, 135mm telephoto compression, warm color grade, natural and candid."
+  },
+  {
+   "i": "h04",
+   "c": "headshot",
+   "t": "黑白經典人像",
+   "k": "黑白,林布蘭光,質感",
+   "zh": "黑白經典人像特寫，林布蘭側光在頰上形成三角形亮區，深灰背景，眼神堅定，中景頭肩構圖，高細節皮膚與眼睛反光，銀鹽底片顆粒，強烈明暗對比。",
+   "en": "Classic black and white portrait close-up, Rembrandt lighting forming a triangle of light on the cheek, deep grey background, steady gaze, head-and-shoulders framing, high detail in skin and catchlights, silver gelatin film grain, strong chiaroscuro contrast."
+  },
+  {
+   "i": "h05",
+   "c": "headshot",
+   "t": "韓系證件照",
+   "k": "韓系,乾淨,通透",
+   "zh": "韓系乾淨風格證件照，淺藍或米白純色背景，通透明亮的膚色，柔和無影平光，微微上揚的嘴角，整齊瀏海與淡妝，高清晰度，清爽現代感。",
+   "en": "Korean-style clean ID portrait, plain pale blue or off-white background, luminous even skin tone, soft shadowless flat lighting, gently upturned lips, neat hair and light makeup, high clarity, fresh modern feel."
+  },
+  {
+   "i": "h06",
+   "c": "headshot",
+   "t": "電影感人像",
+   "k": "電影,青橙,戲劇",
+   "zh": "電影劇照風格人像，單一側面窗光切過臉部，背景沒入陰影，青橙色調分級，淺景深，細膩的皮膚與布料紋理，2.39:1 寬銀幕氛圍，安靜而有故事感。",
+   "en": "Cinematic film-still portrait, single side window light raking across the face, background falling into shadow, teal and orange color grade, shallow depth of field, fine skin and fabric texture, 2.39:1 widescreen mood, quiet and narrative."
+  },
+  {
+   "i": "h07",
+   "c": "headshot",
+   "t": "畢業紀念照",
+   "k": "畢業,學士服,校園",
+   "zh": "畢業紀念形象照，穿著學士服與方帽，校園紅磚建築與綠樹背景虛化，午後柔和陽光，開朗笑容，手持文憑，暖色調，青春正向。",
+   "en": "Graduation portrait wearing academic gown and mortarboard, campus red-brick building and trees blurred behind, soft afternoon sunlight, bright smile, holding a diploma, warm tones, youthful and hopeful."
+  },
+  {
+   "i": "h08",
+   "c": "headshot",
+   "t": "長輩形象照",
+   "k": "長輩,溫暖,尊重",
+   "zh": "{{年齡}} 歲長輩的溫暖形象照，柔和窗光，深色素面背景，慈祥從容的神情，臉上皺紋與白髮細節保留真實，深色針織衫，尊重且有尊嚴的呈現，中焦鏡頭。",
+   "en": "Warm dignified portrait of a {{age}}-year-old elder, soft window light, plain dark background, serene kind expression, wrinkles and grey hair rendered truthfully, dark knit sweater, respectful and dignified, medium telephoto lens."
+  },
+  {
+   "i": "b01",
+   "c": "business",
+   "t": "辦公室環境人像",
+   "k": "企業,環境,現代",
+   "zh": "{{職業}}站在現代辦公室的落地窗前，城市天際線散景，雙手交疊或抱胸的自信姿態，自然日光加柔和補光，中性色調，企業年報等級的質感，35mm 環境人像。",
+   "en": "Environmental portrait of a {{profession}} standing by floor-to-ceiling office windows, city skyline bokeh, confident posture with folded arms, natural daylight with soft fill, neutral palette, annual-report quality, 35mm environmental framing."
+  },
+  {
+   "i": "b02",
+   "c": "business",
+   "t": "團隊合照",
+   "k": "團隊,合作,企業",
+   "zh": "五到七人的專業團隊合照，站在明亮的開放式辦公室，錯落有致的站位與身高層次，每個人都自然微笑看向鏡頭，均勻柔光，統一的品牌色系服裝，商業攝影質感。",
+   "en": "Professional team photo of five to seven people in a bright open-plan office, staggered natural arrangement with height variation, everyone smiling toward camera, even soft lighting, coordinated brand-color outfits, commercial photography quality."
+  },
+  {
+   "i": "b03",
+   "c": "business",
+   "t": "演講講者照",
+   "k": "講台,舞台燈,權威",
+   "zh": "講者站在講台上對著麥克風演說的側拍，身後是模糊的簡報投影，舞台聚光燈打亮上半身，手勢自然有力，觀眾席前排剪影，紀實感，高 ISO 現場光。",
+   "en": "Speaker at a podium mid-presentation, blurred slide projection behind, stage spotlight on the upper body, natural emphatic hand gesture, silhouetted front row of the audience, documentary feel, available-light high ISO."
+  },
+  {
+   "i": "b04",
+   "c": "business",
+   "t": "工作情境紀實",
+   "k": "紀實,職人,雙手",
+   "zh": "{{職業}}專注工作的紀實特寫，鏡頭聚焦在雙手與工具上，臉部在景深後方微微失焦，工作場域的真實雜訊與細節，側逆光帶出灰塵微粒，紀錄片質感。",
+   "en": "Documentary close-up of a {{profession}} at work, focus on the hands and tools, face slightly out of focus behind, authentic clutter and detail of the workspace, side backlight revealing dust motes, documentary photography feel."
+  },
+  {
+   "i": "b05",
+   "c": "business",
+   "t": "個人品牌形象組",
+   "k": "品牌,一致,系列",
+   "zh": "個人品牌形象照，米色極簡背景，模特兒四分之三側身、手輕托下巴，柔和大面積主燈，中性米棕色系服裝，留白構圖便於後製加字，雜誌編輯感。",
+   "en": "Personal-brand portrait, minimalist beige backdrop, three-quarter pose with hand lightly at the chin, large soft key light, neutral taupe wardrobe, generous negative space for overlaid text, editorial magazine feel."
+  },
+  {
+   "i": "b06",
+   "c": "business",
+   "t": "名片與文具展示",
+   "k": "品牌,平拍,樣機",
+   "zh": "品牌識別平拍樣機，米白紋理紙上整齊排列名片、信封與筆記本，斜射晨光投下柔和長影，俯視 90 度平拍，留白充足，質感文具攝影。",
+   "en": "Brand identity flat-lay mockup, business cards, envelope and notebook arranged on off-white textured paper, raking morning light casting soft long shadows, 90-degree top-down view, ample negative space, refined stationery photography."
+  },
+  {
+   "i": "l01",
+   "c": "life",
+   "t": "咖啡廳日常",
+   "k": "日常,窗光,底片",
+   "zh": "{{主體}}坐在咖啡廳窗邊，手捧陶瓷咖啡杯，午後窗光斜射在桌面與臉頰上，背景顧客虛化，Kodak Portra 400 底片色調，35mm 抓拍視角，安靜自在。",
+   "en": "{{subject}} seated by a cafe window holding a ceramic cup, afternoon light raking across the table and cheek, other patrons blurred behind, Kodak Portra 400 film palette, 35mm candid framing, quiet and unposed."
+  },
+  {
+   "i": "l02",
+   "c": "life",
+   "t": "海邊逆光",
+   "k": "海邊,金色,自由",
+   "zh": "{{主體}}在傍晚海灘上赤腳行走，逆光讓髮絲與海浪泛出金邊，長裙隨風揚起，遠方地平線柔和失焦，暖金色調，35mm 廣角帶入天空。",
+   "en": "{{subject}} walking barefoot on an evening beach, backlight rimming hair and sea spray in gold, dress lifting in the wind, distant horizon softly out of focus, warm golden grade, 35mm wide framing including the sky."
+  },
+  {
+   "i": "l03",
+   "c": "life",
+   "t": "城市夜遊",
+   "k": "霓虹,街拍,賽博",
+   "zh": "夜晚城市街頭人像，霓虹招牌的洋紅與青色映在臉上與濕潤路面，背景車燈拉成光斑，淺景深，高 ISO 顆粒，賽博龐克都市氛圍，50mm。",
+   "en": "Night street portrait in the city, magenta and cyan neon signage reflecting on the face and wet asphalt, car lights blurred into bokeh, shallow depth of field, high-ISO grain, cyberpunk urban mood, 50mm."
+  },
+  {
+   "i": "l04",
+   "c": "life",
+   "t": "親子日常",
+   "k": "親子,溫馨,自然",
+   "zh": "母親與孩子在家中客廳地板玩耍的自然抓拍，午後陽光透過紗簾灑落，笑聲中的動態瞬間，淺暖色調，柔和對比，居家生活紀實，35mm。",
+   "en": "Candid moment of a parent and child playing on a living-room floor, afternoon sun filtered through sheer curtains, mid-laugh motion, soft warm palette, gentle contrast, family documentary style, 35mm."
+  },
+  {
+   "i": "l05",
+   "c": "life",
+   "t": "情侶紀實",
+   "k": "情侶,曖昧,底片",
+   "zh": "情侶在老街巷弄中並肩行走的紀實照，其中一人回頭笑看對方，斑駁牆面與晾曬衣物為背景，午後硬光與陰影交錯，底片顆粒，日系街拍。",
+   "en": "Candid photo of a couple walking side by side through an old alley, one glancing back with a smile, weathered walls and hanging laundry behind, afternoon hard light and shadow, film grain, Japanese street-photography style."
+  },
+  {
+   "i": "l06",
+   "c": "life",
+   "t": "居家慵懶晨光",
+   "k": "晨光,居家,療癒",
+   "zh": "清晨臥室的慵懶時刻，{{主體}}裹著米色棉被坐在床邊，晨光穿過百葉窗在牆上畫出條紋，空氣中的灰塵微粒可見，低飽和暖色，安靜療癒。",
+   "en": "Lazy early-morning bedroom moment, {{subject}} wrapped in a beige duvet at the edge of the bed, sunrise through venetian blinds striping the wall, dust motes visible in the air, desaturated warm tones, quiet and comforting."
+  },
+  {
+   "i": "l07",
+   "c": "life",
+   "t": "山林健行",
+   "k": "戶外,自然,遼闊",
+   "zh": "健行者站在山稜線上眺望雲海，晨霧在腳下流動，背著登山包，防風外套顏色鮮明，遠景層層山巒，冷藍與暖橘交界的日出光線，24mm 廣角。",
+   "en": "Hiker on a mountain ridge looking over a sea of clouds, morning mist flowing below, backpack and brightly colored shell jacket, layered ridgelines receding, sunrise light where cool blue meets warm orange, 24mm wide angle."
+  },
+  {
+   "i": "l08",
+   "c": "life",
+   "t": "雨天窗景",
+   "k": "雨天,靜謐,情緒",
+   "zh": "雨天室內情緒照，{{主體}}靠著佈滿水珠的窗玻璃向外望，窗外街景失焦成一片色塊，冷藍灰色調，柔和低對比，安靜孤獨的氛圍，50mm 淺景深。",
+   "en": "Rainy-day interior mood shot, {{subject}} leaning against a rain-beaded window looking out, the street beyond dissolved into color blocks, cool blue-grey grade, soft low contrast, quiet solitary atmosphere, 50mm shallow focus."
+  },
+  {
+   "i": "l09",
+   "c": "life",
+   "t": "復古底片日常",
+   "k": "復古,昭和,懷舊",
+   "zh": "1990 年代台灣街景中的日常人像，褪色底片色調，輕微漏光與暗角，穿著當年風格的襯衫，背景有老式招牌與機車，柯達過期底片質感，方形構圖。",
+   "en": "Everyday portrait set in a 1990s Taiwanese street, faded film palette, slight light leaks and vignetting, period-appropriate shirt, old shop signage and scooters behind, expired Kodak film texture, square format."
+  },
+  {
+   "i": "l10",
+   "c": "life",
+   "t": "運動動態",
+   "k": "運動,凍結,力量",
+   "zh": "跑者在清晨柏油路上的側面動態照，汗水在逆光中飛濺並被高速快門凍結，腿部肌肉線條清晰，背景以慢速搖攝拉出線條，高對比，運動品牌廣告質感。",
+   "en": "Side-on action shot of a runner on asphalt at dawn, sweat frozen mid-flight by a fast shutter in backlight, defined leg musculature, background streaked by a panning blur, high contrast, athletic brand advertising quality."
+  },
+  {
+   "i": "s01",
+   "c": "style",
+   "t": "日系空氣感",
+   "k": "日系,清透,低對比",
+   "zh": "日系空氣感攝影風格：過曝半格的明亮曝光、極低對比、淡青與奶白色調、柔和無方向性的漫射光、大量留白、輕微朦朧的散景。主題為 {{主體}}。",
+   "en": "Japanese airy photography style: half-stop overexposed, very low contrast, pale cyan and milky white palette, soft directionless diffused light, generous negative space, gently hazy bokeh. Subject: {{subject}}."
+  },
+  {
+   "i": "s02",
+   "c": "style",
+   "t": "歐美雜誌大片",
+   "k": "時尚,硬光,高級",
+   "zh": "歐美時尚雜誌大片風格：硬質棚燈製造銳利陰影、飽和的單色背景紙、極簡造型、模特兒姿態誇張有張力、Vogue 等級的後製質感。主題為 {{主體}}。",
+   "en": "High-fashion editorial style: hard studio strobe with crisp shadows, saturated single-color seamless backdrop, minimal styling, exaggerated confident posing, Vogue-grade retouching. Subject: {{subject}}."
+  },
+  {
+   "i": "s03",
+   "c": "style",
+   "t": "水墨東方",
+   "k": "水墨,留白,禪",
+   "zh": "中國水墨畫風格：宣紙質地、濃淡墨韻層次、大面積留白、筆觸飛白、僅以硃砂紅點綴印章，構圖遵循留白與呼吸感。主題為 {{主體}}。",
+   "en": "Chinese ink-wash painting style: rice-paper texture, graded ink tonality, expansive negative space, dry-brush strokes, a single vermilion seal as the only color accent, composition built on breathing space. Subject: {{subject}}."
+  },
+  {
+   "i": "s04",
+   "c": "style",
+   "t": "油畫古典",
+   "k": "油畫,古典,厚塗",
+   "zh": "古典油畫風格：厚塗筆觸與可見顏料堆疊、林布蘭式暗調光源、赭石與土黃為主色、深沉背景、龜裂的清漆質感，博物館館藏氛圍。主題為 {{主體}}。",
+   "en": "Classical oil painting style: impasto brushwork with visible paint ridges, Rembrandt-style low-key lighting, ochre and umber palette, deep shadowed background, aged varnish craquelure, museum-collection atmosphere. Subject: {{subject}}."
+  },
+  {
+   "i": "s05",
+   "c": "style",
+   "t": "宮崎駿動畫感",
+   "k": "動畫,手繪,溫暖",
+   "zh": "手繪日式動畫電影風格：水彩背景、飽滿的積雨雲、鮮明的草綠與天藍、柔和的角色線稿、溫暖懷舊的光線、細膩的自然環境細節。場景為 {{場景}}。",
+   "en": "Hand-drawn Japanese animated film style: watercolor backgrounds, billowing cumulus clouds, vivid grass green and sky blue, soft character linework, warm nostalgic light, richly observed natural detail. Scene: {{scene}}."
+  },
+  {
+   "i": "s06",
+   "c": "style",
+   "t": "極簡平面插畫",
+   "k": "扁平,簡報,幾何",
+   "zh": "極簡扁平向量插畫：幾何色塊、無漸層、限定三色的配色、粗細一致的線條、大量留白、適合簡報與網頁的乾淨風格。主題為 {{主體}}。",
+   "en": "Minimal flat vector illustration: geometric shapes, no gradients, strict three-color palette, uniform stroke weight, generous white space, clean enough for slides and web. Subject: {{subject}}."
+  },
+  {
+   "i": "s07",
+   "c": "style",
+   "t": "蒸氣波復古",
+   "k": "蒸氣波,霓虹,90s",
+   "zh": "蒸氣波美學：洋紅與青的漸層、網格地平線、羅馬石膏像、棕櫚樹剪影、CRT 掃描線與色差、80 至 90 年代電腦繪圖質感。主題為 {{主體}}。",
+   "en": "Vaporwave aesthetic: magenta-to-cyan gradients, grid horizon, Roman plaster busts, palm silhouettes, CRT scanlines and chromatic aberration, late-80s computer-graphics texture. Subject: {{subject}}."
+  },
+  {
+   "i": "s08",
+   "c": "style",
+   "t": "剪紙立體層次",
+   "k": "剪紙,層次,工藝",
+   "zh": "多層剪紙工藝風格：五到七層錯落紙張堆疊出景深、每層之間有柔和投影、紙纖維質感清晰、飽和度適中的配色、正面平視構圖。主題為 {{主體}}。",
+   "en": "Layered paper-cut craft style: five to seven staggered paper layers creating depth, soft drop shadows between layers, visible paper fiber texture, moderately saturated palette, straight-on frontal composition. Subject: {{subject}}."
+  },
+  {
+   "i": "s09",
+   "c": "style",
+   "t": "針織羊毛氈",
+   "k": "羊毛氈,可愛,手作",
+   "zh": "羊毛氈手作模型風格：毛絨纖維質感、圓潤的造型、可見的針戳紋理、柔和的棚拍光、淺色布面背景、微距鏡頭下的溫暖手作感。主題為 {{主體}}。",
+   "en": "Needle-felted wool craft style: fuzzy fiber texture, rounded soft forms, visible needle-poke detail, gentle studio light, pale fabric backdrop, macro lens warmth of a handmade object. Subject: {{subject}}."
+  },
+  {
+   "i": "s10",
+   "c": "style",
+   "t": "黏土定格動畫",
+   "k": "黏土,定格,趣味",
+   "zh": "黏土定格動畫風格：可見的指紋與捏塑痕跡、微縮實景搭建、柔和的舞台燈光、飽和的原色、淺景深營造微縮感。主題為 {{主體}}。",
+   "en": "Claymation stop-motion style: visible fingerprints and sculpting marks, miniature practical set, soft stage lighting, saturated primary colors, shallow focus reinforcing the miniature scale. Subject: {{subject}}."
+  },
+  {
+   "i": "s11",
+   "c": "style",
+   "t": "等距像素風",
+   "k": "像素,復古,遊戲",
+   "zh": "等距視角像素藝術：16 位元色階、清晰的方格像素、45 度等距投影、柔和的抖色漸層、遊戲場景般的物件配置。主題為 {{主體}}。",
+   "en": "Isometric pixel art: 16-bit palette, crisp square pixels, 45-degree isometric projection, subtle dithered gradients, game-scene object arrangement. Subject: {{subject}}."
+  },
+  {
+   "i": "s12",
+   "c": "style",
+   "t": "建築藍圖線稿",
+   "k": "藍圖,技術,線稿",
+   "zh": "技術藍圖風格：深普魯士藍底、白色細線繪製的正投影圖、標註尺寸線與引線、網格參考線、老舊描圖紙的輕微磨損，精密工程感。主題為 {{主體}}。",
+   "en": "Technical blueprint style: deep Prussian blue ground, fine white orthographic linework, dimension lines and leader annotations, grid reference, slight wear of aged tracing paper, precise engineering feel. Subject: {{subject}}."
+  },
+  {
+   "i": "s13",
+   "c": "style",
+   "t": "雙重曝光",
+   "k": "雙曝,詩意,剪影",
+   "zh": "雙重曝光：人物側臉剪影內部融合 {{疊加元素}} 的景象，邊緣柔和過渡，單色或雙色調，背景乾淨，詩意而象徵性的視覺。",
+   "en": "Double exposure: a profile silhouette with {{overlay}} blended inside the head, soft edge transitions, monochrome or duotone treatment, clean background, poetic symbolic imagery."
+  },
+  {
+   "i": "s14",
+   "c": "style",
+   "t": "微縮模型移軸",
+   "k": "移軸,微縮,俯視",
+   "zh": "移軸微縮效果：高角度俯拍真實場景，上下強烈失焦只留一條清晰帶、飽和度與對比拉高，讓真實場景看起來像塑膠微縮模型。場景為 {{場景}}。",
+   "en": "Tilt-shift miniature effect: high-angle view of a real scene, strong blur above and below a single sharp band, boosted saturation and contrast, making the real place look like a plastic model. Scene: {{scene}}."
+  },
+  {
+   "i": "c01",
+   "c": "char",
+   "t": "虛擬主播設定",
+   "k": "虛擬,角色設定,三視圖",
+   "zh": "虛擬角色設定圖：一位 {{年齡}} 歲的{{性別}}角色，三視圖排列（正面、側面、背面），日系賽璐璐上色，清晰的線稿，配色標註色卡，白色背景，服裝細節與配件分解說明。",
+   "en": "Character design sheet: a {{age}}-year-old {{gender}} character in three views (front, side, back), Japanese cel-shaded coloring, clean linework, palette swatches labeled, white background, costume details and accessories called out."
+  },
+  {
+   "i": "c02",
+   "c": "char",
+   "t": "寫實虛擬人像",
+   "k": "寫實,CGI,質感",
+   "zh": "照片級寫實的虛擬人像：細膩的次表面散射皮膚、單根可見的髮絲與眉毛、真實的眼球濕潤反光、柔和棚燈、中性背景、Unreal Engine MetaHuman 等級的渲染。",
+   "en": "Photoreal digital human portrait: fine subsurface-scattering skin, individually visible hair and brow strands, wet realistic eye highlights, soft studio lighting, neutral backdrop, MetaHuman-grade rendering."
+  },
+  {
+   "i": "c03",
+   "c": "char",
+   "t": "奇幻戰士",
+   "k": "奇幻,盔甲,史詩",
+   "zh": "奇幻世界的{{職業}}角色：刻紋精細的盔甲與皮革綁帶、風中飛揚的斗篷、背後是暴風雨天空與遠方城堡、戲劇性的側逆光、電影概念美術質感、全身站姿。",
+   "en": "Fantasy {{profession}} character: intricately engraved armor and leather strapping, cloak whipping in the wind, stormy sky and distant castle behind, dramatic side backlight, cinematic concept-art quality, full-body standing pose."
+  },
+  {
+   "i": "c04",
+   "c": "char",
+   "t": "賽博義體角色",
+   "k": "科幻,義體,霓虹",
+   "zh": "近未來賽博龐克角色：局部機械義肢與發光電路紋、防水風衣、雨夜巷弄中的霓虹反光、冷青光與洋紅光交錯、高對比、電影概念設計稿。",
+   "en": "Near-future cyberpunk character: partial cybernetic limbs with glowing circuitry, technical raincoat, neon reflections in a rainy alley, cyan and magenta cross-lighting, high contrast, cinematic concept design."
+  },
+  {
+   "i": "c05",
+   "c": "char",
+   "t": "Q版三頭身",
+   "k": "Q版,可愛,吉祥物",
+   "zh": "Q 版三頭身角色：大眼圓臉、簡化的四肢、飽和明亮的配色、粗描邊、柔和的漸層陰影、純色背景、可愛吉祥物風格。角色設定為 {{角色}}。",
+   "en": "Chibi three-head-tall character: big eyes and round face, simplified limbs, bright saturated palette, bold outline, soft gradient shading, flat color background, cute mascot style. Character: {{character}}."
+  },
+  {
+   "i": "c06",
+   "c": "char",
+   "t": "品牌吉祥物",
+   "k": "吉祥物,品牌,親和",
+   "zh": "品牌吉祥物設計：以 {{主題}} 為原型的擬人化角色，圓潤親和的造型、限定四色配色、清楚的辨識輪廓、多種表情小圖並列、白底向量風格。",
+   "en": "Brand mascot design: an anthropomorphic character based on {{theme}}, rounded friendly forms, strict four-color palette, strong recognizable silhouette, a row of expression variations, white background vector style."
+  },
+  {
+   "i": "c07",
+   "c": "char",
+   "t": "角色情緒表",
+   "k": "情緒表,設定,九宮格",
+   "zh": "角色表情設定表：同一角色的九宮格表情（開心、生氣、驚訝、難過、害羞、疑惑、得意、疲倦、大笑），風格一致的線條與配色，白底整齊排列。",
+   "en": "Character expression sheet: a 3x3 grid of the same character (happy, angry, surprised, sad, shy, puzzled, smug, tired, laughing), consistent linework and palette, tidy layout on white."
+  },
+  {
+   "i": "c08",
+   "c": "char",
+   "t": "虛擬偶像舞台",
+   "k": "偶像,舞台,燈光",
+   "zh": "虛擬偶像的舞台演出畫面：全息投影般的光影、聚光燈與雷射光束、飄浮的光粒子、閃亮的舞台服裝、觀眾席的螢光棒海、動態舞蹈姿勢、廣角低角度。",
+   "en": "Virtual idol live-stage scene: hologram-like lighting, spotlights and laser beams, floating light particles, sequined stage costume, a sea of glowsticks in the crowd, dynamic dance pose, low wide-angle view."
+  },
+  {
+   "i": "c09",
+   "c": "char",
+   "t": "職業角色群像",
+   "k": "群像,職業,系列",
+   "zh": "同一美術風格的職業角色群像：{{職業列表}}，統一的身形比例與配色系統，並排全身站姿，白色背景，扁平插畫風，適合作為系列圖示。",
+   "en": "A set of occupation characters in one consistent art style: {{professions}}, unified proportions and palette system, standing side by side in full body, white background, flat illustration, suitable as an icon series."
+  },
+  {
+   "i": "f01",
+   "c": "finance",
+   "t": "K線戰情室",
+   "k": "股市,螢幕,專業",
+   "zh": "專業交易室畫面：多螢幕牆上顯示紅綠 K 線圖與跳動報價，交易員背影剪影，室內昏暗僅由螢幕藍光照亮，玻璃反射城市夜景，高對比冷色調，商業攝影質感。",
+   "en": "Professional trading floor: a wall of monitors showing candlestick charts and streaming quotes, silhouetted trader from behind, dim room lit only by screen glow, city night reflected in the glass, high-contrast cool grade, commercial photography quality."
+  },
+  {
+   "i": "f02",
+   "c": "finance",
+   "t": "多空對決示意",
+   "k": "多空,牛熊,象徵",
+   "zh": "金融市場多空對決的象徵性插畫：一頭金屬質感的公牛與一頭黑色的熊在上升與下降的線圖上對峙，背景為淡色格線與數據流，紅綠對比色，商業雜誌插畫風。",
+   "en": "Symbolic illustration of bulls versus bears: a metallic bull and a dark bear facing off across rising and falling chart lines, faint gridlines and data streams behind, red-green contrast, business magazine illustration style."
+  },
+  {
+   "i": "f03",
+   "c": "finance",
+   "t": "總經數據儀表板",
+   "k": "儀表板,UI,深色",
+   "zh": "總經數據儀表板 UI 設計圖：深色介面、青綠與琥珀色的資料視覺化、折線圖與熱力圖並置、清晰的數字排版、卡片式模組、細緻的網格對齊，現代金融科技風格。",
+   "en": "Macro data dashboard UI: dark interface, teal and amber data visualization, line charts beside a heatmap, crisp numeric typography, card-based modules, precise grid alignment, modern fintech aesthetic."
+  },
+  {
+   "i": "f04",
+   "c": "finance",
+   "t": "通膨與升息",
+   "k": "總經,概念,象徵",
+   "zh": "總體經濟概念插畫：象徵通膨的膨脹氣球與象徵利率的向上階梯並列，背景是褪色的鈔票紋理與百分比符號，限定紅、灰、深藍三色，編輯插畫風格。",
+   "en": "Macroeconomic concept illustration: an inflating balloon beside an ascending staircase of interest rates, faded banknote texture and percent symbols behind, restricted red, grey and navy palette, editorial illustration style."
+  },
+  {
+   "i": "f05",
+   "c": "finance",
+   "t": "投資理財溫馨感",
+   "k": "理財,信任,家庭",
+   "zh": "個人理財主題插畫：一對夫妻在餐桌上看著平板規劃儲蓄，桌上有存錢筒與植栽，溫暖的柔光，米色與草綠色系，親切可信的扁平插畫風格，適合金融品牌文宣。",
+   "en": "Personal finance illustration: a couple at a dining table reviewing savings on a tablet, a piggy bank and a potted plant nearby, warm soft light, beige and sage palette, approachable trustworthy flat illustration for financial brand collateral."
+  },
+  {
+   "i": "f06",
+   "c": "finance",
+   "t": "財經新聞封面",
+   "k": "新聞,封面,標題",
+   "zh": "財經新聞封面圖：巨大的上升箭頭穿過城市天際線，背景為冷藍色調的數據網格，前景留出標題文字空間，強烈透視，商業新聞頻道視覺風格。",
+   "en": "Financial news cover graphic: a large upward arrow cutting through a city skyline, cool blue data grid behind, foreground space reserved for a headline, strong perspective, business news channel visual style."
+  },
+  {
+   "i": "f07",
+   "c": "finance",
+   "t": "風險與泡沫",
+   "k": "風險,概念,警示",
+   "zh": "市場風險概念圖：無數半透明的肥皂泡泡漂浮在城市上空，其中幾顆正在破裂，泡泡表面折射出股價數字，冷色調搭配一抹警示紅，超現實編輯插畫。",
+   "en": "Market risk concept: countless translucent bubbles drifting above a city, several bursting, stock figures refracted on their surfaces, cool palette with a single warning red accent, surreal editorial illustration."
+  },
+  {
+   "i": "f08",
+   "c": "finance",
+   "t": "資產配置圓餅",
+   "k": "資訊圖,配置,乾淨",
+   "zh": "資產配置資訊圖：立體感適中的圓餅圖分為股票、債券、現金與另類資產，每塊有清楚標籤與百分比，柔和陰影，米白背景，專業簡報等級的乾淨版面。",
+   "en": "Asset allocation infographic: a lightly dimensional pie chart split into equities, bonds, cash and alternatives, each wedge clearly labeled with a percentage, soft shadows, off-white background, clean presentation-grade layout."
+  },
+  {
+   "i": "t01",
+   "c": "festival",
+   "t": "農曆新年賀圖",
+   "k": "新年,春節,喜慶",
+   "zh": "農曆新年賀圖：朱紅底色搭配燙金紋樣，中央為立體感的春字與盛開的梅花，兩側掛著金色流蘇燈籠，桌上有橘子與糖果盒，中央留白供祝賀文字，喜氣而不俗豔。",
+   "en": "Lunar New Year greeting image: vermilion ground with gold foil motifs, a dimensional spring character and blooming plum blossoms at center, gold-tasseled lanterns at both sides, tangerines and a candy box below, clear center space for greeting text, festive but refined."
+  },
+  {
+   "i": "t02",
+   "c": "festival",
+   "t": "生肖主題賀圖",
+   "k": "生肖,可愛,新年",
+   "zh": "{{生肖}}年生肖賀圖：可愛的擬人化生肖角色手持元寶站在紅色圓形背景中，周圍環繞祥雲與金錢紋，剪紙質感的層次，上方預留橫幅文字位置。",
+   "en": "Zodiac greeting for the year of the {{zodiac}}: a cute anthropomorphic zodiac character holding a gold ingot on a red circular ground, auspicious clouds and coin motifs around, layered paper-cut texture, banner space reserved above."
+  },
+  {
+   "i": "t03",
+   "c": "festival",
+   "t": "元宵提燈",
+   "k": "元宵,燈籠,夜",
+   "zh": "元宵節夜景：孩童提著紙燈籠走在老街上，四周懸掛數百盞暖黃燈籠，遠方廟宇燈火通明，暖橘色調，柔和光暈與淺景深，溫馨的節慶氛圍。",
+   "en": "Lantern Festival night: children carrying paper lanterns along an old street, hundreds of warm amber lanterns overhead, a brightly lit temple in the distance, warm orange grade, soft glow and shallow focus, cozy festive mood."
+  },
+  {
+   "i": "t04",
+   "c": "festival",
+   "t": "媽祖遶境",
+   "k": "民俗,信仰,台灣",
+   "zh": "台灣媽祖遶境紀實：陣頭旗幟與神轎在煙霧與鞭炮碎屑中前行，信眾雙手合十跪伏於地，午後強光穿過煙塵形成光柱，高飽和紅金色調，紀實新聞攝影風格。",
+   "en": "Mazu pilgrimage procession in Taiwan: temple banners and a palanquin advancing through smoke and firecracker debris, devotees kneeling with hands pressed together, afternoon sun beaming through the haze, saturated red and gold, photojournalistic documentary style."
+  },
+  {
+   "i": "t05",
+   "c": "festival",
+   "t": "端午龍舟",
+   "k": "端午,龍舟,動態",
+   "zh": "端午節龍舟競渡：鼓手在船頭擊鼓，槳手整齊揮槳濺起水花，龍頭彩繪鮮豔，河岸觀眾旗幟飄揚，高速快門凍結水珠，夏日強烈日光，動感十足。",
+   "en": "Dragon Boat Festival race: a drummer at the bow, rowers striking the water in unison with spray flying, a vividly painted dragon head, flags and spectators along the bank, fast shutter freezing droplets, harsh summer sun, high energy."
+  },
+  {
+   "i": "t06",
+   "c": "festival",
+   "t": "中元普渡",
+   "k": "中元,民俗,莊嚴",
+   "zh": "中元普渡場景：長桌上整齊排列供品與插著香的三牲、水果與罐頭塔，白色紙錢與燭火，黃昏時分的柔和光線，莊嚴而寧靜，紀實色調不誇張。",
+   "en": "Ghost Month offering ceremony: long tables neatly arrayed with offerings, incense, fruit and stacked canned goods, joss paper and candle flames, soft dusk light, solemn and quiet, restrained documentary color."
+  },
+  {
+   "i": "t07",
+   "c": "festival",
+   "t": "中秋團圓",
+   "k": "中秋,月亮,烤肉",
+   "zh": "中秋節團圓場景：大家庭在庭院烤肉，炭火餘燼發出橘光，桌上有月餅與柚子，滿月高掛夜空並帶有薄雲，暖色調，笑語中的自然抓拍。",
+   "en": "Mid-Autumn gathering: an extended family barbecuing in a courtyard, orange glow from the charcoal, mooncakes and pomelos on the table, a full moon behind thin cloud, warm tones, candid moment mid-laughter."
+  },
+  {
+   "i": "t08",
+   "c": "festival",
+   "t": "聖誕溫馨",
+   "k": "聖誕,溫暖,居家",
+   "zh": "聖誕節居家場景：裝飾好的聖誕樹掛滿暖黃燈串與紅金球飾，壁爐火光與襪子，窗外飄雪，前景禮物盒堆疊，散景光斑，溫暖飽和的紅綠金配色。",
+   "en": "Christmas home scene: a decorated tree strung with warm lights and red-gold ornaments, a lit fireplace with stockings, snow falling outside the window, gift boxes stacked in the foreground, bokeh highlights, warm saturated red-green-gold palette."
+  },
+  {
+   "i": "t09",
+   "c": "festival",
+   "t": "跨年煙火",
+   "k": "跨年,煙火,城市",
+   "zh": "跨年倒數煙火：城市地標上空綻放多層次煙火，人群剪影仰望，長曝光讓煙火拉出光軌，河面倒映燦爛光影，深藍夜空，廣角低視角。",
+   "en": "New Year countdown fireworks: layered bursts above a city landmark, silhouetted crowd looking up, long exposure trailing the light, reflections shimmering on the river, deep blue night sky, low wide-angle view."
+  },
+  {
+   "i": "t10",
+   "c": "festival",
+   "t": "母親節康乃馨",
+   "k": "母親節,溫馨,花",
+   "zh": "母親節主題圖：粉色與白色康乃馨花束靠在米白色桌面上，旁邊放著手寫卡片，柔和的側窗光，淺景深，低飽和溫柔色調，上方留白供祝福文字。",
+   "en": "Mother’s Day image: a bouquet of pink and white carnations resting on an off-white table beside a handwritten card, soft side window light, shallow depth of field, gentle desaturated palette, blank space above for a message."
+  },
+  {
+   "i": "t11",
+   "c": "festival",
+   "t": "父親節",
+   "k": "父親節,沉穩,質感",
+   "zh": "父親節主題平拍：深藍領帶、皮革錶帶、木質托盤與一杯黑咖啡整齊排列，斜射硬光帶出材質紋理，沉穩的深藍與棕色調，右側留白供文字。",
+   "en": "Father’s Day flat-lay: a navy tie, leather watch strap, wooden tray and a cup of black coffee arranged neatly, raking hard light revealing texture, grounded navy and brown palette, right side left blank for text."
+  },
+  {
+   "i": "t12",
+   "c": "festival",
+   "t": "教師節感恩",
+   "k": "教師節,校園,溫暖",
+   "zh": "教師節主題圖：講桌上放著一束花、一疊作業本與紅筆，黑板上有粉筆寫的感謝字樣的模糊背景，午後教室斜光，暖色調，懷舊而溫馨。",
+   "en": "Teacher’s Day image: a bouquet, a stack of exercise books and a red pen on a lectern, a blurred chalkboard behind, afternoon light across the classroom, warm tones, nostalgic and heartfelt."
+  },
+  {
+   "i": "m01",
+   "c": "morning",
+   "t": "經典早安花卉",
+   "k": "早安,花卉,長輩",
+   "zh": "早安祝福圖：清晨陽光穿過帶露水的粉色玫瑰與滿天星，柔和光暈與彩虹光斑，背景是淡金色的散景，畫面中央上方留出大片乾淨區域供文字，明亮溫暖，長輩喜愛的飽和度。",
+   "en": "Good-morning greeting image: dawn light through dew-covered pink roses and baby’s breath, soft glow and rainbow flare, pale gold bokeh behind, a large clean area in the upper center reserved for text, bright warm and generously saturated."
+  },
+  {
+   "i": "m02",
+   "c": "morning",
+   "t": "山景日出早安",
+   "k": "早安,日出,大氣",
+   "zh": "早安圖：雲海之上的日出，金色光芒穿透雲層灑向山巒，前景有一棵孤立的松樹剪影，天空由橘紅漸層到淡紫，大氣磅礡，下方三分之一留白供文字。",
+   "en": "Good-morning image: sunrise above a sea of clouds, golden rays piercing through onto mountain ridges, a lone pine silhouette in the foreground, sky graduating from orange-red to soft violet, expansive and majestic, lower third left clear for text."
+  },
+  {
+   "i": "m03",
+   "c": "morning",
+   "t": "咖啡與晨光",
+   "k": "早安,咖啡,日常",
+   "zh": "早安圖：木桌上一杯冒著熱氣的咖啡，旁邊有小盆綠植與翻開的書，晨光從左側斜射進來投下柔和長影，暖米色調，右上方大片留白，質感清新不俗氣。",
+   "en": "Good-morning image: a steaming cup of coffee on a wooden table beside a small potted plant and an open book, morning light raking from the left casting long soft shadows, warm beige palette, generous clear space upper right, fresh and tasteful."
+  },
+  {
+   "i": "m04",
+   "c": "morning",
+   "t": "平安喜樂蓮花",
+   "k": "祝福,蓮花,禪意",
+   "zh": "祝福圖：清晨池塘中一朵盛開的粉白蓮花，水面薄霧與露珠，柔和的漫射光，低飽和的青綠與粉色，禪意寧靜，上方留白供「平安喜樂」等祝福語。",
+   "en": "Blessing image: a pink-white lotus in full bloom on a misty morning pond, dew on the petals, soft diffused light, muted teal and pink palette, serene and meditative, clear space above for a blessing phrase."
+  },
+  {
+   "i": "m05",
+   "c": "morning",
+   "t": "晚安月夜",
+   "k": "晚安,月亮,寧靜",
+   "zh": "晚安圖：深藍夜空中的明亮滿月，薄雲飄過並泛著銀邊，下方是安靜的湖面倒影與遠山剪影，點點星光，寧靜安詳，中央留白供晚安文字。",
+   "en": "Good-night image: a bright full moon in a deep blue sky, thin clouds drifting with silver edges, a still lake reflecting below with distant mountain silhouettes, scattered stars, calm and peaceful, center left clear for a good-night message."
+  },
+  {
+   "i": "m06",
+   "c": "morning",
+   "t": "健康養生提醒",
+   "k": "養生,健康,關懷",
+   "zh": "關懷提醒圖：清晨公園中的太極或散步身影遠景剪影，晨霧與斜射晨光，前景有露水草地，清新的綠色調，畫面下方留白供健康叮嚀文字，溫和不刺眼。",
+   "en": "Wellness reminder image: a distant silhouette practicing tai chi or walking in a park at dawn, mist and low sunbeams, dew-covered grass in the foreground, fresh green palette, lower area clear for a health reminder, gentle on the eyes."
+  },
+  {
+   "i": "m07",
+   "c": "morning",
+   "t": "四季問候",
+   "k": "季節,自然,系列",
+   "zh": "季節問候圖：{{季節}}的代表性自然景色（如春櫻、夏荷、秋楓、冬雪），構圖統一為中央景物加上下留白，柔和的自然光，飽和適中，可作為系列圖使用。",
+   "en": "Seasonal greeting image: a signature natural scene for {{season}} (cherry blossom, lotus, maple, or snow), consistent composition with the subject centered and clear margins above and below, soft natural light, moderate saturation, designed as a series."
+  },
+  {
+   "i": "m08",
+   "c": "morning",
+   "t": "週一到週日",
+   "k": "星期,系列,活力",
+   "zh": "一週問候圖：以 {{星期}} 為主題，明亮活潑的配色，簡潔的插畫元素（如太陽、咖啡、行事曆），大量留白與清楚的層次，扁平現代風格，適合社群每日發文。",
+   "en": "Day-of-week greeting: themed for {{weekday}}, bright cheerful palette, simple illustrated elements such as a sun, coffee cup or calendar, generous white space and clear hierarchy, flat modern style, made for daily social posts."
+  },
+  {
+   "i": "d01",
+   "c": "birthday",
+   "t": "溫馨生日蛋糕",
+   "k": "生日,蛋糕,溫暖",
+   "zh": "生日祝賀圖：一個插著點燃蠟燭的奶油蛋糕放在木桌上，背景是柔和失焦的暖黃燈串與氣球，淺景深散景光斑，溫暖的金色調，上方留白供生日祝福文字。",
+   "en": "Birthday greeting image: a cream cake with lit candles on a wooden table, warm string lights and balloons softly blurred behind, shallow-focus bokeh highlights, warm golden grade, clear space above for a birthday message."
+  },
+  {
+   "i": "d02",
+   "c": "birthday",
+   "t": "派對繽紛",
+   "k": "派對,歡樂,飽和",
+   "zh": "歡樂生日派對圖：漂浮的彩色氣球、飛散的紙花與彩帶、閃亮的金色點綴，明亮的粉藍黃配色，白色乾淨背景，中央留出圓形空間放置文字，活潑而不雜亂。",
+   "en": "Festive birthday graphic: floating colored balloons, scattered confetti and streamers, gold accents, bright pink-blue-yellow palette, clean white background, a circular clear area at center for text, lively but uncluttered."
+  },
+  {
+   "i": "d03",
+   "c": "birthday",
+   "t": "長輩祝壽",
+   "k": "祝壽,傳統,吉祥",
+   "zh": "祝壽圖：紅金色底搭配壽桃、松鶴與如意雲紋，中央為圓形壽字紋樣，邊框以傳統回紋裝飾，端莊喜氣，中央留白供祝壽文字，傳統工藝質感。",
+   "en": "Longevity birthday image: red and gold ground with peaches, cranes and pine, auspicious cloud motifs, a circular longevity emblem at center, traditional key-fret border, dignified and celebratory, center reserved for text, traditional craft finish."
+  },
+  {
+   "i": "d04",
+   "c": "birthday",
+   "t": "兒童生日",
+   "k": "兒童,可愛,插畫",
+   "zh": "兒童生日插畫：可愛的動物角色戴著派對帽圍著蛋糕慶祝，柔和的粉彩配色，圓潤的插畫線條，天真歡樂的氛圍，上下留白供姓名與年齡文字。",
+   "en": "Children’s birthday illustration: cute animal characters in party hats gathered around a cake, soft pastel palette, rounded friendly linework, joyful innocent mood, margins above and below for a name and age."
+  },
+  {
+   "i": "d05",
+   "c": "birthday",
+   "t": "週年紀念",
+   "k": "週年,質感,簡約",
+   "zh": "週年紀念視覺：深墨綠底色搭配燙金的細線框與 {{數字}} 週年字樣，中央有幾何線條組成的簡約徽章，極簡留白，高級質感，適合品牌或婚姻紀念。",
+   "en": "Anniversary visual: deep forest-green ground with a gold hairline frame and a {{number}}-year mark, a minimal geometric badge at center, restrained white space, premium finish, suitable for a brand or wedding anniversary."
+  },
+  {
+   "i": "d06",
+   "c": "birthday",
+   "t": "恭喜開幕",
+   "k": "開幕,喜慶,商業",
+   "zh": "開幕誌慶圖：紅金色系的花籃與綵球，背景為新店面模糊光影，飄落的金色紙花，喜氣但版面乾淨，中央大片留白供店名與賀詞。",
+   "en": "Grand-opening congratulation image: red and gold flower baskets and celebration balls, a new storefront softly blurred behind, gold confetti falling, festive yet clean layout, large clear center for the shop name and message."
+  },
+  {
+   "i": "p01",
+   "c": "product",
+   "t": "純白去背商品圖",
+   "k": "電商,白底,乾淨",
+   "zh": "電商主圖：{{商品}}置於純白無縫背景中央，均勻柔和的環繞打光消除硬陰影，僅保留淡淡的接地投影，商品邊緣銳利清晰，色彩還原準確，正面 45 度視角。",
+   "en": "E-commerce hero shot: {{product}} centered on a pure white seamless background, even wrapped soft lighting eliminating harsh shadows, only a faint contact shadow, crisp product edges, accurate color, three-quarter front angle."
+  },
+  {
+   "i": "p02",
+   "c": "product",
+   "t": "情境生活照",
+   "k": "情境,生活,質感",
+   "zh": "商品情境照：{{商品}}自然地放置在木質桌面上，旁邊有相關的生活道具與一株綠植，斜射窗光帶出材質細節，淺景深，暖色調，真實可用的生活感。",
+   "en": "Lifestyle product shot: {{product}} placed naturally on a wooden surface with related props and a small plant, raking window light revealing material detail, shallow depth of field, warm palette, believable everyday context."
+  },
+  {
+   "i": "p03",
+   "c": "product",
+   "t": "水花動態",
+   "k": "動態,水花,飲料",
+   "zh": "飲品動態商品照：{{商品}}在液體飛濺中懸浮，水花以高速閃燈凍結成清晰水珠與冠狀，深色漸層背景，強烈邊緣光勾勒瓶身，商業廣告等級。",
+   "en": "Dynamic beverage shot: {{product}} suspended amid a liquid splash frozen by high-speed flash into crisp droplets and crowns, dark gradient background, strong rim light defining the bottle, advertising-grade quality."
+  },
+  {
+   "i": "p04",
+   "c": "product",
+   "t": "極簡幾何台座",
+   "k": "極簡,幾何,高級",
+   "zh": "極簡商品視覺：{{商品}}放在圓柱形石材台座上，背景為單一柔和色塊，硬光投下乾淨的幾何長影，低飽和的莫蘭迪配色，大量留白，高級精品感。",
+   "en": "Minimal product visual: {{product}} on a cylindrical stone plinth, single soft color-field background, hard light casting a clean geometric shadow, muted Morandi palette, generous negative space, premium editorial feel."
+  },
+  {
+   "i": "p05",
+   "c": "product",
+   "t": "俯視平拍組合",
+   "k": "平拍,俯視,組合",
+   "zh": "俯視平拍組合圖：{{商品}}與相關配件在中性色背景上以網格對齊整齊排列，均勻無影平光，90 度正俯視，構圖對稱有秩序，適合作為系列展示。",
+   "en": "Top-down flat-lay: {{product}} and its accessories aligned on a grid over a neutral background, even shadowless lighting, straight 90-degree overhead view, symmetrical orderly composition, ideal for a range display."
+  },
+  {
+   "i": "p06",
+   "c": "product",
+   "t": "手持使用情境",
+   "k": "使用,雙手,真實",
+   "zh": "使用情境照：一雙手正在使用 {{商品}}，鏡頭聚焦在手與產品接觸的細節，背景是模糊的真實使用環境，自然側光，皮膚與材質紋理清楚，真實可信。",
+   "en": "In-use shot: a pair of hands operating {{product}}, focus on the contact point between hand and product, real environment blurred behind, natural side light, clear skin and material texture, credible and unstaged."
+  },
+  {
+   "i": "p07",
+   "c": "product",
+   "t": "包裝樣機",
+   "k": "樣機,包裝,設計",
+   "zh": "包裝設計樣機：{{商品}}的紙盒與軟袋並排立於淺灰背景，柔和大面積主燈加輕微邊緣光，正面標籤清晰可讀，材質有真實的紙纖維與霧面質感，設計提案等級。",
+   "en": "Packaging mockup: the carton and pouch for {{product}} standing side by side on a light grey ground, large soft key light with gentle rim, front label crisply legible, realistic paper fiber and matte finish, presentation-ready."
+  },
+  {
+   "i": "p08",
+   "c": "product",
+   "t": "節慶促銷版",
+   "k": "促銷,節慶,活潑",
+   "zh": "節慶促銷主視覺：{{商品}}被 {{節慶}} 元素環繞，飽和明亮的配色，放射狀背景強調焦點，留出角落區塊放折扣標籤，活潑吸睛但保持商品清晰。",
+   "en": "Seasonal promotion key visual: {{product}} surrounded by {{festival}} elements, bright saturated palette, radial background drawing focus inward, a corner block left free for a discount badge, eye-catching while keeping the product clear."
+  },
+  {
+   "i": "o01",
+   "c": "food",
+   "t": "熱食蒸氣特寫",
+   "k": "美食,蒸氣,食慾",
+   "zh": "美食特寫：一碗剛上桌的 {{料理}}，可見的蒸氣裊裊上升，逆側光讓湯汁與油光閃亮，食材層次分明，深色木桌與粗陶碗，淺景深，暖色調，食慾感強烈。",
+   "en": "Food close-up: a freshly served bowl of {{dish}}, visible steam rising, back-side light making the broth and sheen glisten, clearly layered ingredients, dark wood table and rustic ceramic bowl, shallow depth of field, warm grade, highly appetizing."
+  },
+  {
+   "i": "o02",
+   "c": "food",
+   "t": "平拍餐桌",
+   "k": "平拍,餐桌,豐盛",
+   "zh": "俯視餐桌平拍：多道 {{料理}} 與配菜、餐具、布巾在深色石紋桌面上錯落擺放，自然窗光從左上斜射，柔和陰影，飽滿的色彩層次，雜誌美食版面感。",
+   "en": "Overhead table spread: several dishes of {{dish}} with sides, cutlery and linen arranged across a dark stone surface, natural window light from upper left, soft shadows, rich layered color, food-magazine layout feel."
+  },
+  {
+   "i": "o03",
+   "c": "food",
+   "t": "街頭小吃",
+   "k": "小吃,夜市,台灣",
+   "zh": "台灣夜市小吃紀實：攤販正在翻炒 {{料理}}，鍋氣與火焰竄起，暖黃燈泡與招牌燈光，背景人潮虛化成光斑，高 ISO 顆粒，真實的煙火氣，35mm 抓拍。",
+   "en": "Taiwanese night-market street food: a vendor tossing {{dish}} in a wok with flames leaping, warm bulb and signage light, crowd blurred into bokeh behind, high-ISO grain, authentic bustle, 35mm candid."
+  },
+  {
+   "i": "o04",
+   "c": "food",
+   "t": "甜點精緻特寫",
+   "k": "甜點,精緻,柔光",
+   "zh": "甜點精緻特寫：一塊 {{甜點}} 放在素色瓷盤上，微距鏡頭捕捉層次與碎屑細節，柔和的大面積側光，淺灰粉背景，低飽和高質感，精品甜點店形象。",
+   "en": "Refined dessert close-up: a slice of {{dessert}} on a plain porcelain plate, macro lens capturing layers and crumbs, broad soft side light, pale grey-pink background, muted premium palette, patisserie brand imagery."
+  },
+  {
+   "i": "o05",
+   "c": "food",
+   "t": "食材原型",
+   "k": "食材,原型,自然",
+   "zh": "食材原型攝影：新鮮的 {{食材}} 帶著水珠散放在粗麻布與木板上，斜射硬光帶出紋理與立體感，深色背景，低調光線，質樸自然的產地感。",
+   "en": "Raw ingredient photography: fresh {{ingredient}} with water droplets scattered across burlap and a wooden board, raking hard light revealing texture and form, dark background, low-key lighting, earthy farm-to-table feel."
+  },
+  {
+   "i": "o06",
+   "c": "food",
+   "t": "咖啡拉花",
+   "k": "咖啡,拉花,質感",
+   "zh": "咖啡特寫：拉花完整的拿鐵在陶瓷杯中，俯視 45 度角，奶泡紋理細膩，杯緣有輕微咖啡漬，木桌與亞麻布，柔和側窗光，暖棕色調，咖啡館氛圍。",
+   "en": "Coffee close-up: a latte with intact rosetta art in a ceramic cup, 45-degree overhead angle, fine microfoam texture, a faint stain at the rim, wooden table and linen, soft side window light, warm brown grade, cafe atmosphere."
+  },
+  {
+   "i": "a01",
+   "c": "agri",
+   "t": "葉菜田空拍",
+   "k": "農業,空拍,幾何",
+   "zh": "農田空拍圖：整齊的葉菜田在午後陽光下形成規律的綠色條紋，田埂與灌溉溝渠構成幾何線條，遠處有防風林與農舍，垂直俯視，高飽和自然綠，農業紀實。",
+   "en": "Aerial farmland: neatly planted leafy-green fields forming regular stripes under afternoon sun, ridges and irrigation channels drawing geometric lines, a windbreak and farmhouse in the distance, straight-down view, saturated natural greens, agricultural documentary."
+  },
+  {
+   "i": "a02",
+   "c": "agri",
+   "t": "採收職人",
+   "k": "農業,職人,雙手",
+   "zh": "採收紀實：農人在清晨田間彎腰採收 {{作物}}，雙手與作物是畫面焦點，晨霧與低角度陽光在葉面形成逆光輪廓，泥土與露水的真實質感，紀錄片色調。",
+   "en": "Harvest documentary: a farmer bending to pick {{crop}} at dawn, hands and produce as the focal point, morning mist and low sun rimming the leaves, honest texture of soil and dew, documentary color grade."
+  },
+  {
+   "i": "a03",
+   "c": "agri",
+   "t": "產地直送商品",
+   "k": "農產,包裝,信任",
+   "zh": "農產品形象照：新鮮採收的 {{作物}}裝在紙箱與竹籃中，旁邊有泥土與農具，背景是模糊的田園，自然側光，樸實的暖色調，強調新鮮與產地直送的信任感。",
+   "en": "Farm produce brand shot: freshly harvested {{crop}} in a cardboard box and bamboo basket, soil and hand tools nearby, blurred field behind, natural side light, honest warm palette, emphasizing freshness and direct-from-farm trust."
+  },
+  {
+   "i": "a04",
+   "c": "agri",
+   "t": "溫室科技農業",
+   "k": "智慧農業,科技,現代",
+   "zh": "智慧農業溫室內部：整齊的層架式水耕蔬菜在 LED 植物燈下生長，紫粉色光線與白色設備形成對比，感測器與管線清晰可見，透視延伸的走道，科技潔淨感。",
+   "en": "Inside a smart-farming greenhouse: tiered hydroponic greens under LED grow lights, magenta-pink light against white equipment, sensors and piping clearly visible, a corridor receding in perspective, clean high-tech feel."
+  },
+  {
+   "i": "a05",
+   "c": "agri",
+   "t": "農民曆節氣",
+   "k": "節氣,傳統,插畫",
+   "zh": "二十四節氣插畫：以 {{節氣}} 為主題，描繪對應的農事場景與代表作物，水墨與淡彩結合，米色宣紙質感，直式構圖，右側留白供節氣名稱與說明文字。",
+   "en": "Solar-term illustration for {{term}}: the corresponding farming scene and signature crop, ink wash combined with light color wash, beige rice-paper texture, vertical composition, right side left clear for the term name and notes."
+  },
+  {
+   "i": "a06",
+   "c": "agri",
+   "t": "漁港與船",
+   "k": "漁業,港口,台灣",
+   "zh": "台灣漁港清晨：漁船並排靠泊，桅杆與繩索交錯，海面反射天空的粉橘漸層，工作人員整理漁網的剪影，濕潤的碼頭地面，紀實廣角，鹹濕的空氣感。",
+   "en": "Taiwanese fishing harbor at dawn: boats moored side by side, a tangle of masts and lines, sea reflecting a pink-orange sky, silhouetted crew sorting nets, wet quayside, documentary wide angle, salt-air atmosphere."
+  },
+  {
+   "i": "n01",
+   "c": "social",
+   "t": "YouTube 縮圖",
+   "k": "縮圖,高對比,吸睛",
+   "zh": "YouTube 影片縮圖：主體人物誇張的驚訝表情置於右側，左側留出大片區域放粗體標題，高飽和撞色背景與放射狀線條，強烈邊緣光把主體從背景切開，16:9。",
+   "en": "YouTube thumbnail: a subject with an exaggerated surprised expression on the right, a large clear area on the left for a bold headline, high-saturation clashing background with radial burst lines, strong rim light separating subject from background, 16:9."
+  },
+  {
+   "i": "n02",
+   "c": "social",
+   "t": "IG 貼文九宮格",
+   "k": "IG,系列,一致",
+   "zh": "Instagram 九宮格系列圖之一：統一的米白背景與細襯線標題排版，中央為單一主體照片，底部有細線分隔與小字說明，柔和一致的色調，1:1 正方形。",
+   "en": "One frame of an Instagram grid series: consistent off-white background with a fine serif headline, a single subject photograph at center, a hairline rule and small caption below, softly consistent color, 1:1 square."
+  },
+  {
+   "i": "n03",
+   "c": "social",
+   "t": "限時動態底圖",
+   "k": "限動,直式,留白",
+   "zh": "限時動態背景圖：柔和的漸層底色搭配細緻的紙質紋理，上下三分之一大量留白供文字與貼紙，中央有低對比的裝飾線條，9:16 直式，不搶文字焦點。",
+   "en": "Story background: a soft gradient with subtle paper texture, the top and bottom thirds left clear for text and stickers, low-contrast decorative linework at center, 9:16 vertical, deliberately unobtrusive."
+  },
+  {
+   "i": "n04",
+   "c": "social",
+   "t": "部落格封面",
+   "k": "封面,標題,編輯",
+   "zh": "文章封面圖：以 {{主題}} 為概念的編輯式插畫，限定三色配色，構圖左重右輕，右側留出標題空間，簡潔的幾何與線條，現代雜誌感，16:9。",
+   "en": "Article cover: an editorial illustration around {{theme}}, three-color palette, weighted left with the right side reserved for a headline, clean geometry and linework, modern magazine feel, 16:9."
+  },
+  {
+   "i": "n05",
+   "c": "social",
+   "t": "Podcast 封面",
+   "k": "Podcast,方形,品牌",
+   "zh": "Podcast 節目封面：深色底搭配單一鮮明主色，中央為象徵 {{主題}} 的簡化圖形，粗體無襯線節目名稱置於下方，高對比確保縮小後仍清楚辨識，1:1。",
+   "en": "Podcast cover art: dark ground with one vivid accent, a simplified symbol for {{theme}} at center, bold sans-serif show name below, high contrast so it stays legible at small sizes, 1:1."
+  },
+  {
+   "i": "n06",
+   "c": "social",
+   "t": "活動海報",
+   "k": "海報,活動,資訊",
+   "zh": "活動海報：上方為 {{主題}} 的主視覺插畫，中段留出大片區塊放活動名稱與日期，底部一條資訊列放地點與 QR 碼位置，網格對齊嚴謹，兩色印刷質感，直式。",
+   "en": "Event poster: a {{theme}} key illustration across the top, a large clear block in the middle for the event name and date, an information bar at the bottom for venue and a QR code area, strict grid alignment, two-color print feel, portrait format."
+  },
+  {
+   "i": "g01",
+   "c": "logo",
+   "t": "極簡字母標",
+   "k": "LOGO,字母,極簡",
+   "zh": "極簡字母標誌設計：以字母 {{字母}} 為基礎的幾何造型，單一實色，粗細一致的負空間切割，白色背景置中，向量般乾淨的邊緣，附上黑白反白版本並排。",
+   "en": "Minimal lettermark logo: a geometric form built from the letter {{letter}}, single solid color, evenly weighted negative-space cuts, centered on white, vector-crisp edges, shown beside a reversed monochrome version."
+  },
+  {
+   "i": "g02",
+   "c": "logo",
+   "t": "品牌圖形標",
+   "k": "LOGO,圖形,象徵",
+   "zh": "品牌圖形標誌：以 {{主題}} 為象徵的簡化圖形，連續單線構成，雙色配色，圓潤的端點，適合縮至 16 像素仍可辨識，白底置中，向量風格。",
+   "en": "Brand symbol logo: a simplified mark symbolizing {{theme}}, built from one continuous line, two-color palette, rounded terminals, legible down to 16 pixels, centered on white, vector style."
+  },
+  {
+   "i": "g03",
+   "c": "logo",
+   "t": "復古徽章",
+   "k": "徽章,復古,工藝",
+   "zh": "復古徽章標誌：圓形外框內環繞文字，中央為 {{主題}} 的線描圖案，飾以星點與緞帶，米色與深棕雙色，輕微的印刷磨損質感，傳統工坊風格。",
+   "en": "Vintage badge logo: circular frame with text wrapped around, a line-drawn {{theme}} motif at center, star and ribbon accents, cream and dark brown duotone, slight letterpress wear, traditional workshop style."
+  },
+  {
+   "i": "g04",
+   "c": "logo",
+   "t": "APP 圖示",
+   "k": "APP,圓角,漸層",
+   "zh": "APP 圖示設計：圓角方形底加上柔和的雙色漸層，中央為 {{主題}} 的簡化符號，輕微的內陰影與高光營造立體感，乾淨銳利，1:1，適合 iOS 與 Android。",
+   "en": "App icon: rounded square with a soft two-tone gradient, a simplified {{theme}} symbol at center, subtle inner shadow and highlight for depth, clean and crisp, 1:1, suited to iOS and Android."
+  },
+  {
+   "i": "g05",
+   "c": "logo",
+   "t": "線性圖示組",
+   "k": "圖示,線性,系列",
+   "zh": "線性圖示組：與 {{主題}} 相關的六個圖示並排，統一 2 像素線寬、統一圓角半徑與 24x24 網格，單色，白底整齊排列，風格一致可作為系統圖示。",
+   "en": "Line icon set: six icons related to {{theme}} in a row, uniform 2-pixel stroke, matching corner radius on a 24x24 grid, single color, tidy layout on white, consistent enough to serve as a system icon set."
+  },
+  {
+   "i": "v01",
+   "c": "scene",
+   "t": "台灣山岳雲海",
+   "k": "風景,山,壯闊",
+   "zh": "台灣高山雲海日出：層層山稜線在雲海中若隱若現，第一道晨光從側面照亮雲層邊緣，前景有玉山圓柏剪影，冷藍與暖橘的色溫對比，24mm 廣角，高動態範圍。",
+   "en": "Sunrise over a Taiwanese high-mountain cloud sea: ridgelines emerging through cloud, first light grazing the cloud edges, juniper silhouettes in the foreground, cool blue against warm orange, 24mm wide angle, high dynamic range."
+  },
+  {
+   "i": "v02",
+   "c": "scene",
+   "t": "老街巷弄",
+   "k": "老街,懷舊,台灣",
+   "zh": "台灣老街巷弄：紅磚牆與洗石子立面、鐵窗花與招牌，午後強光在地面切出明暗對比，晾曬的衣物與盆栽，一輛老機車停靠，紀實色調，懷舊而真實。",
+   "en": "Old Taiwanese alley: red brick and terrazzo facades, iron window grilles and hand-painted signage, afternoon sun cutting sharp light and shadow on the ground, hanging laundry and potted plants, an old scooter parked, documentary color, nostalgic and real."
+  },
+  {
+   "i": "v03",
+   "c": "scene",
+   "t": "城市藍調時刻",
+   "k": "城市,夜景,藍調",
+   "zh": "城市藍調時刻天際線：日落後天空呈現深藍紫漸層，建築窗戶亮起暖黃燈光，車流長曝成紅白光軌，河面倒影，長曝光，冷暖對比強烈，高樓細節清晰。",
+   "en": "City skyline at blue hour: post-sunset sky in a deep blue-violet gradient, warm windows glowing across the buildings, traffic long-exposed into red and white trails, reflections on the river, long exposure, strong warm-cool contrast, crisp architectural detail."
+  },
+  {
+   "i": "v04",
+   "c": "scene",
+   "t": "稻田與三合院",
+   "k": "農村,台灣,懷舊",
+   "zh": "台灣農村景致：金黃稻浪在風中起伏，遠處是紅瓦三合院與檳榔樹，藍天下堆積的積雲，午後斜光，飽和的金綠色調，寬幅構圖，安靜的田園氣息。",
+   "en": "Taiwanese rural scene: golden rice paddies rippling in the wind, a red-tiled courtyard house and betel palms beyond, cumulus stacked in a blue sky, late-afternoon light, saturated gold-green palette, wide composition, quiet pastoral air."
+  },
+  {
+   "i": "v05",
+   "c": "scene",
+   "t": "海岸礁岩長曝",
+   "k": "海岸,長曝,靜謐",
+   "zh": "海岸長曝：黑色火山礁岩在前景，海水被長時間曝光抹成絲綢般的霧白，天空的雲被拉成流動的線條，黃昏的粉紫色調，穩定的水平線，寧靜遼闊。",
+   "en": "Long-exposure coastline: black volcanic rock in the foreground, seawater smoothed into silky mist, clouds stretched into flowing streaks, dusk pink-violet palette, level horizon, calm and expansive."
+  },
+  {
+   "i": "v06",
+   "c": "scene",
+   "t": "極簡建築",
+   "k": "建築,幾何,留白",
+   "zh": "極簡建築攝影：清水模與白色量體在強烈日光下形成銳利的幾何陰影，天空為單一無雲的深藍，構圖大量留白，正面對稱，低飽和，靜謐的秩序感。",
+   "en": "Minimal architecture photography: fair-faced concrete and white volumes casting sharp geometric shadows in strong sun, a single cloudless deep blue sky, generous negative space, frontal symmetry, desaturated, serene order."
+  },
+  {
+   "i": "v07",
+   "c": "scene",
+   "t": "日本京都街景",
+   "k": "旅遊,京都,和風",
+   "zh": "京都街景：石板小徑兩側是木造町屋與暖簾，遠處是五重塔剪影，傍晚燈籠陸續亮起，微雨後的地面反光，低飽和青灰與暖橘，35mm 街拍視角。",
+   "en": "Kyoto street: a stone-paved lane lined with wooden machiya and noren curtains, a pagoda silhouette beyond, lanterns coming on at dusk, wet reflective ground after light rain, muted blue-grey with warm amber, 35mm street perspective."
+  },
+  {
+   "i": "v08",
+   "c": "scene",
+   "t": "歐洲小鎮",
+   "k": "旅遊,歐洲,童話",
+   "zh": "歐洲山城小鎮：彩色房屋沿著陡坡層層堆疊，狹窄石階與花箱，遠處是湖泊與山脈，午後金色陽光，飽和明亮的色彩，廣角帶入天空，明信片般的構圖。",
+   "en": "European hill town: colorful houses stacked up a steep slope, narrow stone steps and flower boxes, a lake and mountains beyond, golden afternoon light, bright saturated color, wide angle including the sky, postcard composition."
+  },
+  {
+   "i": "r01",
+   "c": "render",
+   "t": "等距城市方塊",
+   "k": "等距,3D,城市",
+   "zh": "等距 3D 城市方塊：一個 45 度等距視角的微縮街區，建築、樹木、車輛皆為圓潤的低多邊形，柔和的環境光遮蔽與長投影，明亮的粉藍黃配色，白色底座浮在空白背景。",
+   "en": "Isometric 3D city block: a 45-degree isometric miniature neighborhood, buildings, trees and vehicles as rounded low-poly forms, soft ambient occlusion and long shadows, bright pink-blue-yellow palette, the block floating on a plain background."
+  },
+  {
+   "i": "r02",
+   "c": "render",
+   "t": "流程資訊圖",
+   "k": "資訊圖,流程,清楚",
+   "zh": "流程資訊圖：{{主題}} 的四個步驟由左至右排列，每步驟有簡化圖示、編號與短標題，箭頭連接，限定三色配色，米白背景，網格對齊，簡報等級的清晰版面。",
+   "en": "Process infographic: four steps of {{theme}} arranged left to right, each with a simplified icon, number and short title, connected by arrows, three-color palette, off-white background, grid-aligned, presentation-grade clarity."
+  },
+  {
+   "i": "r03",
+   "c": "render",
+   "t": "抽象流體",
+   "k": "抽象,3D,背景",
+   "zh": "抽象 3D 流體背景：柔軟的液態金屬形體緩緩交纏，表面同時有霧面與鏡面反射，柔和的漸層打光，低飽和的奶油與淡藍配色，大量負空間，可作為簡報背景。",
+   "en": "Abstract 3D fluid background: soft liquid-metal forms slowly intertwining, surfaces mixing matte and mirror reflection, gentle gradient lighting, muted cream and pale blue palette, ample negative space, usable as a slide backdrop."
+  },
+  {
+   "i": "r04",
+   "c": "render",
+   "t": "剖面示意圖",
+   "k": "剖面,教學,結構",
+   "zh": "剖面示意圖：{{主題}} 的立體剖切視圖，外殼半透明露出內部結構，各部件以細引線標註名稱，等距視角，柔和的技術插畫配色，白色背景，教學說明用途。",
+   "en": "Cutaway diagram: an isometric cross-section of {{theme}}, the outer shell semi-transparent to reveal internal structure, parts labeled with fine leader lines, soft technical-illustration palette, white background, instructional use."
+  },
+  {
+   "i": "r05",
+   "c": "render",
+   "t": "資料視覺化",
+   "k": "資料,圖表,現代",
+   "zh": "資料視覺化海報：多組長條圖與折線圖在深色底上以青綠與琥珀色呈現，數字排版清楚有層次，細網格線，留白充足，現代資訊設計風格。",
+   "en": "Data visualization poster: bar and line charts in teal and amber on a dark ground, clear typographic hierarchy for the numbers, fine gridlines, generous margins, modern information-design style."
+  },
+  {
+   "i": "r06",
+   "c": "render",
+   "t": "UI 介面樣機",
+   "k": "UI,樣機,產品",
+   "zh": "APP 介面樣機展示：手機畫面漂浮在柔和漸層背景上，介面為 {{主題}} 的簡潔設計，輕微的 3D 傾斜角度與柔和投影，週邊有放大的元件卡片，產品發表視覺。",
+   "en": "App UI mockup: a phone screen floating over a soft gradient background, the interface a clean {{theme}} design, gentle 3D tilt with soft shadow, magnified component cards alongside, product launch visual."
+  },
+  {
+   "i": "e01",
+   "c": "pet",
+   "t": "寵物棚拍",
+   "k": "寵物,棚拍,可愛",
+   "zh": "寵物棚拍肖像：一隻 {{品種}}坐在純色背景前直視鏡頭，柔和的柔光箱主燈加背景燈，毛髮每一根都清晰銳利，眼睛有明亮的反光，微微歪頭的可愛姿態。",
+   "en": "Studio pet portrait: a {{breed}} seated against a solid backdrop looking into the lens, softbox key with a background light, every strand of fur crisp, bright catchlights in the eyes, an endearing head tilt."
+  },
+  {
+   "i": "e02",
+   "c": "pet",
+   "t": "寵物生活抓拍",
+   "k": "寵物,日常,溫馨",
+   "zh": "寵物日常抓拍：{{品種}}趴在窗邊的地毯上曬太陽，午後光線在毛上形成金邊，家中背景柔和失焦，暖色調，低角度平視，安靜溫馨。",
+   "en": "Candid pet moment: a {{breed}} sprawled on a rug in a sunny window, afternoon light rimming the fur in gold, home interior softly out of focus, warm palette, low eye-level angle, calm and cozy."
+  },
+  {
+   "i": "e03",
+   "c": "pet",
+   "t": "擬人化寵物",
+   "k": "擬人,趣味,肖像",
+   "zh": "擬人化寵物肖像：一隻 {{品種}}穿著文藝復興時期的絲絨外袍與白色領飾，古典油畫式的暗調打光，深色背景，莊嚴的坐姿與神情，古典肖像畫質感，幽默而精緻。",
+   "en": "Anthropomorphic pet portrait: a {{breed}} in a Renaissance velvet robe and white ruff, classical low-key painterly lighting, dark background, dignified seated pose and expression, old-master finish, witty and refined."
+  },
+  {
+   "i": "e04",
+   "c": "pet",
+   "t": "動態奔跑",
+   "k": "動態,寵物,凍結",
+   "zh": "寵物動態照：{{品種}}在草地上全速奔跑朝鏡頭而來，四腳離地的瞬間被高速快門凍結，草屑與塵土飛揚，背景以淺景深化開，逆光邊緣光，運動感強烈。",
+   "en": "Action pet shot: a {{breed}} sprinting toward the camera across grass, all four paws airborne frozen by a fast shutter, grass and dust kicked up, background thrown out of focus, backlit rim, high energy."
+  },
+  {
+   "i": "e05",
+   "c": "pet",
+   "t": "野生動物特寫",
+   "k": "野生,自然,紀錄",
+   "zh": "野生動物特寫：{{動物}}在自然棲地中的半身特寫，眼神銳利對焦，長焦鏡頭壓縮背景成柔和色塊，清晨側光帶出毛髮與紋理細節，紀錄片攝影質感。",
+   "en": "Wildlife close-up: a {{animal}} in its natural habitat, tack-sharp focus on the eye, telephoto compression softening the background into color, early side light revealing fur and texture, natural-history photography quality."
+  },
+  {
+   "i": "k01",
+   "c": "sticker",
+   "t": "LINE 貼圖組",
+   "k": "貼圖,可愛,系列",
+   "zh": "LINE 貼圖風格：一個圓潤可愛的 {{角色}} 做出 {{動作}}，粗黑描邊、飽和平塗色彩、簡單的表情、旁邊有手寫感的短句文字，白色透明背景，適合小尺寸辨識。",
+   "en": "Messaging sticker style: a rounded cute {{character}} doing {{action}}, bold black outline, saturated flat color, simple expression, a short handwritten phrase beside it, white transparent background, legible at small size."
+  },
+  {
+   "i": "k02",
+   "c": "sticker",
+   "t": "手繪塗鴉風",
+   "k": "塗鴉,手繪,隨性",
+   "zh": "手繪塗鴉風插畫：粗細不均的鉛筆或蠟筆線條、隨性的填色溢出邊界、米色紙張紋理、限定四色、天真而有生命力的筆觸。主題為 {{主體}}。",
+   "en": "Hand-drawn doodle illustration: uneven pencil or crayon strokes, color fills spilling past the lines, beige paper texture, four-color palette, naive and lively mark-making. Subject: {{subject}}."
+  },
+  {
+   "i": "k03",
+   "c": "sticker",
+   "t": "絵文字表情",
+   "k": "表情,圓形,簡化",
+   "zh": "圓形表情符號設計：以 {{情緒}} 為主題的簡化臉部圖形，飽和的單色底、極簡的五官、柔和的立體高光，白底置中，一組多個角度變化並排。",
+   "en": "Round emoji design: a simplified face expressing {{emotion}}, saturated single-color ground, minimal features, soft dimensional highlight, centered on white, several variations shown in a row."
+  },
+  {
+   "i": "k04",
+   "c": "sticker",
+   "t": "漫畫分鏡",
+   "k": "漫畫,分鏡,黑白",
+   "zh": "黑白漫畫分鏡：四格直式排列，描繪 {{情境}}，網點陰影、速度線與誇張的表情符號、粗細變化的墨線、對話框留白，日式漫畫風格。",
+   "en": "Black-and-white manga page: a four-panel vertical sequence depicting {{situation}}, screentone shading, speed lines and exaggerated emotion symbols, varied ink weights, empty speech bubbles, Japanese comic style."
+  },
+  {
+   "i": "k05",
+   "c": "sticker",
+   "t": "繪本插畫",
+   "k": "繪本,溫暖,故事",
+   "zh": "兒童繪本插畫：{{情境}}的場景，水彩與色鉛筆質感、柔和的紙紋、溫暖的大地色系、圓潤親切的造型、留出天空與地面的呼吸空間，適合搭配文字。",
+   "en": "Children’s picture-book illustration: a scene of {{situation}}, watercolor and colored-pencil texture, soft paper grain, warm earth palette, rounded friendly shapes, breathing room in sky and ground for accompanying text."
+  },
+  {
+   "i": "w01",
+   "c": "wedding",
+   "t": "戶外婚紗逆光",
+   "k": "婚紗,逆光,浪漫",
+   "zh": "新人在黃昏草原上相擁的婚紗照，逆光讓白紗與髮絲透出金色光暈，蒲公英與草絮在空氣中飄浮，遠山失焦成柔和色帶，暖金色調，85mm 淺景深，浪漫而不甜膩。",
+   "en": "Wedding photo of a couple embracing in a meadow at dusk, backlight glowing through the veil and hair, seed fluff drifting in the air, distant hills blurred into soft bands, warm golden grade, 85mm shallow focus, romantic but restrained."
+  },
+  {
+   "i": "w02",
+   "c": "wedding",
+   "t": "教堂儀式",
+   "k": "婚禮,教堂,莊嚴",
+   "zh": "教堂婚禮儀式瞬間：彩繪玻璃的斑斕光線灑在紅毯與新人身上，賓客席剪影，高聳的拱頂延伸出縱深，自然光為主的紀實拍攝，莊嚴而溫暖，24mm 廣角。",
+   "en": "Church wedding ceremony: stained-glass light falling across the aisle and the couple, silhouetted guests, soaring vaulted ceiling creating depth, available-light documentary approach, solemn and warm, 24mm wide angle."
+  },
+  {
+   "i": "w03",
+   "c": "wedding",
+   "t": "復古中式婚紗",
+   "k": "中式,禮服,喜氣",
+   "zh": "中式婚紗照：新人身著繡金龍鳳的紅色秀禾服，站在朱紅木門與鏤空窗櫺前，燈籠暖光與淺景深，飽和的紅金色調，端莊典雅，傳統與現代並存的質感。",
+   "en": "Chinese wedding portrait: the couple in embroidered red xiuhe robes with gold dragon and phoenix, standing before vermilion doors and carved lattice windows, warm lantern light and shallow focus, saturated red-gold palette, elegant and dignified."
+  },
+  {
+   "i": "w04",
+   "c": "wedding",
+   "t": "全家福棚拍",
+   "k": "全家福,三代,溫馨",
+   "zh": "三代同堂全家福棚拍：{{人數}} 人分層排列坐站有致，米白背景，柔和均勻的大面積打光，每個人都自然微笑，服裝為統一的米棕色系，溫馨自然，正面構圖。",
+   "en": "Three-generation family studio portrait: {{count}} people arranged in tiered seated and standing rows, off-white backdrop, large soft even lighting, everyone smiling naturally, coordinated beige and taupe wardrobe, warm and unfussy, frontal composition."
+  },
+  {
+   "i": "w05",
+   "c": "wedding",
+   "t": "居家全家福",
+   "k": "全家福,居家,生活",
+   "zh": "居家風格全家福：一家人擠在客廳沙發上笑成一團，孩子爬在父母身上，午後窗光柔和灑落，自然抓拍非擺拍，暖色調低對比，真實的家庭溫度，35mm。",
+   "en": "Lifestyle family portrait: the family piled together on a living-room sofa mid-laugh, children climbing on the parents, soft afternoon window light, candid rather than posed, warm low-contrast grade, real family warmth, 35mm."
+  },
+  {
+   "i": "w06",
+   "c": "wedding",
+   "t": "孕婦寫真",
+   "k": "孕婦,柔美,剪影",
+   "zh": "孕婦寫真：側身剪影襯著明亮窗光，雙手輕捧腹部，飄逸的薄紗長裙，低調柔和的打光讓輪廓發亮而細節沒入陰影，米白與膚色調，安靜而有生命力。",
+   "en": "Maternity portrait: side silhouette against a bright window, hands resting gently on the belly, flowing sheer gown, low-key soft lighting glowing along the contour with detail falling into shadow, cream and skin tones, quiet and full of life."
+  },
+  {
+   "i": "w07",
+   "c": "wedding",
+   "t": "新生兒寫真",
+   "k": "新生兒,柔和,純淨",
+   "zh": "新生兒寫真：嬰兒蜷曲熟睡在柔軟的羊毛毯上，父母的雙手輕輕環繞，極柔和的漫射光，米白與淺灰色調，微距捕捉細小的手指與睫毛，安靜純淨，無強烈陰影。",
+   "en": "Newborn portrait: the baby curled asleep on a soft wool blanket, the parents’ hands cradling gently, extremely soft diffused light, cream and pale grey palette, macro detail on tiny fingers and lashes, quiet and pure, no harsh shadows."
+  },
+  {
+   "i": "x01",
+   "c": "fashion",
+   "t": "街拍穿搭",
+   "k": "穿搭,街拍,全身",
+   "zh": "街拍穿搭全身照：模特兒行走在城市人行道上，全身入鏡，服裝細節與版型清晰，午後自然光加輕微反光板，背景街景以長焦壓縮虛化，時尚部落格質感，直式構圖。",
+   "en": "Street-style full-body outfit shot: a model walking on a city sidewalk, full figure in frame, garment detail and silhouette clearly readable, afternoon daylight with subtle bounce, background compressed and blurred by telephoto, fashion-blog quality, vertical framing."
+  },
+  {
+   "i": "x02",
+   "c": "fashion",
+   "t": "服飾平拍",
+   "k": "服飾,平拍,電商",
+   "zh": "服飾平拍圖：一整套 {{服裝}} 攤平擺放在淺色背景上，衣物折疊整齊、袖口與領口自然堆疊出立體感，均勻無影光，正俯視 90 度，色彩還原準確，電商上架規格。",
+   "en": "Apparel flat-lay: a complete {{outfit}} laid out on a light background, garments folded neatly with sleeves and collars arranged to suggest volume, even shadowless lighting, straight 90-degree overhead, accurate color, e-commerce listing standard."
+  },
+  {
+   "i": "x03",
+   "c": "fashion",
+   "t": "伸展台走秀",
+   "k": "時裝,伸展台,動態",
+   "zh": "時裝週伸展台：模特兒行走中裙擺與布料飛揚，兩側觀眾席沒入黑暗，頂部聚光燈打出強烈的頂光與地面反光，高對比，動感被略慢的快門帶出輕微拖影，時尚新聞攝影。",
+   "en": "Runway show: a model mid-stride with fabric in motion, the audience falling into darkness on both sides, hard overhead spotlight and floor reflection, high contrast, a slightly slow shutter leaving subtle motion trail, fashion-press photography."
+  },
+  {
+   "i": "x04",
+   "c": "fashion",
+   "t": "配件特寫",
+   "k": "配件,微距,質感",
+   "zh": "配件質感特寫：{{配件}}放在深色石材上，微距鏡頭捕捉皮革紋理、金屬拋光與縫線細節，單一側向硬光帶出立體感，深色低調背景，精品廣告質感。",
+   "en": "Accessory macro: {{accessory}} on dark stone, macro lens capturing leather grain, polished metal and stitching, a single hard side light shaping the form, dark low-key background, luxury advertising quality."
+  },
+  {
+   "i": "x05",
+   "c": "fashion",
+   "t": "美妝特寫",
+   "k": "美妝,妝容,細節",
+   "zh": "美妝特寫：模特兒臉部半邊入鏡，聚焦在眼妝或唇妝的色彩與質地，皮膚有真實毛孔與細絨毛，環形柔光在眼中形成圓形反光，乾淨的單色背景，高解析美妝廣告。",
+   "en": "Beauty close-up: half the model’s face in frame, focus on the color and texture of the eye or lip makeup, real pores and fine facial hair visible, ring light forming a circular catchlight, clean solid background, high-resolution beauty advertising."
+  },
+  {
+   "i": "x06",
+   "c": "fashion",
+   "t": "復古年代穿搭",
+   "k": "復古,年代,造型",
+   "zh": "{{年代}}年代復古穿搭寫真：符合該時期的髮型、剪裁與配色，場景道具與服裝一致，使用該年代典型的底片色偏與顆粒，輕微暗角，時代感完整而不出戲。",
+   "en": "{{era}} vintage fashion portrait: period-accurate hair, tailoring and palette, props and set consistent with the era, film color cast and grain typical of the period, subtle vignetting, fully committed period feel."
+  },
+  {
+   "i": "i01",
+   "c": "interior",
+   "t": "北歐風客廳",
+   "k": "室內,北歐,明亮",
+   "zh": "北歐風客廳室內照：淺色木地板、米白布沙發與淺灰地毯，大面窗引入充足自然光，綠色植栽點綴，簡潔的線條與大量留白，一點透視構圖，色溫偏冷但溫暖舒適。",
+   "en": "Scandinavian living room: pale wood flooring, cream fabric sofa and light grey rug, large windows flooding the space with daylight, green plants as accents, clean lines and generous space, one-point perspective, cool white balance yet inviting."
+  },
+  {
+   "i": "i02",
+   "c": "interior",
+   "t": "日式侘寂空間",
+   "k": "侘寂,禪意,質樸",
+   "zh": "侘寂風格室內：粗糙的灰泥牆面、原木橫樑與榻榻米，一只素陶花器插著單枝枯枝，光線從高窗斜射形成柔和光斑，低飽和的米灰與土色，靜謐克制。",
+   "en": "Wabi-sabi interior: rough plaster walls, raw timber beams and tatami, a single dried branch in an unglazed vessel, light angling in from a high window into a soft pool, muted grey-beige earth palette, quiet and restrained."
+  },
+  {
+   "i": "i03",
+   "c": "interior",
+   "t": "工業風咖啡廳",
+   "k": "工業風,咖啡廳,質感",
+   "zh": "工業風咖啡廳內部：裸露紅磚牆與黑鐵管線、水泥地坪、愛迪生燈泡吊燈，木質長桌與皮革座椅，午後陽光穿過大窗形成明暗對比，暖棕與深灰色調，廣角帶入空間感。",
+   "en": "Industrial-style cafe interior: exposed brick and black steel conduit, polished concrete floor, Edison bulb pendants, long wooden communal table and leather seating, afternoon sun through large windows creating strong light and shade, warm brown and charcoal palette, wide angle for spatial depth."
+  },
+  {
+   "i": "i04",
+   "c": "interior",
+   "t": "房仲物件照",
+   "k": "房產,空間,明亮",
+   "zh": "房產物件照：空屋客廳，垂直線嚴格校正無變形，均衡的曝光讓室內與窗外景色同時清晰，明亮乾淨的白平衡，廣角但不誇張變形，專業不動產攝影規格。",
+   "en": "Real-estate listing photo: an empty living room, vertical lines strictly corrected, balanced exposure so both interior and the view outside are readable, bright neutral white balance, wide angle without exaggerated distortion, professional property photography standard."
+  },
+  {
+   "i": "i05",
+   "c": "interior",
+   "t": "建築 3D 效果圖",
+   "k": "效果圖,3D,建築",
+   "zh": "建築室內 3D 效果圖：{{空間}}的寫實渲染，正確的全局光照與柔和陰影，材質有真實的反射與粗糙度，家具比例準確，黃昏時分的暖色人工照明與冷色天光混合，建築視覺化等級。",
+   "en": "Architectural interior rendering: a photoreal visualization of a {{space}}, correct global illumination and soft shadows, materials with believable reflection and roughness, accurate furniture scale, dusk mix of warm artificial light and cool skylight, archviz quality."
+  },
+  {
+   "i": "i06",
+   "c": "interior",
+   "t": "小空間收納",
+   "k": "收納,實用,整齊",
+   "zh": "收納整理示範照：小坪數空間中整齊分類的層架與收納盒，物品排列有秩序、標籤清晰，明亮均勻的光線，米白與原木色系，乾淨清爽，適合作為居家整理教學圖。",
+   "en": "Home organization photo: a compact space with neatly categorized shelving and storage boxes, orderly arrangement and clear labels, bright even lighting, cream and natural wood palette, crisp and calm, suitable as an organizing tutorial image."
+  },
+  {
+   "i": "y01",
+   "c": "poster",
+   "t": "中文標題海報",
+   "k": "海報,中文字,排版",
+   "zh": "設計一張海報，畫面中以粗體黑體中文清楚寫出「{{標題文字}}」，字體端正無錯字，字距均勻。背景為 {{主題}} 的簡潔插畫，限定三色配色，文字與背景高對比，留白充足，直式版面。",
+   "en": "Design a poster with the Chinese headline \"{{headline}}\" rendered in a bold sans-serif face, correct characters, even letter spacing. Background is a clean illustration of {{theme}}, three-color palette, high contrast between type and ground, generous margins, portrait layout."
+  },
+  {
+   "i": "y02",
+   "c": "poster",
+   "t": "英文標語排版",
+   "k": "海報,英文,現代",
+   "zh": "現代極簡海報：畫面中央以超大粗體無襯線英文寫出「{{TEXT}}」，字母部分被幾何色塊裁切但仍可辨識，背景為單一飽和色，右下角有一行小字說明，瑞士平面設計風格。",
+   "en": "Modern minimal poster: the words \"{{TEXT}}\" set in oversized bold sans-serif at center, letters partially cropped by geometric color blocks yet still legible, single saturated background color, a line of small caption type at lower right, Swiss graphic design style."
+  },
+  {
+   "i": "y03",
+   "c": "poster",
+   "t": "促銷標籤",
+   "k": "促銷,標籤,電商",
+   "zh": "電商促銷標籤圖：畫面中清楚寫著「{{文字}}」，數字放大加粗為視覺焦點，放射狀背景與爆炸框強調，紅黃高飽和配色，圓角標籤造型，四周留白便於去背使用。",
+   "en": "E-commerce promo badge: the text \"{{text}}\" clearly rendered, the number enlarged and bolded as the focal point, radial burst background and starburst frame, saturated red-yellow palette, rounded badge shape, clear margins for cutting out."
+  },
+  {
+   "i": "y04",
+   "c": "poster",
+   "t": "手寫書法字",
+   "k": "書法,毛筆,東方",
+   "zh": "毛筆書法作品：以行書寫出「{{文字}}」，墨色濃淡有致、筆鋒與飛白清晰，宣紙的纖維質地與輕微暈染，左下角有一枚朱紅印章，大量留白，東方書法美學。",
+   "en": "Chinese calligraphy: the phrase \"{{text}}\" brushed in running script, graded ink density with visible brush tips and dry-brush texture, rice-paper fiber and slight bleed, a vermilion seal at lower left, expansive negative space, classical calligraphic aesthetic."
+  },
+  {
+   "i": "y05",
+   "c": "poster",
+   "t": "復古印刷海報",
+   "k": "復古,印刷,質感",
+   "zh": "復古絹印海報：{{主題}} 的簡化圖像以三色套印呈現，可見輕微的套版偏移與網點，米黃色紙張質地與邊緣磨損，粗體無襯線標題「{{標題文字}}」置於下方，1960 年代旅遊海報風格。",
+   "en": "Vintage screen-print poster: a simplified image of {{theme}} in three-color separation, slight registration offset and halftone dots visible, cream paper stock with worn edges, bold sans-serif headline \"{{headline}}\" along the bottom, 1960s travel-poster style."
+  },
+  {
+   "i": "y06",
+   "c": "poster",
+   "t": "邀請卡",
+   "k": "卡片,優雅,留白",
+   "zh": "活動邀請卡設計：米白紙張上以細襯線字體寫出「{{文字}}」，燙金的細線框與植物線描裝飾，大量留白，對稱置中排版，柔和的自然光展示紙張紋理，高雅簡約。",
+   "en": "Event invitation card: \"{{text}}\" set in a fine serif on off-white stock, gold hairline frame with botanical line drawings, generous white space, symmetrical centered layout, soft natural light revealing the paper texture, elegant and restrained."
+  },
+  {
+   "i": "u01",
+   "c": "edu",
+   "t": "概念比喻插圖",
+   "k": "教育,比喻,簡報",
+   "zh": "教學概念插圖：用視覺比喻說明 {{概念}}，扁平向量風格，限定三色，人物為簡化的幾何造型，箭頭與標註清楚，白色背景，一眼就能理解，適合放進簡報。",
+   "en": "Educational concept illustration: a visual metaphor explaining {{concept}}, flat vector style, three-color palette, simplified geometric figures, clear arrows and labels, white background, instantly legible, presentation-ready."
+  },
+  {
+   "i": "u02",
+   "c": "edu",
+   "t": "科學原理圖",
+   "k": "科學,示意,清楚",
+   "zh": "科學原理示意圖：清楚描繪 {{原理}} 的運作過程，各階段以編號標示並附細引線說明，等距或剖面視角，柔和的技術插畫配色，白底，教科書等級的準確與清晰。",
+   "en": "Scientific diagram: a clear depiction of how {{principle}} works, stages numbered with fine leader-line annotations, isometric or cross-section view, soft technical-illustration palette, white ground, textbook-grade accuracy and clarity."
+  },
+  {
+   "i": "u03",
+   "c": "edu",
+   "t": "歷史場景重現",
+   "k": "歷史,場景,寫實",
+   "zh": "歷史場景重現插圖：{{年代}}的 {{場景}}，服裝、建築與器物皆符合史實，柔和的自然光，略帶泛黃的古典色調，畫面資訊豐富但主次分明，博物館解說圖等級。",
+   "en": "Historical scene illustration: {{scene}} in {{era}}, clothing, architecture and objects historically accurate, soft natural light, gently aged classical palette, rich detail with clear focal hierarchy, museum interpretive quality."
+  },
+  {
+   "i": "u04",
+   "c": "edu",
+   "t": "兒童學習插畫",
+   "k": "兒童,教材,可愛",
+   "zh": "兒童教材插畫：可愛的角色示範 {{主題}}，圓潤的造型與粗線條、明亮的原色配色、簡單背景不干擾主體，情緒正向鼓勵，適合國小低年級教材。",
+   "en": "Children’s educational illustration: a friendly character demonstrating {{topic}}, rounded forms and bold outlines, bright primary palette, simple background that doesn’t compete, encouraging positive tone, suited to lower-primary materials."
+  },
+  {
+   "i": "u05",
+   "c": "edu",
+   "t": "比較對照圖",
+   "k": "對照,比較,清楚",
+   "zh": "左右對照示意圖：畫面垂直分成兩半，左側為 {{A}}、右側為 {{B}}，兩側構圖對稱、元素一一對應，中央有分隔線，各以一種主色區分，扁平插畫風，一眼看出差異。",
+   "en": "Side-by-side comparison graphic: the frame split vertically, {{A}} on the left and {{B}} on the right, symmetrical composition with element-for-element correspondence, a divider at center, each side keyed to one color, flat illustration, differences immediately obvious."
+  },
+  {
+   "i": "u06",
+   "c": "edu",
+   "t": "時間軸",
+   "k": "時間軸,歷程,資訊",
+   "zh": "時間軸資訊圖：一條水平主軸串連 {{數量}} 個節點，每個節點有年份、小圖示與一行說明，交替配置於軸的上下方，限定雙色加一個強調色，米白背景，清楚有節奏。",
+   "en": "Timeline infographic: a horizontal spine linking {{count}} nodes, each with a year, small icon and one line of copy, alternating above and below the spine, two-color palette plus one accent, off-white ground, clear and rhythmic."
+  },
+  {
+   "i": "q01",
+   "c": "health",
+   "t": "醫護形象照",
+   "k": "醫療,專業,信任",
+   "zh": "醫護人員形象照：穿著白袍或手術服，站在明亮潔淨的診間，雙手交疊，溫和專業的微笑，柔和均勻的打光，淺藍與白色調，背景設備適度虛化，可信賴的醫療品牌形象。",
+   "en": "Healthcare professional portrait: in a white coat or scrubs, standing in a bright clean clinic, hands folded, warm professional smile, soft even lighting, pale blue and white palette, equipment gently blurred behind, trustworthy medical brand imagery."
+  },
+  {
+   "i": "q02",
+   "c": "health",
+   "t": "人體解剖示意",
+   "k": "解剖,醫學,精確",
+   "zh": "醫學解剖示意圖：{{部位}} 的立體結構圖，半透明外層顯示內部組織，各構造以細引線標註名稱，柔和的醫學插畫配色，深色漸層背景，解剖學準確，衛教說明用途。",
+   "en": "Medical anatomy illustration: a three-dimensional view of the {{part}}, semi-transparent outer layers revealing internal structures, parts labeled with fine leader lines, soft medical-illustration palette, dark gradient background, anatomically accurate, patient-education use."
+  },
+  {
+   "i": "q03",
+   "c": "health",
+   "t": "運動健身",
+   "k": "健身,力量,動態",
+   "zh": "健身訓練照：訓練者在健身房執行 {{動作}}，肌肉線條在側光下清晰立體，汗珠反光，背景器材沒入陰影，深色調加一抹強調色，高對比，運動品牌質感。",
+   "en": "Gym training shot: an athlete performing {{exercise}}, musculature defined by side lighting, sweat catching the light, equipment falling into shadow behind, dark palette with one accent color, high contrast, athletic brand quality."
+  },
+  {
+   "i": "q04",
+   "c": "health",
+   "t": "健康飲食",
+   "k": "飲食,均衡,清爽",
+   "zh": "健康飲食平拍：均衡餐盤中分區擺放蔬菜、蛋白質與全穀，色彩鮮豔自然，淺色木桌與亞麻布，明亮的自然光，清爽不油膩的質感，營養衛教用圖。",
+   "en": "Healthy eating flat-lay: a balanced plate divided into vegetables, protein and whole grains, naturally vivid colors, light wood table and linen, bright natural light, fresh and clean rendering, nutrition-education imagery."
+  },
+  {
+   "i": "q05",
+   "c": "health",
+   "t": "冥想放鬆",
+   "k": "放鬆,冥想,療癒",
+   "zh": "冥想放鬆場景：人物盤腿坐在鋪著地墊的安靜房間，晨光透過紗簾漫射，空氣中有細微塵埃，低飽和的米白與淺綠，柔和無陰影，平靜療癒的氛圍。",
+   "en": "Meditation scene: a person seated cross-legged on a mat in a quiet room, morning light diffusing through sheer curtains, fine dust in the air, muted cream and pale green palette, soft shadowless light, calm restorative mood."
+  },
+  {
+   "i": "q06",
+   "c": "health",
+   "t": "衛教流程圖",
+   "k": "衛教,流程,清楚",
+   "zh": "衛教流程圖：以四到六個步驟說明 {{主題}}，每步驟搭配簡化人物圖示與短句，編號清楚、箭頭連貫，淺藍與白的醫療配色，白底，長輩也能一眼看懂的大字級。",
+   "en": "Patient-education flowchart: four to six steps explaining {{topic}}, each with a simplified figure icon and a short line, clear numbering and connecting arrows, pale blue and white medical palette, white ground, large type legible for older readers."
+  },
+  {
+   "i": "z01",
+   "c": "auto",
+   "t": "汽車棚拍",
+   "k": "汽車,棚拍,質感",
+   "zh": "汽車棚拍形象照：{{車款}}停在深色反光地面上，環繞的長條柔光在車身鈑金上拉出連續的高光帶，輪廓線條清晰，背景為漸層深色，正側 45 度角，汽車廣告等級。",
+   "en": "Automotive studio shot: a {{car}} on a dark reflective floor, wrapped strip lighting drawing continuous highlight bands along the bodywork, crisp silhouette, dark gradient background, three-quarter front angle, car-advertising quality."
+  },
+  {
+   "i": "z02",
+   "c": "auto",
+   "t": "公路行駛",
+   "k": "汽車,動態,公路",
+   "zh": "汽車行駛動態照：{{車款}}在蜿蜒山路上高速行駛，追焦拍攝讓背景拉成流動線條、車身清晰，輪胎揚起輕微塵土，黃昏側光，飽和的暖色調，強烈速度感。",
+   "en": "Car in motion: a {{car}} cornering fast on a mountain road, panning shot streaking the background while the car stays sharp, light dust off the tires, low golden side light, saturated warm grade, strong sense of speed."
+  },
+  {
+   "i": "z03",
+   "c": "auto",
+   "t": "機車與街景",
+   "k": "機車,台灣,街拍",
+   "zh": "台灣街頭機車紀實：一整排機車停靠在騎樓前，招牌與電線交錯，午後強光在地面切出明暗，色彩繁雜卻真實，35mm 紀實視角，濃厚的在地生活感。",
+   "en": "Taiwanese street scooters: a row parked along an arcade frontage, signage and overhead wires crisscrossing, harsh afternoon light dividing the pavement, busy but authentic color, 35mm documentary framing, strong local character."
+  },
+  {
+   "i": "z04",
+   "c": "auto",
+   "t": "復古車特寫",
+   "k": "復古,車,細節",
+   "zh": "復古老車細節特寫：鍍鉻水箱護罩與圓形車燈的微距畫面，烤漆有歲月的細紋與反光，柔和的側逆光帶出曲面，淺景深，低飽和懷舊色調，質感懷舊。",
+   "en": "Classic car detail: macro view of the chrome grille and round headlamp, aged paint with fine crazing and reflections, soft back-side light describing the curvature, shallow focus, muted nostalgic palette."
+  },
+  {
+   "i": "z05",
+   "c": "auto",
+   "t": "大眾運輸",
+   "k": "交通,捷運,城市",
+   "zh": "城市大眾運輸場景：捷運車廂內部，乘客剪影與窗外飛逝的光帶，冷色的車廂燈光與窗外暖色街燈對比，輕微動態模糊，都市通勤的疏離感，紀實色調。",
+   "en": "Urban transit scene: inside a metro car, silhouetted passengers against streaks of light through the windows, cool cabin lighting against warm street light outside, slight motion blur, the quiet detachment of commuting, documentary grade."
+  },
+  {
+   "i": "z06",
+   "c": "auto",
+   "t": "空拍交通",
+   "k": "空拍,幾何,城市",
+   "zh": "都市交通空拍：垂直俯視繁忙的十字路口或交流道，車流與斑馬線形成幾何圖案，車輛如玩具般整齊，午後長影增加立體感，高飽和，秩序與韻律感。",
+   "en": "Aerial traffic view: straight-down over a busy intersection or interchange, vehicles and crosswalks forming geometric patterns, cars reading like toys, long afternoon shadows adding depth, saturated color, order and rhythm."
+  },
+  {
+   "i": "v11",
+   "c": "wall",
+   "t": "極簡漸層桌布",
+   "k": "桌布,漸層,簡約",
+   "zh": "極簡手機桌布：柔和的雙色漸層由深藍過渡到淡紫，加上細緻的顆粒噪點避免色帶，沒有任何主體物件，中央與上方保持乾淨以免遮住圖示與時間，9:16 直式。",
+   "en": "Minimal phone wallpaper: a soft two-tone gradient from deep blue to pale violet, fine grain noise to avoid banding, no focal object, center and top kept clean so icons and the clock stay readable, 9:16 vertical."
+  },
+  {
+   "i": "v12",
+   "c": "wall",
+   "t": "抽象山脈",
+   "k": "桌布,山,幾何",
+   "zh": "幾何抽象山脈桌布：層層堆疊的三角形山峰以由深到淺的漸層排列，上方是簡化的大圓日與細緻星點，低飽和的莫蘭迪配色，扁平無質感，構圖平衡，9:16。",
+   "en": "Geometric mountain wallpaper: layered triangular peaks graded from dark to light, a simplified large sun disc and fine stars above, muted Morandi palette, flat and textureless, balanced composition, 9:16."
+  },
+  {
+   "i": "v13",
+   "c": "wall",
+   "t": "夜空星軌",
+   "k": "桌布,星空,深色",
+   "zh": "深色星空桌布：銀河橫跨畫面上方，前景是低矮的山稜剪影，星點大小層次分明，深藍紫至近黑的漸層，適合深色模式，下方大片留空，9:16 直式。",
+   "en": "Dark night-sky wallpaper: the Milky Way arcing across the upper frame, a low ridgeline silhouette below, stars varied in size and brightness, gradient from deep blue-violet to near black, suited to dark mode, lower area left open, 9:16."
+  },
+  {
+   "i": "v14",
+   "c": "wall",
+   "t": "日式紋樣",
+   "k": "桌布,紋樣,重複",
+   "zh": "日式傳統紋樣桌布：青海波或麻葉紋以規律重複鋪滿畫面，細線與素雅的靛藍配色，和紙般的細微質地，無主體、無焦點，適合作為背景不干擾前景，可無縫拼接。",
+   "en": "Japanese pattern wallpaper: seigaiha or asanoha motifs tiled across the frame, fine linework and restrained indigo palette, subtle washi texture, no focal point, unobtrusive as a background, seamlessly tileable."
+  },
+  {
+   "i": "v15",
+   "c": "wall",
+   "t": "液態流體背景",
+   "k": "桌布,抽象,流動",
+   "zh": "抽象流體背景：緩慢交融的彩色墨水在水中擴散，柔和的邊緣與半透明層次，紫粉青三色漸變，高解析度細節，適合作為簡報或網頁的大面積背景，16:9。",
+   "en": "Abstract fluid background: colored inks slowly diffusing in water, soft edges and translucent layering, violet-pink-cyan blend, high-resolution detail, suited to a full-bleed slide or web background, 16:9."
+  },
+  {
+   "i": "v16",
+   "c": "wall",
+   "t": "線條網格",
+   "k": "桌布,幾何,科技",
+   "zh": "科技感線條背景：細緻的等距網格線在深色底上延伸至消失點，交點處有微弱發光，一抹青綠色作為強調，大量負空間，冷靜理性，適合資料儀表板背景，16:9。",
+   "en": "Tech line background: a fine isometric grid receding to a vanishing point on a dark ground, faint glow at the intersections, a single teal accent, generous negative space, calm and rational, suited to a dashboard backdrop, 16:9."
+  },
+  {
+   "i": "h09",
+   "c": "headshot",
+   "t": "側臉輪廓照",
+   "k": "側臉,輪廓,藝術",
+   "zh": "側臉輪廓人像：主體正側面對著明亮背景，臉部細節保留但邊緣被強烈逆光勾出清晰輪廓，深灰背景，低飽和，構圖大量留白於視線方向，安靜克制的藝術人像。",
+   "en": "Profile portrait: the subject in strict side view against a bright ground, facial detail retained while the edge is defined by strong backlight, dark grey background, desaturated, generous space in the direction of the gaze, quiet artistic portraiture."
+  },
+  {
+   "i": "h10",
+   "c": "headshot",
+   "t": "雙人合照",
+   "k": "雙人,合照,自然",
+   "zh": "雙人形象合照：兩人並肩站立、身體微微朝內，其中一人略靠前形成層次，柔和的大面積主燈，中性背景，服裝色系協調，自然放鬆的表情，商務或家人皆適用。",
+   "en": "Two-person portrait: standing shoulder to shoulder angled slightly inward, one placed marginally forward to create depth, large soft key light, neutral background, coordinated wardrobe, relaxed natural expressions, works for business or family."
+  },
+  {
+   "i": "b07",
+   "c": "business",
+   "t": "徵才形象圖",
+   "k": "徵才,團隊,活力",
+   "zh": "徵才形象圖：年輕團隊在明亮辦公空間中討論，白板上有便利貼，成員自然互動而非看鏡頭，充足的自然光，飽和適中的暖色調，開放友善的企業文化感。",
+   "en": "Recruitment image: a young team in discussion in a bright office, sticky notes on a whiteboard, members interacting naturally rather than looking at camera, ample daylight, moderately warm palette, open and welcoming culture."
+  },
+  {
+   "i": "b08",
+   "c": "business",
+   "t": "簡報封面人物",
+   "k": "簡報,封面,留白",
+   "zh": "簡報封面用人物照：人物置於畫面右三分之一，身體朝內，左側大片乾淨的單色背景供標題文字，柔和側光，中性色調，構圖為文字預留呼吸空間，16:9 橫式。",
+   "en": "Slide-cover portrait: the subject placed in the right third facing inward, a large clean solid-color field on the left for the title, soft side light, neutral palette, composition deliberately reserving space for type, 16:9."
+  },
+  {
+   "i": "l11",
+   "c": "life",
+   "t": "旅行紀實",
+   "k": "旅行,紀實,故事",
+   "zh": "旅行紀實照：旅人背著背包站在陌生街頭回望，環境元素說明地點特色，自然光與真實色彩，構圖將人放小以突顯環境，35mm 廣角，有故事感的一瞬間。",
+   "en": "Travel documentary shot: a traveler with a backpack pausing to look back on an unfamiliar street, environmental cues establishing the place, natural light and honest color, the figure kept small to emphasize context, 35mm, a moment with a story."
+  },
+  {
+   "i": "l12",
+   "c": "life",
+   "t": "美髮沙龍風",
+   "k": "髮型,質感,棚拍",
+   "zh": "髮型形象照：聚焦在髮流、光澤與剪裁層次，柔和的頂光加背光讓髮絲透亮，模特兒微側頭，素色背景，色彩還原準確以呈現真實髮色，美髮沙龍作品集規格。",
+   "en": "Hair salon portfolio shot: focus on the flow, shine and layering of the cut, soft top light with backlight making strands glow, the model’s head slightly turned, plain background, accurate color for a true rendering of the hair tone."
+  },
+  {
+   "i": "c10",
+   "c": "char",
+   "t": "古風仙俠",
+   "k": "古風,仙俠,飄逸",
+   "zh": "古風仙俠角色：身著層疊飄逸的長袍與腰帶，長髮與衣袂在風中揚起，手持法器或劍，背景是雲霧繚繞的山巔與月光，冷藍與白的色調加金色點綴，唯美工筆質感。",
+   "en": "Xianxia fantasy character: layered flowing robes and sash, long hair and fabric lifting in the wind, holding a sword or talisman, mist-wrapped mountain peak and moonlight behind, cool blue and white with gold accents, ethereal fine-line rendering."
+  },
+  {
+   "i": "c11",
+   "c": "char",
+   "t": "機甲設定",
+   "k": "機甲,科幻,設定",
+   "zh": "機甲設計圖：巨型人形機甲的全身正面圖，裝甲板分件與關節結構清楚，可見螺栓、管線與磨損痕跡，工業配色加警示條紋，白色背景與比例尺人形，硬派工業設計質感。",
+   "en": "Mecha design sheet: a full-body front view of a humanoid mecha, armor panel breaks and joint structure clearly defined, visible bolts, cabling and wear, industrial palette with hazard striping, white background with a human silhouette for scale, hard-industrial design quality."
+  },
+  {
+   "i": "f09",
+   "c": "finance",
+   "t": "ETF 與長期投資",
+   "k": "投資,穩健,概念",
+   "zh": "長期投資概念插畫：一棵從硬幣堆中長出的樹，年輪與枝葉層次象徵複利成長，背景是柔和的上升曲線，穩重的深綠與金色調，扁平帶輕微質感的編輯插畫。",
+   "en": "Long-term investing concept: a tree growing from a stack of coins, rings and branching suggesting compound growth, a soft rising curve behind, grounded deep green and gold palette, lightly textured editorial flat illustration."
+  },
+  {
+   "i": "f10",
+   "c": "finance",
+   "t": "法說會與財報",
+   "k": "財報,商務,場景",
+   "zh": "法說會場景：主管在簡報螢幕前說明財報數字，螢幕上是清楚的長條圖與折線圖，台下記者與投資人的背影，專業的會場燈光，冷藍色調，商業新聞攝影質感。",
+   "en": "Earnings call scene: an executive presenting financial figures before a screen showing clear bar and line charts, the backs of reporters and investors in the foreground, professional venue lighting, cool blue grade, business-press photography quality."
+  },
+  {
+   "i": "t13",
+   "c": "festival",
+   "t": "廟宇建築",
+   "k": "廟宇,台灣,信仰",
+   "zh": "台灣廟宇建築特寫：色彩鮮豔的剪黏與交趾陶裝飾在屋脊上，龍柱與燈籠細節豐富，藍天為背景，午後強光讓色彩飽和鮮明，仰角構圖突顯宏偉，高細節。",
+   "en": "Taiwanese temple architecture: vividly colored jiannian and koji pottery ornament along the roof ridge, richly detailed dragon columns and lanterns, blue sky behind, strong afternoon sun saturating the colors, low angle emphasizing scale, high detail."
+  },
+  {
+   "i": "t14",
+   "c": "festival",
+   "t": "情人節",
+   "k": "情人節,浪漫,溫柔",
+   "zh": "情人節主題圖：淡粉與奶油色調的柔和背景，玫瑰花瓣與絲帶自然散落，中央有心形的柔焦光斑，大量留白供祝福文字，低飽和溫柔質感，不俗豔。",
+   "en": "Valentine’s image: soft pink and cream background, rose petals and ribbon scattered naturally, heart-shaped soft-focus bokeh at center, generous clear space for a message, gently desaturated and tasteful."
+  },
+  {
+   "i": "t15",
+   "c": "festival",
+   "t": "萬聖節",
+   "k": "萬聖節,趣味,南瓜",
+   "zh": "萬聖節場景：雕刻南瓜燈在門廊上散發橘色暖光，薄霧與落葉，遠處是剪影般的枯樹，深紫與橘色對比，適度的神秘感但保持可愛不驚悚，適合親子活動使用。",
+   "en": "Halloween scene: carved jack-o’-lanterns glowing amber on a porch, light mist and fallen leaves, bare trees silhouetted beyond, deep purple against orange, mysterious but kept playful rather than frightening, family-friendly."
+  },
+  {
+   "i": "m09",
+   "c": "morning",
+   "t": "感恩祝福",
+   "k": "祝福,溫暖,通用",
+   "zh": "通用祝福圖：柔和的暖光穿過樹葉在草地上灑落光斑，前景有幾朵小野花，畫面上半部是明亮乾淨的散景區供文字，溫暖低對比，適合各種問候語，長輩友善的明亮度。",
+   "en": "General blessing image: warm light filtering through leaves onto grass in dappled patches, a few small wildflowers in the foreground, the upper half a bright clean bokeh area for text, warm low contrast, adaptable to any greeting, comfortably bright."
+  },
+  {
+   "i": "m10",
+   "c": "morning",
+   "t": "天氣提醒",
+   "k": "天氣,關懷,實用",
+   "zh": "天氣提醒圖：以 {{天氣}} 為主題的簡潔插畫（如雨傘、太陽、雪花），扁平現代風格，明亮的配色，中央大片留白供提醒文字，圖示清楚易懂，適合每日社群發文。",
+   "en": "Weather reminder graphic: a clean illustration themed on {{weather}} such as an umbrella, sun or snowflake, flat modern style, bright palette, a large clear center for the reminder text, instantly readable, made for daily social posts."
+  },
+  {
+   "i": "d07",
+   "c": "birthday",
+   "t": "極簡生日卡",
+   "k": "生日,極簡,質感",
+   "zh": "極簡生日卡設計：米白背景上只有一根細長的插著火焰的蠟燭線描圖，細襯線字體寫著祝福，大量留白，柔和的淺灰陰影，低調高雅，適合成人與正式場合。",
+   "en": "Minimal birthday card: a single slender line-drawn candle with a flame on an off-white ground, a fine serif greeting, generous white space, soft grey shadow, understated and elegant, suited to adults and formal occasions."
+  },
+  {
+   "i": "d08",
+   "c": "birthday",
+   "t": "寵物生日",
+   "k": "寵物,生日,可愛",
+   "zh": "寵物生日圖：{{品種}}戴著小巧的生日帽坐在蛋糕前，表情期待又困惑，柔和的暖色燈光與氣球散景，淺景深，明亮活潑的配色，上方留白供祝福文字。",
+   "en": "Pet birthday image: a {{breed}} in a small party hat seated before a cake, expectant and slightly puzzled, warm soft lighting with balloon bokeh, shallow focus, bright cheerful palette, clear space above for a message."
+  },
+  {
+   "i": "o07",
+   "c": "food",
+   "t": "便當與家常菜",
+   "k": "便當,家常,台灣",
+   "zh": "台式便當俯視照：白飯配上滷排骨、滷蛋、青菜與酸菜分格擺放在鐵盒中，色彩自然不誇張，柔和的頂光，木桌背景，家常真實感，不做過度造型。",
+   "en": "Taiwanese lunchbox from above: rice with braised pork chop, marinated egg, greens and pickles arranged in a metal box, natural unexaggerated color, soft top light, wooden table, honest home-style feel without over-styling."
+  },
+  {
+   "i": "o08",
+   "c": "food",
+   "t": "烘焙麵包",
+   "k": "烘焙,麵包,質感",
+   "zh": "手工麵包特寫：剛出爐的 {{麵包}}切開露出蜂窩狀組織，外皮金黃酥脆有裂紋，麵粉灑落在木板上，斜射側光帶出粗糙質地，暖棕色調，職人烘焙質感。",
+   "en": "Artisan bread close-up: a freshly baked {{bread}} cut open to reveal an open crumb, golden crackled crust, flour dusted across a wooden board, raking side light bringing out texture, warm brown grade, craft-bakery quality."
+  },
+  {
+   "i": "a07",
+   "c": "agri",
+   "t": "市集攤位",
+   "k": "市集,農產,熱鬧",
+   "zh": "農夫市集攤位：新鮮蔬果堆疊在木箱中色彩繽紛，手寫價目牌，攤主與顧客互動的自然抓拍，遮陽棚下的柔和散射光，飽和自然的色彩，充滿生活感。",
+   "en": "Farmers’ market stall: fresh produce piled in wooden crates in vivid color, hand-lettered price signs, a candid exchange between vendor and customer, soft diffused light under an awning, naturally saturated color, full of life."
+  },
+  {
+   "i": "a08",
+   "c": "agri",
+   "t": "病蟲害對照",
+   "k": "農業,教學,對照",
+   "zh": "農作病徵對照圖：左右並列健康與受害的 {{作物}}葉片，微距拍攝葉面紋理與病斑細節，均勻的白光確保色彩準確，白色背景，標註箭頭指出關鍵特徵，農業教學用途。",
+   "en": "Crop disease comparison: healthy and affected {{crop}} leaves side by side, macro detail of leaf texture and lesions, even white lighting for accurate color, white background, arrows marking the diagnostic features, agricultural training use."
+  },
+  {
+   "i": "n07",
+   "c": "social",
+   "t": "引言卡",
+   "k": "引言,社群,排版",
+   "zh": "社群引言卡：深色純色背景上以大字級襯線字體排出「{{文字}}」，文字分行有節奏，下方一條細線與署名小字，四周留白充足，安靜有力，1:1 正方形。",
+   "en": "Social quote card: \"{{text}}\" set in large serif type on a solid dark ground, line breaks paced for rhythm, a hairline rule and small attribution below, generous margins, quiet and confident, 1:1 square."
+  },
+  {
+   "i": "n08",
+   "c": "social",
+   "t": "對比前後圖",
+   "k": "前後,對比,社群",
+   "zh": "前後對比圖：畫面垂直對切，左右兩側為同一場景的前後狀態，構圖與視角完全一致，中央有細分隔線與「Before／After」小標，一致的曝光與色溫，說服力強。",
+   "en": "Before-and-after graphic: the frame split vertically showing the same scene in two states, identical composition and viewpoint, a hairline divider with small Before and After labels, matched exposure and white balance, highly convincing."
+  },
+  {
+   "i": "g06",
+   "c": "logo",
+   "t": "手寫簽名標",
+   "k": "手寫,簽名,個人",
+   "zh": "手寫簽名式標誌：以流暢的單筆書寫呈現 {{名稱}}，線條粗細有自然變化，收筆處有輕微飛白，單一深色，白底置中，個人品牌或工作室適用。",
+   "en": "Handwritten signature logo: {{name}} rendered in one flowing stroke, natural variation in line weight, a slight dry-brush finish at the terminal, single dark color, centered on white, suited to a personal brand or studio."
+  },
+  {
+   "i": "g07",
+   "c": "logo",
+   "t": "負空間巧思",
+   "k": "LOGO,負空間,巧思",
+   "zh": "負空間標誌設計：{{主題A}} 的外形中隱藏著 {{主題B}} 的負空間輪廓，兩者互為圖底，單一實色，極簡幾何，白底置中，設計聰明且一眼可懂。",
+   "en": "Negative-space logo: the silhouette of {{A}} concealing the counter-form of {{B}}, the two reading as figure and ground, single solid color, minimal geometry, centered on white, clever yet immediately legible."
+  },
+  {
+   "i": "r07",
+   "c": "render",
+   "t": "產品爆炸圖",
+   "k": "爆炸圖,結構,產品",
+   "zh": "產品爆炸圖：{{產品}} 的各零件沿同一軸線分離懸浮，間距均勻、順序清楚，細虛線標示組裝關係，等距視角，柔和的棚拍打光與淺灰背景，工業設計提案質感。",
+   "en": "Product exploded view: the components of {{product}} separated and floating along a shared axis, even spacing and clear assembly order, fine dashed lines indicating relationships, isometric view, soft studio lighting on a light grey ground, industrial-design presentation quality."
+  },
+  {
+   "i": "r08",
+   "c": "render",
+   "t": "低多邊形場景",
+   "k": "低多邊,3D,可愛",
+   "zh": "低多邊形 3D 場景：{{場景}} 以簡化的多邊形量體構成，柔和的漸層打光與明顯的面塊分界，明亮的粉彩配色，淺景深，浮在乾淨背景上的小島式構圖。",
+   "en": "Low-poly 3D scene: {{scene}} built from simplified faceted volumes, soft gradient lighting with visible facet edges, bright pastel palette, shallow depth of field, an island-style composition floating on a clean background."
+  },
+  {
+   "i": "e06",
+   "c": "pet",
+   "t": "寵物與主人",
+   "k": "寵物,情感,溫馨",
+   "zh": "寵物與主人的合照：兩者臉靠近彼此，主人閉眼微笑，寵物直視鏡頭，柔和的窗光，居家背景虛化，暖色低對比，情感真摯不擺拍，50mm。",
+   "en": "Pet and owner portrait: faces close together, the owner smiling with eyes closed, the pet looking to camera, soft window light, home interior blurred behind, warm low-contrast grade, genuinely affectionate rather than posed, 50mm."
+  },
+  {
+   "i": "e07",
+   "c": "pet",
+   "t": "鳥類特寫",
+   "k": "鳥,自然,細節",
+   "zh": "鳥類特寫：{{鳥種}}停在枝頭，羽毛的層次與紋理清晰可見，眼睛銳利對焦並有明亮反光，背景以長焦壓縮成柔和色塊，清晨側光，自然生態攝影質感。",
+   "en": "Bird close-up: a {{species}} perched on a branch, feather layering and texture clearly resolved, tack-sharp eye with a bright catchlight, background compressed into soft color by telephoto, early side light, natural-history photography quality."
+  },
+  {
+   "i": "k06",
+   "c": "sticker",
+   "t": "扁平人物插畫",
+   "k": "人物,扁平,通用",
+   "zh": "扁平人物插畫：簡化的角色正在 {{動作}}，無臉部細節或僅有極簡五官，圓潤的肢體與統一的線寬，限定四色，白色背景，適合網站與簡報的通用人物圖。",
+   "en": "Flat character illustration: a simplified figure {{action}}, faceless or with minimal features, rounded limbs and uniform stroke weight, four-color palette, white background, a general-purpose figure for web and slides."
+  },
+  {
+   "i": "k07",
+   "c": "sticker",
+   "t": "等距小物件",
+   "k": "等距,圖示,可愛",
+   "zh": "等距 3D 小物件圖示：{{物件}} 以 45 度等距視角呈現，圓潤的邊角與柔和的漸層陰影，明亮的粉彩配色，浮在透明或白色背景上，適合作為系列圖示。",
+   "en": "Isometric object icon: {{object}} in a 45-degree isometric view, rounded edges and soft gradient shading, bright pastel palette, floating on a transparent or white background, designed as part of an icon series."
+  },
+  {
+   "i": "s15",
+   "c": "style",
+   "t": "拍立得質感",
+   "k": "拍立得,懷舊,方形",
+   "zh": "拍立得照片質感：方形畫面加下方寬白邊，輕微的過曝與偏黃色偏，柔和的暗角與低對比，邊緣有輕微的化學顯影不均，即時攝影的隨性感。主題為 {{主體}}。",
+   "en": "Instant-film look: square frame with a wide white border below, slightly overexposed with a yellow cast, soft vignette and low contrast, uneven chemical development at the edges, the casualness of instant photography. Subject: {{subject}}."
+  },
+  {
+   "i": "s16",
+   "c": "style",
+   "t": "長曝光軌跡",
+   "k": "長曝,光軌,夜",
+   "zh": "長曝光光軌攝影：靜止的主體清晰銳利，周圍的移動光源被拉成連續流暢的線條，深色夜景背景，冷暖光交錯，穩定的構圖與清楚的水平，30 秒曝光質感。",
+   "en": "Long-exposure light trails: the static subject rendered sharp while moving lights stretch into smooth continuous ribbons, dark night setting, warm and cool light interweaving, steady composition with a level horizon, the look of a 30-second exposure."
+  },
+  {
+   "i": "s17",
+   "c": "style",
+   "t": "玻璃擬態",
+   "k": "玻璃,現代,UI",
+   "zh": "玻璃擬態視覺：半透明的磨砂玻璃卡片浮在彩色漸層背景上，玻璃有細緻的邊緣高光與背後模糊，柔和的投影，現代 UI 設計質感，乾淨簡潔。主題為 {{主體}}。",
+   "en": "Glassmorphism visual: frosted translucent cards floating over a colorful gradient background, fine edge highlights and background blur behind the glass, soft drop shadows, modern UI aesthetic, clean and uncluttered. Subject: {{subject}}."
+  },
+  {
+   "i": "s18",
+   "c": "style",
+   "t": "針筆線描",
+   "k": "線描,細膩,單色",
+   "zh": "針筆細密線描：僅以黑色細線的排線與交叉線構成明暗層次，無填色與灰階，白紙背景，極高的線條密度與耐心的細節，古典博物誌插畫風格。主題為 {{主體}}。",
+   "en": "Pen-and-ink stipple drawing: tone built purely from fine black hatching and cross-hatching, no fills or greys, white paper ground, extremely dense linework and patient detail, classical natural-history illustration style. Subject: {{subject}}."
+  },
+  {
+   "i": "p09",
+   "c": "product",
+   "t": "商品比例對照",
+   "k": "商品,比例,實用",
+   "zh": "商品比例對照圖：{{商品}}旁放置一枚硬幣或一隻手作為尺寸參考，兩者在同一平面且對焦一致，白色背景，均勻無影光，清楚傳達真實大小，電商必備輔圖。",
+   "en": "Product scale reference: {{product}} beside a coin or a hand for size comparison, both on the same plane and equally in focus, white background, even shadowless light, communicating true size clearly, an essential e-commerce support image."
+  },
+  {
+   "i": "p10",
+   "c": "product",
+   "t": "材質細節微距",
+   "k": "材質,微距,質感",
+   "zh": "材質細節微距：極近距離拍攝 {{商品}} 的表面，織紋、拋光、縫線或木紋的細節填滿畫面，斜射硬光強調凹凸，淺景深讓邊緣柔化，抽象而有質感的細節圖。",
+   "en": "Material macro: an extreme close-up of the surface of {{product}}, weave, polish, stitching or grain filling the frame, raking hard light emphasizing relief, shallow focus softening the edges, an abstract yet tactile detail shot."
+  },
+  {
+   "i": "j01",
+   "c": "milestone",
+   "t": "長官升遷榮調賀圖",
+   "k": "升遷,榮調,莊重",
+   "zh": "榮陞誌慶賀圖：深酒紅與燙金的莊重底色，中央是金色綬帶與桂冠環繞的圓形徽記，兩側有向上延伸的細金線與雲紋，畫面中央預留大片乾淨區域書寫「{{賀詞}}」，下方留出署名位置，端莊大器不浮誇，直式構圖。",
+   "en": "Promotion congratulation graphic: dignified deep burgundy ground with gold foil, a circular emblem framed by a gold sash and laurel at center, fine gold lines and cloud motifs rising on both sides, a large clean area at center reserved for the message \"{{message}}\", space for a signature below, stately rather than flashy, portrait layout."
+  },
+  {
+   "i": "j02",
+   "c": "milestone",
+   "t": "就職布達典禮",
+   "k": "就職,布達,正式",
+   "zh": "就職布達典禮場景：會場講台前的紅色布幔與國旗或機關旗，胸前配戴綬帶的主角與長官握手交接，賓客席在景深後方虛化，正式的會場燈光，沉穩的紅金與深藍色調，紀實新聞攝影質感。",
+   "en": "Inauguration ceremony scene: a red drape and institutional flag behind the podium, the honoree wearing a sash shaking hands with a senior official, guests blurred in the background, formal venue lighting, grounded red-gold and navy palette, photojournalistic quality."
+  },
+  {
+   "i": "j03",
+   "c": "milestone",
+   "t": "軍旅退伍賀圖",
+   "k": "退伍,軍旅,榮譽",
+   "zh": "軍旅退伍紀念圖：軍綠與卡其色調背景，中央是折疊整齊的軍帽、階級章與一枚紀念徽章的靜物平拍，旁邊有一封信與鋼筆，斜射硬光帶出布料與金屬質感，上方留白書寫「{{賀詞}}」，肅穆而溫暖。",
+   "en": "Military discharge commemorative image: olive and khaki palette, a still-life flat lay of a neatly folded cap, rank insignia and a commemorative medal at center, a letter and fountain pen beside them, raking hard light bringing out fabric and metal texture, clear space above for \"{{message}}\", solemn yet warm."
+  },
+  {
+   "i": "j04",
+   "c": "milestone",
+   "t": "退伍歡送合影",
+   "k": "退伍,同袍,情誼",
+   "zh": "退伍歡送合影：一群同袍在營區前並肩搭肩大笑，中央的主角被拋接或被眾人簇擁，午後強烈日光，飽和的軍綠與藍天，動態抓拍非擺拍，青春與情誼並存的紀實感，35mm 廣角。",
+   "en": "Send-off group photo: comrades with arms around each other laughing outside the barracks, the honoree hoisted or surrounded at center, strong afternoon sun, saturated olive green against blue sky, candid action rather than a posed line-up, youthful camaraderie, 35mm wide angle."
+  },
+  {
+   "i": "j05",
+   "c": "milestone",
+   "t": "榮退退休祝福",
+   "k": "榮退,退休,感念",
+   "zh": "榮退祝福圖：溫暖的米金色背景，中央是一只放下的懷錶與一束向日葵，旁邊散落幾張泛黃的老照片，柔和的側窗光，低飽和的懷舊色調，上方大片留白書寫「{{賀詞}}」，感念而不傷感。",
+   "en": "Retirement tribute image: warm cream-gold background, a set-down pocket watch and a bouquet of sunflowers at center, a few faded photographs scattered beside, soft side window light, muted nostalgic palette, generous clear space above for \"{{message}}\", grateful rather than melancholy."
+  },
+  {
+   "i": "j06",
+   "c": "milestone",
+   "t": "傳統賀匾",
+   "k": "賀匾,傳統,喜氣",
+   "zh": "傳統賀匾樣式：深紅木質匾額搭配燙金浮雕邊框，四角有龍紋或回紋裝飾，中央大片留白書寫「{{賀詞}}」四字，兩側有落款位置，正面平視構圖，木紋與金箔質感真實，端莊隆重。",
+   "en": "Traditional congratulatory plaque: a deep red lacquered wooden plaque with an embossed gold frame, dragon or key-fret motifs at the four corners, a large clear center for a four-character phrase \"{{message}}\", inscription space at both sides, straight-on frontal view, realistic wood grain and gold leaf, formal and ceremonious."
+  },
+  {
+   "i": "j07",
+   "c": "milestone",
+   "t": "當選誌慶",
+   "k": "當選,選舉,喜氣",
+   "zh": "當選誌慶賀圖：紅金配色的放射狀背景，中央是綬帶與勝利手勢的剪影或桂冠圖樣，飄落的金色紙花，畫面中段留出橫幅區塊書寫「{{賀詞}}」，喜氣醒目但保持莊重，適合花籃卡片與社群發布。",
+   "en": "Election victory congratulation graphic: red-gold radial background, a sash and laurel emblem at center, gold confetti falling, a horizontal band in the middle reserved for \"{{message}}\", celebratory and eye-catching yet dignified, suited to flower-basket cards and social posts."
+  },
+  {
+   "i": "j08",
+   "c": "milestone",
+   "t": "金榜題名",
+   "k": "考取,金榜,勵志",
+   "zh": "金榜題名賀圖：朱紅與金色的傳統榜單樣式，背景是淡淡的雲紋與墨竹，中央留白書寫「{{賀詞}}」，旁邊有毛筆與硯台的靜物點綴，喜氣中帶書卷氣，直式構圖。",
+   "en": "Exam success congratulation: a traditional vermilion and gold results-notice layout, faint cloud motifs and ink bamboo in the background, a clear center for \"{{message}}\", a brush and inkstone as still-life accents, festive with a scholarly air, portrait layout."
+  },
+  {
+   "i": "j09",
+   "c": "milestone",
+   "t": "喬遷之喜",
+   "k": "喬遷,新居,溫馨",
+   "zh": "喬遷之喜賀圖：明亮的新居玄關，門上掛著紅色緞帶與小花圈，地上有尚未拆封的紙箱與一盆綠植，晨光從門外灑入，溫暖清爽的米白與原木色調，右上方留白書寫「{{賀詞}}」。",
+   "en": "Housewarming congratulation: a bright new entryway, a red ribbon and small wreath on the door, unopened boxes and a potted plant on the floor, morning light spilling in from outside, warm fresh cream and natural wood palette, clear space at upper right for \"{{message}}\"."
+  },
+  {
+   "i": "j10",
+   "c": "milestone",
+   "t": "弄璋弄瓦滿月",
+   "k": "滿月,新生,溫柔",
+   "zh": "彌月賀圖：柔和的粉藍或粉紅漸層背景，中央是小巧的嬰兒鞋、圍兜與一朵棉花般的雲，極柔和的漫射光，低飽和的粉彩色調，上方留白書寫「{{賀詞}}」，溫柔可愛不甜膩。",
+   "en": "Full-moon baby celebration image: a soft pastel blue or pink gradient, tiny baby shoes, a bib and a cotton-soft cloud at center, extremely soft diffused light, muted pastel palette, clear space above for \"{{message}}\", tender and sweet without excess."
+  },
+  {
+   "i": "j11",
+   "c": "milestone",
+   "t": "康復出院",
+   "k": "康復,祝福,清爽",
+   "zh": "康復祝福圖：明亮的窗邊放著一束白色與淡黃的花，旁邊有一杯溫水與摺好的毛毯，晨光柔和灑落，清爽的白綠色調，畫面下方留白書寫「{{賀詞}}」，安定溫和不帶醫療感。",
+   "en": "Get-well image: a bouquet of white and pale yellow flowers by a bright window, a cup of warm water and a folded blanket beside, soft morning light, fresh white-green palette, clear space below for \"{{message}}\", calming and warm without a clinical feel."
+  },
+  {
+   "i": "j12",
+   "c": "milestone",
+   "t": "得獎表揚",
+   "k": "得獎,榮譽,質感",
+   "zh": "獲獎表揚賀圖：深藍或墨綠的沉穩背景，中央是一座簡潔的獎座或金色徽章，柔和的邊緣光讓金屬質感立體，細緻的光暈與粒子，下方留白書寫「{{賀詞}}」，專業有質感，適合公司內部表揚。",
+   "en": "Award recognition graphic: a grounded navy or deep green background, a clean trophy or gold medallion at center, soft rim light shaping the metal, subtle glow and particles, clear space below for \"{{message}}\", polished and professional, suited to internal company recognition."
+  },
+  {
+   "i": "j13",
+   "c": "milestone",
+   "t": "結婚誌喜賀卡",
+   "k": "結婚,賀卡,典雅",
+   "zh": "結婚誌喜賀卡：米白紙張質感搭配燙金的植物線描與細框，中央留白書寫「{{賀詞}}」，右下角有一對交疊的戒指線稿，對稱置中排版，柔和自然光展現紙紋，典雅簡約不俗豔。",
+   "en": "Wedding congratulation card: off-white paper stock with gold botanical line art and a fine frame, a clear center for \"{{message}}\", a pair of interlocking rings drawn at lower right, symmetrical centered layout, soft natural light revealing the paper texture, elegant and restrained."
+  },
+  {
+   "i": "n11",
+   "c": "charvar",
+   "t": "上班通勤",
+   "k": "換裝,職場,日常",
+   "zh": "同一位角色的上班日：合身的襯衫與西裝外套，肩背托特包，站在清晨的辦公大樓前，柔和的側向晨光，都市背景淺景深虛化，半身構圖，專業而放鬆的表情。",
+   "en": "The same character on a workday: a fitted shirt and blazer, tote bag on the shoulder, standing outside an office building at dawn, soft side morning light, urban background thrown out of focus, half-body framing, professional and at ease."
+  },
+  {
+   "i": "n12",
+   "c": "charvar",
+   "t": "居家放鬆",
+   "k": "換裝,居家,慵懶",
+   "zh": "同一位角色的居家時刻：寬鬆的棉質家居服與拖鞋，蜷在沙發上捧著馬克杯，午後窗光柔和灑落，暖色低對比，房間背景微微失焦，放鬆自在的神情。",
+   "en": "The same character at home: loose cotton loungewear and slippers, curled on a sofa holding a mug, soft afternoon window light, warm low contrast, the room gently out of focus, relaxed and unguarded."
+  },
+  {
+   "i": "n13",
+   "c": "charvar",
+   "t": "運動健身",
+   "k": "換裝,運動,活力",
+   "zh": "同一位角色的運動時刻：機能性運動背心與短褲，額頭有汗珠，在戶外跑道或健身房，強烈的側光勾勒身形，高對比冷色調，動態姿勢，專注有活力。",
+   "en": "The same character working out: technical tank top and shorts, sweat on the forehead, on an outdoor track or in a gym, strong side light defining the form, high-contrast cool grade, dynamic pose, focused and energetic."
+  },
+  {
+   "i": "n14",
+   "c": "charvar",
+   "t": "正式禮服",
+   "k": "換裝,正式,典雅",
+   "zh": "同一位角色的正式場合：剪裁俐落的禮服或西裝，配戴簡約飾品，站在昏黃燈光的宴會廳中，柔和的散景光斑，暖金色調，優雅端莊的站姿與微笑。",
+   "en": "The same character at a formal event: a sharply tailored gown or suit with minimal jewelry, standing in a warmly lit banquet hall, soft bokeh highlights, warm golden grade, elegant posture and a composed smile."
+  },
+  {
+   "i": "n15",
+   "c": "charvar",
+   "t": "雨天街頭",
+   "k": "換景,雨天,情緒",
+   "zh": "同一位角色的雨天：撐著透明傘穿著風衣，站在濕潤反光的街道上，霓虹與路燈在水面倒映，冷藍色調帶一抹暖橘，淺景深，安靜的情緒感。",
+   "en": "The same character in the rain: a clear umbrella and trench coat on a wet reflective street, neon and streetlight mirrored in the puddles, cool blue grade with a warm amber accent, shallow focus, quiet mood."
+  },
+  {
+   "i": "n16",
+   "c": "charvar",
+   "t": "海邊度假",
+   "k": "換景,海邊,明亮",
+   "zh": "同一位角色的海邊假期：亞麻襯衫或泳裝外搭罩衫，赤腳走在退潮的沙灘上，正午偏晚的強烈陽光，飽和的藍與米白，海風吹起衣角與髮絲，明亮開朗。",
+   "en": "The same character on a beach holiday: a linen shirt or swimsuit with a cover-up, walking barefoot on wet sand at low tide, strong late-midday sun, saturated blue and cream, wind lifting the fabric and hair, bright and buoyant."
+  },
+  {
+   "i": "n17",
+   "c": "charvar",
+   "t": "咖啡廳閱讀",
+   "k": "換景,日常,安靜",
+   "zh": "同一位角色在咖啡廳：針織上衣配牛仔褲，低頭翻著書，桌上有咖啡與筆記本，窗光從側面照亮臉部輪廓，暖木色調，背景客人虛化，安靜專注。",
+   "en": "The same character in a cafe: a knit top and jeans, head lowered over a book, coffee and a notebook on the table, window light grazing the profile, warm wood tones, other patrons blurred, quiet and absorbed."
+  },
+  {
+   "i": "n18",
+   "c": "charvar",
+   "t": "夜市小吃",
+   "k": "換景,台灣,熱鬧",
+   "zh": "同一位角色在台灣夜市：簡單的短T與外套，手裡拿著小吃邊走邊笑，兩側攤位燈光斑斕，背景人潮虛化成暖色光斑，高 ISO 顆粒，熱鬧生動的生活感。",
+   "en": "The same character at a Taiwanese night market: a simple tee and jacket, holding street food and laughing mid-stride, stall lights glowing on both sides, the crowd blurred into warm bokeh, high-ISO grain, lively and alive."
+  },
+  {
+   "i": "n19",
+   "c": "charvar",
+   "t": "山林健行",
+   "k": "換景,戶外,遼闊",
+   "zh": "同一位角色在山上：防風外套與登山背包，站在稜線上回頭看鏡頭，身後是雲海與層疊山巒，清晨冷冽的光線，冷藍與暖橘交界，全身廣角構圖。",
+   "en": "The same character hiking: a shell jacket and backpack, pausing on a ridge to look back at the camera, a sea of clouds and layered peaks behind, crisp early light where cool meets warm, full-body wide-angle framing."
+  },
+  {
+   "i": "n20",
+   "c": "charvar",
+   "t": "傳統服飾",
+   "k": "換裝,傳統,典雅",
+   "zh": "同一位角色穿著 {{服飾}}：衣料紋樣與配件細節清晰，站在相應的傳統建築或庭園前，柔和的自然光，飽和適中的色調，端正的站姿，尊重而不誇張的呈現。",
+   "en": "The same character wearing {{costume}}: fabric patterns and accessories rendered in detail, standing before a matching traditional building or garden, soft natural light, moderately saturated palette, upright posture, respectful and unexaggerated."
+  },
+  {
+   "i": "n21",
+   "c": "charvar",
+   "t": "表情變化",
+   "k": "表情,系列,九宮格",
+   "zh": "同一位角色的九宮格表情組：開心、大笑、生氣、驚訝、難過、害羞、疑惑、得意、疲倦，九格構圖一致、燈光與背景完全相同，只有表情不同，白色背景。",
+   "en": "A 3x3 expression set of the same character: happy, laughing, angry, surprised, sad, shy, puzzled, smug, tired, identical framing, lighting and background across all nine, only the expression changes, white background."
+  },
+  {
+   "i": "n22",
+   "c": "charvar",
+   "t": "角度變化",
+   "k": "角度,系列,三視圖",
+   "zh": "同一位角色的多角度組圖：正面、四分之三側、正側面、背面，四張並排，姿勢站姿與服裝完全一致，燈光與背景相同，僅視角改變，白色背景，適合建立角色參考。",
+   "en": "Multi-angle set of the same character: front, three-quarter, profile and back, four views in a row, identical pose, wardrobe, lighting and background, only the viewpoint changes, white background, for building a character reference."
+  },
+  {
+   "i": "n23",
+   "c": "charvar",
+   "t": "年齡變化",
+   "k": "年齡,系列,時光",
+   "zh": "同一位角色的不同年齡：童年、青年、中年、老年四個階段並排，五官結構與標誌性特徵一致可辨識為同一人，服裝與髮型隨年齡自然變化，相同的燈光與構圖。",
+   "en": "The same character at four ages: childhood, youth, middle age and old age side by side, bone structure and signature features consistent so it reads as one person, wardrobe and hair changing naturally with age, identical lighting and framing."
+  },
+  {
+   "i": "n24",
+   "c": "charvar",
+   "t": "季節四連",
+   "k": "季節,系列,一致",
+   "zh": "同一位角色的四季造型：春裝、夏裝、秋裝、冬裝四張並排，每張的場景色調對應季節，人物姿勢與構圖完全一致，可作為系列圖使用。",
+   "en": "The same character across four seasons: spring, summer, autumn and winter outfits side by side, each scene graded to its season, pose and framing identical across all four, designed as a series."
+  },
+  {
+   "i": "n25",
+   "c": "charvar",
+   "t": "職業變裝",
+   "k": "職業,變裝,趣味",
+   "zh": "同一位角色扮成 {{職業}}：完整的職業服裝與代表性道具，站在相應的工作場景中，該職業典型的光線氛圍，半身構圖，神情符合角色設定。",
+   "en": "The same character dressed as a {{profession}}: complete uniform and signature props, standing in the matching workplace, lighting typical of that setting, half-body framing, expression suited to the role."
+  },
+  {
+   "i": "n26",
+   "c": "charvar",
+   "t": "情侶合照",
+   "k": "雙人,一致,情感",
+   "zh": "同一位角色與另一位角色的合照：兩人的長相都必須與各自的參考一致，並肩站立身體微微朝內，柔和的側光，中性背景，服裝色系協調，自然放鬆的互動。",
+   "en": "A photo of the same character together with a second character: both faces must match their respective references, standing shoulder to shoulder angled inward, soft side light, neutral background, coordinated wardrobe, natural relaxed interaction."
+  },
+  {
+   "i": "n27",
+   "c": "charvar",
+   "t": "大頭貼裁切",
+   "k": "頭像,一致,實用",
+   "zh": "同一位角色的頭像：僅頭肩入鏡置中，柔和均勻的正面打光，純色背景，直視鏡頭的自然微笑，1:1 正方形構圖，適合作為社群大頭貼。",
+   "en": "Avatar of the same character: head and shoulders centered, soft even frontal light, solid color background, looking into the lens with a natural smile, 1:1 square, made for a social profile picture."
+  },
+  {
+   "i": "n28",
+   "c": "charvar",
+   "t": "動作分解",
+   "k": "動作,系列,連續",
+   "zh": "同一位角色的連續動作分解圖：{{動作}} 的四個階段並排，人物外貌完全一致，燈光與背景相同，僅姿勢改變，側面視角，白色背景，適合作為動畫參考。",
+   "en": "Action breakdown of the same character: four stages of {{action}} in a row, appearance identical throughout, same lighting and background, only the pose changes, side view, white background, suitable as animation reference."
+  },
+  {
+   "i": "k11",
+   "c": "sticker",
+   "t": "貼圖主體設定",
+   "k": "貼圖,主角,設定",
+   "zh": "LINE 貼圖主角設定：一個 {{角色}}，二頭身圓潤造型，大眼睛與簡化的五官，粗黑描邊約 6 像素，飽和平塗的四色配色，無漸層，透明背景，正面站立，縮到 100 像素仍清楚可辨識。",
+   "en": "Messaging sticker mascot: a {{character}} with two-head-tall rounded proportions, big eyes and simplified features, bold black outline about 6 pixels, saturated flat four-color palette, no gradients, transparent background, standing front view, still legible at 100 pixels."
+  },
+  {
+   "i": "k12",
+   "c": "sticker",
+   "t": "日常問候組",
+   "k": "貼圖,問候,實用",
+   "zh": "LINE 貼圖組：同一角色做出四種日常問候動作——揮手打招呼、雙手合十拜託、比讚、鞠躬道謝，每格角色旁有粗體手寫感中文字「{{文字}}」，透明背景，風格與線條粗細完全一致。",
+   "en": "Sticker set: the same character in four everyday greetings — waving hello, hands pressed in a please, thumbs up, and bowing in thanks, each with bold handwritten-style Chinese text \"{{text}}\" beside it, transparent background, consistent style and line weight across all four."
+  },
+  {
+   "i": "k13",
+   "c": "sticker",
+   "t": "上班族梗圖",
+   "k": "貼圖,職場,梗",
+   "zh": "LINE 貼圖：角色以誇張的疲憊表情趴在筆電上，頭上冒出旋轉的星星，旁邊有粗體中文字「加班中」，配色以灰藍與螢光黃對比，粗黑描邊，透明背景，一眼看懂的職場共鳴梗。",
+   "en": "Sticker: the character slumped over a laptop with an exaggerated exhausted face, spinning stars above the head, bold Chinese text for overtime beside it, grey-blue against fluorescent yellow, bold black outline, transparent background, instantly readable workplace humor."
+  },
+  {
+   "i": "k14",
+   "c": "sticker",
+   "t": "已讀不回",
+   "k": "貼圖,聊天,趣味",
+   "zh": "LINE 貼圖：角色盯著手機、眼神死的表情，手機上有明顯的已讀標記，頭上有一滴大汗，旁邊粗體中文字「{{文字}}」，飽和的對比配色，誇張的情緒表現，透明背景。",
+   "en": "Sticker: the character staring at a phone with a deadpan expression, a visible read receipt on the screen, one large sweat drop above the head, bold Chinese text \"{{text}}\" beside it, saturated contrasting palette, exaggerated emotion, transparent background."
+  },
+  {
+   "i": "k15",
+   "c": "sticker",
+   "t": "情緒爆發",
+   "k": "貼圖,情緒,誇張",
+   "zh": "LINE 貼圖：角色情緒爆發的誇張表現——{{情緒}}，臉部變形放大、線條放射、背景有速度線與符號（怒氣井字、淚水噴發、愛心冒出），粗黑描邊，高飽和撞色，透明背景，戲劇性十足。",
+   "en": "Sticker: the character in an over-the-top emotional outburst — {{emotion}}, face distorted and enlarged, radiating lines, speed lines and symbols in the background such as anger marks, gushing tears or floating hearts, bold black outline, clashing saturated colors, transparent background, highly theatrical."
+  },
+  {
+   "i": "k16",
+   "c": "sticker",
+   "t": "節慶貼圖",
+   "k": "貼圖,節慶,應景",
+   "zh": "LINE 貼圖：角色穿著 {{節慶}} 主題的裝扮並做出應景動作，周圍有該節慶的小道具點綴，旁邊粗體中文祝賀字「{{文字}}」，喜氣飽和的配色，透明背景，小尺寸仍清楚。",
+   "en": "Sticker: the character in {{festival}} costume performing a seasonal gesture, small themed props scattered around, bold Chinese greeting text \"{{text}}\" beside it, festive saturated palette, transparent background, legible at small size."
+  },
+  {
+   "i": "k17",
+   "c": "sticker",
+   "t": "長輩問候貼圖",
+   "k": "貼圖,長輩,溫暖",
+   "zh": "長輩風格問候貼圖：明亮飽和的花卉與陽光背景，中央是可愛的角色雙手合十或揮手，上方以粗體圓體中文大字寫著「{{文字}}」，字體加白色描邊確保清楚，暖色調，親切熱情。",
+   "en": "Elder-style greeting sticker: bright saturated flowers and sunshine background, a cute character with hands pressed together or waving at center, bold rounded Chinese text \"{{text}}\" across the top with a white outline for legibility, warm palette, friendly and hearty."
+  },
+  {
+   "i": "k18",
+   "c": "sticker",
+   "t": "食物擬人",
+   "k": "貼圖,食物,可愛",
+   "zh": "LINE 貼圖：把 {{食物}} 擬人化成有手腳與表情的角色，做出可愛的動作，保留食物本身的辨識特徵，粗黑描邊與飽和平塗，透明背景，旁邊可放短句文字，療癒討喜。",
+   "en": "Sticker: {{food}} anthropomorphized with limbs and a face, doing something endearing, keeping the food’s recognizable features, bold outline and saturated flat color, transparent background, room for a short phrase beside it, warm and likeable."
+  },
+  {
+   "i": "k19",
+   "c": "sticker",
+   "t": "動物擬人上班",
+   "k": "貼圖,動物,職場",
+   "zh": "LINE 貼圖：一隻穿著襯衫與識別證的 {{動物}}，二頭身造型，做出上班族的日常動作（喝咖啡、打電話、崩潰），粗黑描邊，柔和飽和的配色，透明背景，幽默不做作。",
+   "en": "Sticker: a {{animal}} in a shirt and lanyard, two-head-tall proportions, performing everyday office actions such as drinking coffee, taking a call or breaking down, bold outline, softly saturated palette, transparent background, funny without trying too hard."
+  },
+  {
+   "i": "k20",
+   "c": "sticker",
+   "t": "純文字貼圖",
+   "k": "貼圖,文字,大字",
+   "zh": "純文字貼圖：畫面中只有粗體中文大字「{{文字}}」，字體為圓潤的手寫感黑體，加上粗白描邊與彩色陰影確保在任何聊天背景上都清楚，周圍有少量放射線與星點點綴，透明背景。",
+   "en": "Text-only sticker: just the bold Chinese phrase \"{{text}}\", set in a rounded handwritten-feel sans-serif with a thick white outline and colored drop shadow so it reads on any chat background, a few radiating lines and star accents around it, transparent background."
+  },
+  {
+   "i": "k21",
+   "c": "sticker",
+   "t": "貼圖主圖與標籤",
+   "k": "貼圖,規格,上架",
+   "zh": "貼圖商店主圖：角色的招牌姿勢置中，背景為單一淺色或簡單圖案，四周留出約 10% 的安全邊距避免被裁切，色彩飽和吸睛，構圖簡潔，縮成小圖仍能一眼認出角色。",
+   "en": "Sticker shop main image: the character in its signature pose centered, a single light color or simple pattern behind, roughly 10 percent safe margin on all sides to survive cropping, saturated and eye-catching, simple composition, recognizable when scaled down."
+  },
+  {
+   "i": "k22",
+   "c": "sticker",
+   "t": "手繪簡筆風",
+   "k": "貼圖,手繪,隨性",
+   "zh": "手繪簡筆貼圖：用不平整的鉛筆或原子筆線條畫出角色做 {{動作}}，刻意的歪斜與塗改痕跡，僅用一到兩個顏色隨性填色且溢出邊界，透明背景，樸拙隨性的手感。",
+   "en": "Hand-drawn doodle sticker: the character {{action}} rendered in uneven pencil or ballpoint line, deliberately wobbly with visible corrections, one or two colors filled loosely past the lines, transparent background, artless and charming."
+  },
+  {
+   "i": "sh1",
+   "c": "shop",
+   "t": "賣場主圖",
+   "k": "網拍,主圖,吸睛",
+   "zh": "網拍商品主圖：{{商品}}置中占畫面約七成，純白或極淺灰背景，均勻無影打光讓顏色完全準確，商品邊緣銳利，右上角留出乾淨區域可加賣點文字，1:1 正方形，符合購物平台上架規範。",
+   "en": "Marketplace listing main image: {{product}} centered filling about 70 percent of the frame, pure white or very light grey background, even shadowless lighting for exact color, crisp product edges, a clean area at upper right for a selling-point label, 1:1 square, compliant with marketplace listing rules."
+  },
+  {
+   "i": "sh2",
+   "c": "shop",
+   "t": "模特兒實穿",
+   "k": "網拍,模特,穿搭",
+   "zh": "網拍服飾實穿照：模特兒穿著 {{商品}}站立全身入鏡，自然的站姿與微側身展現版型，淺灰或米白背景，柔和均勻的打光確保布料顏色準確，衣物皺褶與材質清楚，直式 3:4。",
+   "en": "Apparel on-model shot: the model wearing {{product}} in full body, natural stance angled slightly to show the cut, light grey or off-white background, soft even lighting for accurate fabric color, drape and texture clearly visible, 3:4 portrait."
+  },
+  {
+   "i": "sh3",
+   "c": "shop",
+   "t": "細節放大圖",
+   "k": "網拍,細節,材質",
+   "zh": "網拍細節圖：極近距離拍攝 {{商品}}的關鍵細節——縫線、拉鍊、鈕扣、材質紋理或商標，斜射光強調凹凸，淺景深讓周邊柔化，色彩還原準確，讓買家看清質感的關鍵輔圖。",
+   "en": "Marketplace detail shot: an extreme close-up of a key feature of {{product}} such as stitching, zipper, buttons, material grain or logo, raking light emphasizing relief, shallow focus softening the surroundings, accurate color, the shot that proves the quality."
+  },
+  {
+   "i": "sh4",
+   "c": "shop",
+   "t": "尺寸比例對照",
+   "k": "網拍,尺寸,實用",
+   "zh": "網拍尺寸對照圖：{{商品}}平放在淺色背景上，旁邊放一隻手或一枚硬幣作為比例參考，兩者在同一平面對焦一致，正俯視 90 度，均勻打光，清楚傳達真實大小，減少退貨的關鍵圖。",
+   "en": "Marketplace scale image: {{product}} laid flat on a light background beside a hand or coin for reference, both on one plane and equally sharp, straight 90-degree overhead, even lighting, communicating true size clearly to reduce returns."
+  },
+  {
+   "i": "sh5",
+   "c": "shop",
+   "t": "使用情境圖",
+   "k": "網拍,情境,想像",
+   "zh": "網拍情境圖：{{商品}}被自然地使用在真實生活場景中，有人的手或身影參與其中，環境道具支撐使用想像，柔和的自然光，暖色調，讓買家看見「用起來的樣子」。",
+   "en": "Marketplace lifestyle image: {{product}} being used naturally in a real setting, a hand or figure involved, surrounding props supporting the use case, soft natural light, warm palette, showing the buyer what it looks like in their life."
+  },
+  {
+   "i": "sh6",
+   "c": "shop",
+   "t": "多色一覽",
+   "k": "網拍,色系,排列",
+   "zh": "網拍多色一覽圖：同一款 {{商品}}的所有顏色整齊並排或扇形展開，間距一致、角度一致，純白背景，均勻打光確保每個顏色都準確可辨，正俯視或正面平視，一目了然。",
+   "en": "Marketplace colorway lineup: every color of the same {{product}} arranged in an even row or fan, identical spacing and angle, pure white background, even lighting so each shade reads accurately, top-down or straight-on, instantly scannable."
+  },
+  {
+   "i": "sh7",
+   "c": "shop",
+   "t": "組合套裝圖",
+   "k": "網拍,組合,加購",
+   "zh": "網拍組合圖：{{商品}}與所有附贈配件在淺色背景上整齊排列成網格，每項物件間距均勻、大小關係真實，均勻無影光，正俯視 90 度，清楚呈現「買到什麼」，適合作為規格說明圖。",
+   "en": "Marketplace bundle shot: {{product}} with every included accessory arranged in an even grid on a light background, consistent spacing and true relative scale, even shadowless light, 90-degree overhead, clearly answering what the buyer receives."
+  },
+  {
+   "i": "sh8",
+   "c": "shop",
+   "t": "賣場橫幅",
+   "k": "網拍,Banner,促銷",
+   "zh": "賣場首頁橫幅：左側為 {{商品}} 的去背主體，右側留出大片乾淨區域放標題與折扣文字，柔和的漸層背景搭配品牌主色，輕微的幾何裝飾不搶焦點，橫式寬幅構圖，縮小後文字區仍清楚。",
+   "en": "Storefront banner: the cut-out {{product}} on the left, a large clean field on the right for a headline and discount copy, soft gradient background in the brand color, restrained geometric accents, wide horizontal format, the text area still readable when scaled down."
+  },
+  {
+   "i": "sh9",
+   "c": "shop",
+   "t": "限時促銷圖",
+   "k": "網拍,促銷,搶眼",
+   "zh": "限時促銷圖：{{商品}}置中，背景為放射狀撞色與爆炸框，四周有飄落的碎紙與價格標籤造型，高飽和的紅黃配色，中央下方留出區塊放「{{文字}}」，搶眼但商品仍清楚可辨。",
+   "en": "Flash-sale graphic: {{product}} centered against a radial burst in clashing colors with a starburst frame, falling confetti and price-tag shapes around, saturated red and yellow, a block below center for \"{{text}}\", loud yet keeping the product clear."
+  },
+  {
+   "i": "sh10",
+   "c": "shop",
+   "t": "素人開箱感",
+   "k": "網拍,開箱,真實",
+   "zh": "素人開箱風格照：{{商品}}半開的包裝盒放在木桌或床單上，旁邊有手機與隨手擺放的日常物件，自然的室內光線略帶不完美，手機拍攝般的真實感，不做棚拍造型，可信度高的評價用圖。",
+   "en": "Unboxing-style photo: the half-opened package of {{product}} on a wooden table or bedsheet, a phone and everyday clutter beside it, natural indoor light with mild imperfection, the honest look of a phone snapshot rather than a studio shot, credible review imagery."
+  },
+  {
+   "i": "sh11",
+   "c": "shop",
+   "t": "直播預告圖",
+   "k": "網拍,直播,活潑",
+   "zh": "直播預告圖：畫面右側是主播的半身剪影或去背人像，左側大片區域放「{{文字}}」與時間，背景為活潑的漸層與光斑，明亮高對比配色，直式 9:16 適合限時動態，一眼看到時間與主題。",
+   "en": "Livestream announcement graphic: the host cut out or silhouetted on the right, a large field on the left for \"{{text}}\" and the start time, lively gradient and bokeh background, bright high-contrast palette, 9:16 vertical for stories, time and topic immediately visible."
+  },
+  {
+   "i": "sh12",
+   "c": "shop",
+   "t": "A/B 主圖測試",
+   "k": "網拍,測試,對照",
+   "zh": "A/B 主圖對照：同一件 {{商品}}以兩種不同呈現方式並列——左為純白去背棚拍、右為生活情境照，兩者商品大小與角度接近以便公平比較，說明用途的對照圖。",
+   "en": "A/B listing image comparison: the same {{product}} presented two ways side by side — a pure white studio cut-out on the left and a lifestyle context shot on the right, product scale and angle matched for a fair comparison."
+  },
+  {
+   "i": "g11",
+   "c": "trend",
+   "t": "美式漫畫",
+   "k": "漫畫,美漫,英雄",
+   "zh": "美式漫畫風格：粗細變化強烈的墨線輪廓、班戴網點的半色調陰影、飽和的原色平塗、戲劇性的仰角構圖與動態線條，背景有放射狀速度線，角落有對話框與狀聲字。主題為 {{主體}}。",
+   "en": "American comic book style: bold varying ink outlines, Ben-Day dot halftone shading, saturated flat primary colors, dramatic low-angle composition and dynamic action lines, radial speed lines in the background, speech balloon and sound effect in a corner. Subject: {{subject}}."
+  },
+  {
+   "i": "g12",
+   "c": "trend",
+   "t": "復古美漫封面",
+   "k": "美漫,復古,印刷",
+   "zh": "1960 年代美漫封面風格：粗獷的墨線與明顯的印刷網點、套版輕微偏移的色偏、泛黃的粗紙質地、頂部有粗體標題橫幅與價格標，強烈的戲劇性構圖與誇張表情。主題為 {{主體}}。",
+   "en": "1960s comic cover style: rugged ink linework with visible halftone dots, slight color registration offset, yellowed pulp paper texture, a bold title banner and price tag along the top, high-drama composition and exaggerated expressions. Subject: {{subject}}."
+  },
+  {
+   "i": "g13",
+   "c": "trend",
+   "t": "韓漫 Webtoon",
+   "k": "韓漫,清新,直式",
+   "zh": "韓國網漫風格：乾淨的細線稿、柔和的漸層上色、通透明亮的膚色與大量光暈、簡化但精緻的背景、直式長條構圖，人物比例修長，情緒細膩的表情。主題為 {{主體}}。",
+   "en": "Korean webtoon style: clean fine linework, soft gradient coloring, luminous skin with generous glow, simplified yet refined backgrounds, tall vertical composition, elongated proportions, nuanced emotional expression. Subject: {{subject}}."
+  },
+  {
+   "i": "g14",
+   "c": "trend",
+   "t": "3D 動畫電影",
+   "k": "3D,動畫,皮克斯",
+   "zh": "3D 動畫電影風格：圓潤誇張的角色比例、大眼睛與柔和的次表面散射皮膚、細膩的毛髮與布料模擬、電影級的三點打光與景深、溫暖飽和的色彩，親切討喜的表情。主題為 {{主體}}。",
+   "en": "3D animated feature style: rounded exaggerated proportions, large eyes and soft subsurface-scattering skin, detailed hair and cloth simulation, cinematic three-point lighting and depth of field, warm saturated color, appealing friendly expression. Subject: {{subject}}."
+  },
+  {
+   "i": "g15",
+   "c": "trend",
+   "t": "樂高積木",
+   "k": "積木,玩具,趣味",
+   "zh": "塑膠積木玩具風格：所有元素都由方形積木塊組成，可見圓形凸點與模具接縫，光滑的塑膠反光，微縮攝影的淺景深，明亮的原色配色，柔和的棚拍打光。場景為 {{場景}}。",
+   "en": "Plastic brick toy style: everything built from rectangular blocks with visible studs and mold seams, glossy plastic highlights, macro miniature depth of field, bright primary palette, soft studio lighting. Scene: {{scene}}."
+  },
+  {
+   "i": "g16",
+   "c": "trend",
+   "t": "Y2K 千禧風",
+   "k": "Y2K,千禧,金屬",
+   "zh": "Y2K 千禧美學：液態金屬與全息彩虹反光、氣泡感的圓潤字體、亮粉紫與電光藍配色、星形閃光與蝴蝶元素、輕微的膠片模糊與光暈，混亂中帶著懷舊的未來感。主題為 {{主體}}。",
+   "en": "Y2K millennium aesthetic: liquid chrome and holographic iridescence, bubbly rounded typography, hot pink-purple and electric blue, star sparkles and butterfly motifs, slight film blur and bloom, a nostalgic future rendered in chaos. Subject: {{subject}}."
+  },
+  {
+   "i": "g17",
+   "c": "trend",
+   "t": "故障藝術",
+   "k": "故障,glitch,數位",
+   "zh": "故障藝術風格：RGB 色差偏移、水平掃描線與訊號斷裂、像素破碎與重複位移的區塊、螢光洋紅與青的色偏、黑色底，數位訊號崩壞的視覺語彙。主題為 {{主體}}。",
+   "en": "Glitch art style: RGB channel offset, horizontal scanlines and signal tearing, shattered pixel blocks displaced in bands, fluorescent magenta and cyan casts, black ground, the visual language of a corrupted signal. Subject: {{subject}}."
+  },
+  {
+   "i": "g18",
+   "c": "trend",
+   "t": "Risograph 孔版印刷",
+   "k": "孔版,印刷,復古",
+   "zh": "孔版印刷風格：兩到三色專色套印、明顯的網點與輕微的套版偏移、油墨的不均勻與輕微暈開、螢光粉與藍的專色、粗糙的再生紙質地，質樸的獨立出版感。主題為 {{主體}}。",
+   "en": "Risograph print style: two or three spot-color layers, visible dot screens and slight registration offset, uneven ink coverage with light smudging, fluorescent pink and blue inks, coarse recycled paper texture, the feel of independent publishing. Subject: {{subject}}."
+  },
+  {
+   "i": "g19",
+   "c": "trend",
+   "t": "新中式國潮",
+   "k": "國潮,新中式,東方",
+   "zh": "新中式國潮風格：傳統紋樣以現代扁平手法重構、朱紅與靛藍搭配燙金線條、幾何化的雲紋與山水、粗體的現代中文字排版、留白克制，古典元素與當代設計語言並置。主題為 {{主體}}。",
+   "en": "Contemporary Chinese-revival style: traditional motifs reconstructed in a modern flat idiom, vermilion and indigo with gold linework, geometricized clouds and landscape, bold modern Chinese typography, disciplined negative space, classical elements set against contemporary design language. Subject: {{subject}}."
+  },
+  {
+   "i": "g20",
+   "c": "trend",
+   "t": "浮世繪",
+   "k": "浮世繪,日本,版畫",
+   "zh": "浮世繪木版畫風格：清晰的墨線輪廓、平塗的色塊與漸層暈染、藍色為主的傳統配色、程式化的雲與波浪、和紙的纖維質地與輕微的木紋壓痕，右上角有題款方框。主題為 {{主體}}。",
+   "en": "Ukiyo-e woodblock style: crisp ink outlines, flat color fields with gradated bokashi, an indigo-led traditional palette, stylized clouds and waves, washi fiber texture with faint woodgrain impression, an inscription cartouche at upper right. Subject: {{subject}}."
+  },
+  {
+   "i": "g21",
+   "c": "trend",
+   "t": "暗黑學院風",
+   "k": "暗黑學院,復古,質感",
+   "zh": "暗黑學院美學：深墨綠與棕的沉鬱配色、古老圖書館與皮革書冊、燭光與窗光交錯的低調光線、羊毛格紋與斜紋領帶、霧氣與塵埃、輕微褪色的底片質感，靜謐而神秘。主題為 {{主體}}。",
+   "en": "Dark academia aesthetic: brooding deep green and brown palette, old library and leather-bound books, low-key mix of candlelight and window light, wool tweed and striped ties, mist and dust, gently faded film tones, hushed and enigmatic. Subject: {{subject}}."
+  },
+  {
+   "i": "g22",
+   "c": "trend",
+   "t": "田園慢活風",
+   "k": "田園,療癒,自然",
+   "zh": "田園慢活美學：亞麻與棉質織品、野花與手工陶器、蜂蜜色的柔和自然光、褪色的粉綠與奶油配色、輕微的柔焦與光暈、鄉間廚房或草地場景，溫柔而懷舊的生活感。主題為 {{主體}}。",
+   "en": "Cottagecore aesthetic: linen and cotton textiles, wildflowers and handmade pottery, honeyed soft natural light, faded sage and cream palette, gentle diffusion and bloom, a country kitchen or meadow setting, tender and nostalgic. Subject: {{subject}}."
+  },
+  {
+   "i": "g23",
+   "c": "trend",
+   "t": "液態金屬",
+   "k": "金屬,3D,未來",
+   "zh": "液態金屬渲染風格：高反射的鏡面鉻金屬表面流動變形，環境反射清晰可見，柔和的攝影棚 HDRI 打光，深色漸層背景，一抹彩虹色的邊緣折射，極簡構圖，未來感十足。主題為 {{主體}}。",
+   "en": "Liquid chrome render style: highly reflective mirror-chrome surfaces flowing and deforming, environment reflections clearly readable, soft studio HDRI lighting, dark gradient background, a hint of iridescent edge refraction, minimal composition, distinctly futuristic. Subject: {{subject}}."
+  },
+  {
+   "i": "g24",
+   "c": "trend",
+   "t": "對稱電影構圖",
+   "k": "對稱,電影,美學",
+   "zh": "嚴格對稱的電影構圖：主體置中、消失點正中央、左右元素完美鏡像，粉彩與芥黃的復古配色，平面化的正面視角，戲劇性的色彩分區，人物表情克制平淡，工整而略帶荒謬的美感。場景為 {{場景}}。",
+   "en": "Rigorously symmetrical cinematic composition: subject dead center, vanishing point centered, left and right elements mirrored, pastel and mustard retro palette, flattened frontal view, dramatic color blocking, deliberately deadpan expressions, meticulous and gently absurd. Scene: {{scene}}."
+  },
+  {
+   "i": "g25",
+   "c": "trend",
+   "t": "黑色電影",
+   "k": "黑白,懸疑,光影",
+   "zh": "黑色電影風格：強烈的明暗對比、百葉窗投射在牆與臉上的條紋陰影、雨夜街燈與煙霧、低角度與傾斜的構圖、黑白高反差帶顆粒、風衣與軟呢帽，懸疑而壓抑的氛圍。主題為 {{主體}}。",
+   "en": "Film noir style: extreme chiaroscuro, venetian blind stripes falling across wall and face, rain-slicked street lamps and cigarette smoke, low and canted angles, high-contrast grainy black and white, trench coat and fedora, tense and claustrophobic. Subject: {{subject}}."
+  },
+  {
+   "i": "g26",
+   "c": "trend",
+   "t": "超現實拼貼",
+   "k": "拼貼,超現實,藝術",
+   "zh": "超現實剪貼拼貼風格：不同來源的印刷圖像被剪下重組，可見粗糙的剪裁邊緣與紙張陰影，比例被刻意錯置，黑白照片與飽和色塊混用，米黃紙背景，荒謬而詩意的並置。主題為 {{主體}}。",
+   "en": "Surrealist cut-paper collage: printed images from different sources cropped and recombined, rough scissor edges and paper drop shadows visible, scale deliberately mismatched, black-and-white photography mixed with saturated color fields, cream paper ground, absurd and poetic juxtaposition. Subject: {{subject}}."
+  },
+  {
+   "i": "g27",
+   "c": "trend",
+   "t": "等距 Bento 版面",
+   "k": "Bento,版面,現代",
+   "zh": "Bento 便當盒版面設計：畫面切分為大小不一的圓角矩形區塊如便當格，每格放置一個主題元素或資料，深色底搭配一到兩個強調色，統一的圓角半徑與間距，現代科技產品發表視覺。主題為 {{主題}}。",
+   "en": "Bento box layout design: the frame divided into rounded rectangles of varying sizes like a bento tray, each cell holding one element or data point, dark ground with one or two accent colors, uniform corner radius and gutters, modern tech-launch visual language. Subject: {{theme}}."
+  },
+  {
+   "i": "g28",
+   "c": "trend",
+   "t": "極簡奢華",
+   "k": "奢華,極簡,質感",
+   "zh": "極簡奢華風格：單一主體置於大量負空間中，米白與炭黑的極簡配色搭配一點金屬色，柔和的大面積側光與乾淨的長影，材質質感細膩（絲絨、石材、霧面金屬），構圖克制，安靜的高級感。主題為 {{主體}}。",
+   "en": "Quiet-luxury minimalism: a single subject in expansive negative space, a cream and charcoal palette with one metallic accent, broad soft side light and a clean long shadow, refined materials such as velvet, stone and brushed metal, disciplined composition, understated premium feel. Subject: {{subject}}."
+  },
+  {
+   "i": "g29",
+   "c": "trend",
+   "t": "霓虹描邊",
+   "k": "霓虹,發光,夜",
+   "zh": "霓虹燈管風格：主體以發光的霓虹管線條勾勒輪廓，洋紅與青的雙色光管，黑色或深色磚牆背景，光線在牆面與地面產生柔和的暈染與反射，輕微的光暈與色差，夜店招牌質感。主題為 {{主體}}。",
+   "en": "Neon tube style: the subject outlined in glowing neon tubing, magenta and cyan two-color light, black or dark brick background, the glow bleeding softly onto wall and floor, slight bloom and chromatic fringing, the look of a bar sign. Subject: {{subject}}."
+  },
+  {
+   "i": "g30",
+   "c": "trend",
+   "t": "針織毛線",
+   "k": "針織,質感,溫暖",
+   "zh": "針織毛線質感風格：整個畫面由粗棒針織紋構成，可見清晰的針目與毛線纖維，柔軟的立體起伏與陰影，溫暖的米色與燕麥色系，柔和的側光帶出織紋，療癒的手作觸感。主題為 {{主體}}。",
+   "en": "Chunky knit texture style: the entire image rendered as hand-knitted stitches, individual loops and wool fibers clearly visible, soft dimensional relief and shadow, warm oatmeal and cream palette, gentle side light bringing out the weave, comforting and tactile. Subject: {{subject}}."
+  },
+  {
+   "i": "rt1",
+   "c": "retouch",
+   "t": "去背成純白底",
+   "k": "去背,證件,實用",
+   "zh": "把照片中的主體完整去背，換成純白色無縫背景。主體的邊緣要乾淨銳利，髮絲與細節不可缺損，原本的光線方向與陰影保持自然，主體本身的顏色與細節完全不變。",
+   "en": "Cut out the subject from the photo and place it on a pure white seamless background. Keep the edges clean and sharp with no loss of hair strands or fine detail, preserve the original lighting direction and a natural contact shadow, and leave the subject’s color and detail completely unchanged."
+  },
+  {
+   "i": "rt2",
+   "c": "retouch",
+   "t": "換背景",
+   "k": "換景,合成,自然",
+   "zh": "保留照片中的人物或主體完全不變，只把背景換成 {{新背景}}。新背景的光線方向、色溫與明暗必須與主體原本的打光一致，邊緣過渡自然無合成痕跡，景深也要與主體的焦段相符。",
+   "en": "Keep the subject in the photo entirely unchanged and replace only the background with {{new background}}. The new background’s light direction, color temperature and brightness must match the subject’s existing lighting, edges must blend without any visible compositing seam, and the depth of field should match the subject’s focal length."
+  },
+  {
+   "i": "rt3",
+   "c": "retouch",
+   "t": "老照片修復",
+   "k": "修復,老照片,長輩",
+   "zh": "修復這張老照片：去除刮痕、摺痕、霉斑與污漬，補上缺角與破損處，還原褪色的對比與細節，臉部五官必須保持原本的樣子不可重畫，維持底片原有的顆粒質感，不要過度平滑。",
+   "en": "Restore this old photograph: remove scratches, creases, mold spots and stains, reconstruct torn corners and missing areas, recover faded contrast and detail. The facial features must stay exactly as they are and must not be redrawn. Keep the original film grain and avoid over-smoothing."
+  },
+  {
+   "i": "rt4",
+   "c": "retouch",
+   "t": "黑白照上色",
+   "k": "上色,老照片,還原",
+   "zh": "為這張黑白照片自然上色。膚色要真實符合人種與年齡，衣物與環境的顏色要符合該年代的常見材質與染料，色彩飽和度克制不誇張，不改變任何構圖與人物長相，成果要像當年就用彩色底片拍的。",
+   "en": "Colorize this black and white photograph naturally. Skin tones must be realistic for the subject’s age and ethnicity, clothing and surroundings should use colors plausible for the era’s materials and dyes, saturation restrained rather than vivid. Do not alter the composition or the subjects’ features — the result should look as if it had been shot on color film at the time."
+  },
+  {
+   "i": "rt5",
+   "c": "retouch",
+   "t": "人像精修",
+   "k": "修膚,自然,質感",
+   "zh": "人像精修：去除暫時性的痘痘與雜點，保留毛孔與皮膚紋理不可磨成塑膠感，修飾髮絲雜毛與衣物皺褶，輕微提亮眼神光，膚色調整為自然健康，五官結構與臉型完全不可更動。",
+   "en": "Portrait retouching: remove temporary blemishes and stray spots while keeping pores and skin texture intact — no plastic smoothing. Tidy flyaway hairs and clothing wrinkles, slightly brighten the catchlights, adjust skin tone to look naturally healthy. Do not alter the facial structure or proportions in any way."
+  },
+  {
+   "i": "rt6",
+   "c": "retouch",
+   "t": "去除雜物路人",
+   "k": "移除,清理,乾淨",
+   "zh": "移除照片中的 {{移除對象}}，並用符合周圍紋理、透視與光線的內容自然填補該區域，不可留下模糊塊或重複的圖樣，畫面其餘部分完全保持原樣。",
+   "en": "Remove {{target}} from the photo and fill the area with content that matches the surrounding texture, perspective and lighting. Do not leave blurred patches or repeated patterns, and keep the rest of the image completely unchanged."
+  },
+  {
+   "i": "rt7",
+   "c": "retouch",
+   "t": "換天空",
+   "k": "換天,風景,自然",
+   "zh": "把照片中的天空換成 {{天空}}，地面與建築物完全保留。新天空的光線方向必須與原本畫面的陰影方向一致，並讓地面的色溫與亮度隨新天空自然調整，地平線邊緣乾淨無白邊。",
+   "en": "Replace the sky in this photo with {{sky}}, keeping the ground and buildings entirely intact. The new sky’s light direction must match the existing shadows, the ground’s color temperature and brightness should adapt naturally to it, and the horizon edge must be clean with no halo."
+  },
+  {
+   "i": "rt8",
+   "c": "retouch",
+   "t": "光線重打",
+   "k": "補光,質感,專業",
+   "zh": "重新打光：保留原本的構圖與人物不變，把平淡的光線改成 {{光線}}，明暗層次要合理，陰影方向一致，高光不過曝、暗部保留細節，整體看起來像現場就是這樣打光的。",
+   "en": "Relight the image: keep the composition and subject unchanged, and replace the flat lighting with {{lighting}}. Tonal transitions must be plausible, shadow directions consistent, highlights unclipped and shadows retaining detail — the result should look as if it were lit that way on set."
+  },
+  {
+   "i": "rt9",
+   "c": "retouch",
+   "t": "放大清晰化",
+   "k": "放大,銳化,細節",
+   "zh": "把這張低解析度的照片放大並還原細節：補回自然的紋理與邊緣銳度，去除壓縮產生的方塊雜訊與色斑，不可產生原本不存在的細節或改變人物長相，成果要自然不假。",
+   "en": "Upscale this low-resolution photo and recover detail: restore natural texture and edge sharpness, remove compression blocking and color artifacts. Do not invent detail that was not there or alter the subject’s features — the result must look natural, not synthetic."
+  },
+  {
+   "i": "rt10",
+   "c": "retouch",
+   "t": "證件照轉換",
+   "k": "證件照,實用,規格",
+   "zh": "把這張生活照轉成標準證件照：去背換純白底，裁切為頭肩構圖並讓頭部佔畫面適當比例，補上均勻的正面柔光消除臉上陰影，服裝改為深色素面上衣，五官與髮型完全保持原樣。",
+   "en": "Convert this casual photo into a standard ID portrait: cut out and place on a pure white background, crop to head and shoulders with the head at an appropriate proportion of the frame, add even frontal soft light to remove facial shadows, and change the clothing to a plain dark top. Keep the facial features and hairstyle exactly as they are."
+  },
+  {
+   "i": "rt11",
+   "c": "retouch",
+   "t": "商品圖清理",
+   "k": "商品,電商,乾淨",
+   "zh": "清理這張商品照：去除背景雜物與反光污漬，把背景換成純白，校正商品的透視讓垂直線筆直，還原真實色彩，保留材質紋理與商標文字清晰可讀，加上淡淡的接地陰影。",
+   "en": "Clean up this product photo: remove background clutter and stray reflections, replace the background with pure white, correct the perspective so vertical lines are straight, restore true color, keep material texture and label text crisply legible, and add a faint contact shadow."
+  },
+  {
+   "i": "rt12",
+   "c": "retouch",
+   "t": "延伸補畫",
+   "k": "延伸,構圖,補救",
+   "zh": "把這張照片的畫面向 {{方向}} 延伸擴展，新增區域的透視、光線、色調與質感必須與原圖完全銜接，看不出接縫，延伸出來的內容要符合原場景的合理延續，不可出現重複的圖樣。",
+   "en": "Extend this photo outward toward the {{direction}}. The new area’s perspective, lighting, color and texture must match the original seamlessly with no visible join, and the added content must be a plausible continuation of the scene without repeated patterns."
+  },
+  {
+   "i": "gm1",
+   "c": "game",
+   "t": "卡牌插畫",
+   "k": "卡牌,插畫,直式",
+   "zh": "遊戲卡牌插畫：{{主體}} 佔據畫面中央，戲劇性的仰角與放射狀構圖，濃烈的光影對比與飄浮的能量粒子，背景簡化為漸層與抽象元素避免搶焦點，上方與下方預留卡框與文字空間，直式 5:7 構圖。",
+   "en": "Trading card illustration: {{subject}} dominating the center, dramatic low angle and radial composition, intense chiaroscuro with drifting energy particles, background simplified to gradients and abstract shapes so it never competes, space reserved at top and bottom for the frame and text, 5:7 portrait."
+  },
+  {
+   "i": "gm2",
+   "c": "game",
+   "t": "道具圖示",
+   "k": "道具,圖示,遊戲",
+   "zh": "遊戲道具圖示：{{道具}} 以四分之三角度懸浮於透明背景上，柔和的頂光加冷色邊緣光，材質質感清晰（金屬反光、皮革紋理、寶石折射），輕微的發光外框，統一的光源方向以便成組使用。",
+   "en": "Game item icon: {{item}} floating at a three-quarter angle on a transparent background, soft top light with a cool rim, material qualities clearly read — metallic reflection, leather grain, gem refraction — a faint glow outline, consistent light direction so it works as part of a set."
+  },
+  {
+   "i": "gm3",
+   "c": "game",
+   "t": "技能圖示組",
+   "k": "技能,圖示,系列",
+   "zh": "技能圖示組：六個圓形圖示並排，各代表 {{主題}} 的不同能力，統一的圓框樣式與內縮邊距，每個以一種主色區分並帶柔和內發光，簡化的符號造型，深色底，成套使用時視覺一致。",
+   "en": "Skill icon set: six circular icons in a row representing different abilities of {{theme}}, uniform ring frame and inner padding, each keyed to one accent color with a soft inner glow, simplified symbolic forms, dark ground, visually consistent as a set."
+  },
+  {
+   "i": "gm4",
+   "c": "game",
+   "t": "場景概念稿",
+   "k": "概念,場景,氣氛",
+   "zh": "遊戲場景概念稿：{{場景}} 的廣角全景，大氣透視讓遠景逐層變淡，強烈的方向性光源穿過空間製造光柱，前景有剪影元素建立層次，筆觸鬆放不追求細節，重氣氛勝於精確。",
+   "en": "Game environment concept art: a wide vista of {{scene}}, atmospheric perspective fading the distance in layers, strong directional light shafting through the space, silhouetted foreground elements establishing depth, loose brushwork over precision, mood before accuracy."
+  },
+  {
+   "i": "gm5",
+   "c": "game",
+   "t": "角色立繪",
+   "k": "立繪,全身,遊戲",
+   "zh": "遊戲角色立繪：全身直立，四分之三角度，服裝與配件細節完整，柔和的雙側打光讓輪廓清晰，腳下有簡單的接地陰影，透明或純色背景，構圖適合疊在對話介面上。",
+   "en": "Game character standing art: full body upright at a three-quarter angle, costume and accessories fully detailed, soft two-sided lighting keeping the silhouette clean, a simple contact shadow at the feet, transparent or flat background, composed to sit over a dialogue interface."
+  },
+  {
+   "i": "gm6",
+   "c": "game",
+   "t": "像素場景",
+   "k": "像素,復古,遊戲",
+   "zh": "像素藝術場景：{{場景}} 以 32 位元色階繪製，清晰的方格像素與有限調色盤，等距或側視角，抖色處理的漸層，簡潔的物件輪廓，復古遊戲畫面的親切感。",
+   "en": "Pixel art scene: {{scene}} rendered in a 32-bit palette, crisp square pixels and a limited color set, isometric or side view, dithered gradients, clean object silhouettes, the warmth of a retro game screen."
+  },
+  {
+   "i": "gm7",
+   "c": "game",
+   "t": "UI 介面框",
+   "k": "UI,遊戲,介面",
+   "zh": "遊戲介面框設計：{{風格}} 主題的對話框、按鈕與血條，統一的邊框裝飾與圓角，適度的立體浮雕與內陰影，中央留空供文字，透明背景，各元件並排展示。",
+   "en": "Game UI kit: dialogue box, buttons and health bar in a {{style}} theme, matching border ornament and corner radius, restrained bevel and inner shadow, centers left empty for text, transparent background, components laid out side by side."
+  },
+  {
+   "i": "gm8",
+   "c": "game",
+   "t": "怪物設計",
+   "k": "怪物,設定,奇幻",
+   "zh": "怪物角色設計：以 {{原型}} 為基礎的奇幻生物，解剖結構合理可信，材質層次分明（鱗片、甲殼、皮毛），威嚇的姿態與清晰的輪廓，中性背景與比例參考人形，概念設計稿質感。",
+   "en": "Monster design: a fantasy creature based on {{base}}, anatomy plausible and readable, layered materials such as scales, chitin and fur, a threatening pose with a strong silhouette, neutral background with a human figure for scale, concept-design quality."
+  },
+  {
+   "i": "gm9",
+   "c": "game",
+   "t": "地圖俯視",
+   "k": "地圖,遊戲,俯視",
+   "zh": "遊戲地圖俯視圖：{{區域}} 的手繪風格地圖，地形以簡化的圖示表現（山脈、森林、聚落），羊皮紙質地與手寫地名標註，柔和的做舊邊緣，指北針與比例尺在角落，冒險感十足。",
+   "en": "Game map from above: a hand-drawn map of {{region}}, terrain shown with simplified icons for mountains, forest and settlements, parchment texture with hand-lettered place names, softly aged edges, compass rose and scale bar in the corners, full of adventure."
+  },
+  {
+   "i": "gm10",
+   "c": "game",
+   "t": "成就徽章",
+   "k": "徽章,成就,系列",
+   "zh": "成就徽章設計：圓形或盾形金屬徽章，中央是 {{主題}} 的簡化符號，邊緣有齒紋或桂冠裝飾，金銀銅三階配色，柔和的金屬反光與立體浮雕，透明背景，成組時風格一致。",
+   "en": "Achievement badge: a circular or shield-shaped metal badge, a simplified {{theme}} symbol at center, notched or laurel edging, gold-silver-bronze tiers, soft metallic reflection and relief, transparent background, consistent across the set."
+  },
+  {
+   "i": "mu1",
+   "c": "music",
+   "t": "專輯封面人像",
+   "k": "專輯,封面,質感",
+   "zh": "專輯封面：歌手的半身人像置於畫面偏下，上方大片留空供專輯名，強烈的單一色光染在臉上，深色背景，輕微的底片顆粒與暗角，情緒濃烈的表情，1:1 正方形。",
+   "en": "Album cover: the artist framed from the chest up, placed low in the frame with a large clear field above for the title, a single strong colored light washing the face, dark background, subtle film grain and vignette, an intense expression, 1:1 square."
+  },
+  {
+   "i": "mu2",
+   "c": "music",
+   "t": "抽象音樂封面",
+   "k": "抽象,封面,實驗",
+   "zh": "抽象專輯封面：由流動的色彩、幾何切割與失真紋理構成，沒有具體形象，限定三色的大膽配色，粗糙的印刷質感與輕微錯位，中央或角落留出文字空間，實驗性強烈，1:1。",
+   "en": "Abstract album cover: built from flowing color, geometric cuts and distorted texture with no literal imagery, a bold three-color palette, coarse print texture with slight misregistration, space reserved at center or corner for type, strongly experimental, 1:1."
+  },
+  {
+   "i": "mu3",
+   "c": "music",
+   "t": "復古黑膠",
+   "k": "黑膠,復古,懷舊",
+   "zh": "復古黑膠唱片封面：1970 年代的視覺語彙，褪色的暖色調與粗糙的紙質，中央是一張略微過曝的人像或場景照，粗體的復古字體排版，邊緣有磨損與環形壓痕，懷舊質感，1:1。",
+   "en": "Vintage vinyl sleeve: 1970s visual language, faded warm tones on coarse board stock, a slightly overexposed portrait or scene at center, bold period typography, worn edges and a ring impression from the record, nostalgic, 1:1."
+  },
+  {
+   "i": "mu4",
+   "c": "music",
+   "t": "演唱會視覺",
+   "k": "演唱會,舞台,震撼",
+   "zh": "演唱會主視覺：舞台燈光與雷射光束穿透煙霧，觀眾席的手臂與螢光棒成海，逆光讓表演者只剩剪影，強烈的洋紅與青光對比，長曝的光軌，震撼的現場氛圍，橫式。",
+   "en": "Concert key visual: stage lights and laser beams cutting through haze, a sea of raised arms and glowsticks, the performer reduced to a backlit silhouette, strong magenta against cyan, long-exposure light trails, overwhelming live atmosphere, landscape format."
+  },
+  {
+   "i": "mu5",
+   "c": "music",
+   "t": "樂器靜物",
+   "k": "樂器,質感,靜物",
+   "zh": "樂器靜物特寫：{{樂器}} 在深色背景中被單一側光勾勒，木紋、金屬與弦的質感細膩可見，柔和的反光與深沉的陰影，大量留白，安靜而有重量的質感，適合作為音樂品牌形象。",
+   "en": "Instrument still life: {{instrument}} shaped by a single side light against a dark ground, woodgrain, metal and strings rendered in fine detail, soft reflections and deep shadow, generous negative space, quiet and weighty, suited to a music brand."
+  },
+  {
+   "i": "mu6",
+   "c": "music",
+   "t": "歌詞卡",
+   "k": "歌詞,排版,文字",
+   "zh": "歌詞卡設計：深色背景上以細襯線或手寫字體排出「{{文字}}」，分行有呼吸感，一側有淡淡的抽象紋理或光暈，其餘大量留白，色彩克制只用一個強調色，安靜有情緒，1:1 或 4:5。",
+   "en": "Lyric card: \"{{text}}\" set in a fine serif or handwritten face on a dark ground, line breaks paced to breathe, a faint abstract texture or glow on one side, otherwise generous emptiness, restrained color with a single accent, quiet and emotive, 1:1 or 4:5."
+  },
+  {
+   "i": "cp1",
+   "c": "concept",
+   "t": "AI 概念視覺",
+   "k": "AI,科技,抽象",
+   "zh": "人工智慧概念圖：由光線構成的神經網路節點在深色空間中連結，資料流沿著路徑流動並在節點處亮起，冷藍與青綠的漸層光，深邃的景深與體積光，抽象但秩序井然，科技感而非恐怖感。",
+   "en": "AI concept visual: neural network nodes built from light connecting across a dark space, data flowing along the paths and igniting at each node, cool blue and teal gradients, deep focus falloff and volumetric light, abstract yet orderly, technological rather than ominous."
+  },
+  {
+   "i": "cp2",
+   "c": "concept",
+   "t": "智慧城市",
+   "k": "城市,未來,科技",
+   "zh": "智慧城市概念圖：現代城市天際線上疊加半透明的資料圖層與連線，交通與能源流動以發光線條表示，藍調時刻的天空，冷色調加一抹琥珀，俯視廣角，秩序與科技並存。",
+   "en": "Smart city concept: a modern skyline overlaid with translucent data layers and connection lines, traffic and energy flows drawn as glowing paths, blue-hour sky, cool palette with an amber accent, high wide-angle view, orderly and technological."
+  },
+  {
+   "i": "cp3",
+   "c": "concept",
+   "t": "機器人與人",
+   "k": "機器人,協作,溫度",
+   "zh": "人機協作概念圖：機械手臂與人的手在中央幾乎接觸，背景是明亮潔淨的實驗空間並虛化，柔和的側光讓金屬與皮膚的質感形成對比，冷白加暖膚色，溫和而非對立的氛圍。",
+   "en": "Human-robot collaboration concept: a robotic arm and a human hand nearly touching at center, a bright clean lab space blurred behind, soft side light contrasting metal against skin, cool white with warm flesh tones, cooperative rather than adversarial."
+  },
+  {
+   "i": "cp4",
+   "c": "concept",
+   "t": "資安防護",
+   "k": "資安,防護,象徵",
+   "zh": "資訊安全概念圖：發光的盾形結構由六角網格構成，環繞著流動的資料流與被阻擋的紅色訊號，深藍近黑的背景，冷色主調加警示紅點綴，體積光與粒子，專業可信不誇張。",
+   "en": "Cybersecurity concept: a glowing shield formed from a hexagonal mesh, surrounded by flowing data streams and deflected red signals, near-black navy background, cool base palette with warning-red accents, volumetric light and particles, credible rather than sensational."
+  },
+  {
+   "i": "cp5",
+   "c": "concept",
+   "t": "太空探索",
+   "k": "太空,壯闊,科幻",
+   "zh": "太空探索場景：太空站或探測器懸浮於行星上方，行星大氣層在邊緣形成細緻的光暈，遠處恆星為唯一光源製造強烈明暗，深黑背景與細密星點，寫實的金屬與隔熱材質，壯闊而孤寂。",
+   "en": "Space exploration scene: a station or probe suspended above a planet, the atmosphere forming a fine glowing limb, a distant star as the only light source creating extreme contrast, deep black field with dense stars, realistic metal and thermal blanket materials, vast and solitary."
+  },
+  {
+   "i": "cp6",
+   "c": "concept",
+   "t": "綠能永續",
+   "k": "綠能,永續,自然",
+   "zh": "綠能永續概念圖：風力發電機與太陽能板座落在起伏的綠色丘陵上，清澈的天空與流動的雲影，明亮飽和的自然色，柔和的清晨光線，開闊的廣角構圖，樂觀而不說教。",
+   "en": "Renewable energy concept: wind turbines and solar arrays across rolling green hills, clear sky with drifting cloud shadows, bright saturated natural color, soft early light, open wide-angle composition, optimistic without preaching."
+  },
+  {
+   "i": "cp7",
+   "c": "concept",
+   "t": "量子與微觀",
+   "k": "微觀,抽象,科學",
+   "zh": "微觀科學視覺：發光的粒子與能量場在深色空間中交互作用，波紋與軌跡以細緻的線條表現，冷紫與青的漸層，強烈的體積光與景深，抽象卻有物理感的秩序，科普視覺用途。",
+   "en": "Microscopic science visual: glowing particles and energy fields interacting in dark space, waves and trajectories drawn as fine lines, cool violet and cyan gradients, strong volumetric light and depth of field, abstract yet governed by a sense of physics, for science communication."
+  },
+  {
+   "i": "cp8",
+   "c": "concept",
+   "t": "未來介面",
+   "k": "介面,全息,科幻",
+   "zh": "全息未來介面：半透明的資料面板懸浮在空中，細緻的線框、圖表與文字層層排列，操作者的手在其中滑動，冷青色的發光加深色環境，輕微的掃描線與雜訊，科幻但不誇張的實用感。",
+   "en": "Holographic future interface: translucent data panels floating in mid-air, layered wireframes, charts and labels, an operator’s hand swiping through them, cool cyan glow against a dark environment, faint scanlines and noise, science-fiction grounded in plausibility."
+  },
+  {
+   "i": "lb1",
+   "c": "localbiz",
+   "t": "美甲美睫作品",
+   "k": "美業,微距,質感",
+   "zh": "美甲作品特寫：一雙保養良好的手輕放在絨布或大理石上，指甲的 {{款式}} 造型與光澤清晰可見，微距鏡頭捕捉細節與亮片折射，柔和的環形光形成均勻反光，淺色乾淨背景，色彩還原精準。",
+   "en": "Nail art close-up: a well-groomed pair of hands resting on velvet or marble, the {{style}} design and gloss clearly readable, macro lens capturing detail and glitter refraction, soft ring light giving an even sheen, clean light background, precise color rendering."
+  },
+  {
+   "i": "lb2",
+   "c": "localbiz",
+   "t": "SPA 按摩空間",
+   "k": "SPA,療癒,質感",
+   "zh": "SPA 療程空間：鋪著白色毛巾的按摩床、燭光與精油瓶、竹編與石材元素，暖黃的間接照明與大量陰影層次，低飽和的米棕色調，安靜放鬆的氛圍，廣角帶出空間的舒適感。",
+   "en": "Spa treatment room: a massage table with white towels, candles and essential oil bottles, bamboo and stone elements, warm indirect lighting with layered shadow, muted taupe palette, quiet and restorative, wide angle conveying comfort."
+  },
+  {
+   "i": "lb3",
+   "c": "localbiz",
+   "t": "健身房形象",
+   "k": "健身,空間,力量",
+   "zh": "健身房空間形象照：整齊排列的器材與橡膠地板，工業感的黑鐵與水泥質地，冷白 LED 加一道強調色燈光，遠處有人正在訓練成為畫面焦點，高對比深色調，專業有力量感。",
+   "en": "Gym interior: rows of equipment on rubber flooring, industrial black steel and concrete, cool white LED with one accent color wash, a figure training in the distance as the focal point, high-contrast dark grade, professional and powerful."
+  },
+  {
+   "i": "lb4",
+   "c": "localbiz",
+   "t": "餐飲店面外觀",
+   "k": "店面,招牌,黃昏",
+   "zh": "餐飲店面外觀照：黃昏時分店內暖黃燈光透出，招牌清晰可辨，門口有植栽與立牌，街道上有一點行人動態模糊，藍調時刻的冷藍天空與暖色室內形成對比，正面略帶透視的構圖。",
+   "en": "Restaurant storefront at dusk: warm interior light spilling out, signage clearly legible, plants and a sandwich board by the door, a hint of pedestrian motion blur, blue-hour sky contrasting the warm interior, near-frontal view with slight perspective."
+  },
+  {
+   "i": "lb5",
+   "c": "localbiz",
+   "t": "咖啡廳品牌形象",
+   "k": "咖啡,品牌,質感",
+   "zh": "咖啡廳品牌形象照：吧台上的手沖器具、磨豆機與陶杯排列有序，咖啡師的手正在注水，蒸氣與水流被清晰捕捉，木質與黑鐵材質，暖色側光，淺景深，職人專注的氛圍。",
+   "en": "Cafe brand image: pour-over gear, grinder and ceramic cups arranged along the bar, the barista’s hands mid-pour, steam and the water stream crisply caught, wood and black steel materials, warm side light, shallow focus, focused craft atmosphere."
+  },
+  {
+   "i": "lb6",
+   "c": "localbiz",
+   "t": "補習班教室",
+   "k": "教育,教室,明亮",
+   "zh": "補習班教室情境：明亮整潔的教室，白板上有板書，學生的背影在座位上專注聽講，老師站在前方講解，均勻的日光燈與窗光，清爽的藍白色調，積極正向的學習氛圍。",
+   "en": "Cram school classroom: a bright tidy room, notes on the whiteboard, students seen from behind attentive at their desks, the teacher explaining at the front, even fluorescent and window light, fresh blue-and-white palette, positive learning atmosphere."
+  },
+  {
+   "i": "lb7",
+   "c": "localbiz",
+   "t": "寵物美容",
+   "k": "寵物,美業,可愛",
+   "zh": "寵物美容店場景：美容師正在為 {{品種}}吹整毛髮，寵物表情放鬆配合，工作檯乾淨整齊，柔和明亮的打光讓毛髮蓬鬆質感清晰，暖色調，親切專業不冰冷。",
+   "en": "Pet grooming scene: a groomer blow-drying a {{breed}}, the pet relaxed and cooperative, a clean tidy station, soft bright lighting rendering the fluffy coat clearly, warm palette, friendly and professional rather than clinical."
+  },
+  {
+   "i": "lb8",
+   "c": "localbiz",
+   "t": "汽車美容",
+   "k": "汽車,美容,質感",
+   "zh": "汽車美容成果照：剛完成鍍膜的車身在燈光下形成鏡面般的連續反光，水珠在漆面上結成完美的圓珠，深色的施工廠房背景，強烈的邊緣光勾勒車身曲線，專業質感。",
+   "en": "Auto detailing result: a freshly coated body panel throwing continuous mirror-like reflections, water beading into perfect spheres on the paint, a dark workshop background, strong rim light tracing the body curves, professional finish."
+  },
+  {
+   "i": "lb9",
+   "c": "localbiz",
+   "t": "診所診間",
+   "k": "診所,醫療,信任",
+   "zh": "診所診間形象照：明亮潔淨的診間，設備排列整齊，淺木色與白色的溫和配色，充足的自然光與均勻補光，沒有壓迫感的構圖，親切安心而非冰冷的醫療感。",
+   "en": "Clinic consultation room: a bright spotless space, equipment neatly arranged, gentle light-wood and white palette, ample daylight with even fill, an unintimidating composition, reassuring rather than clinical."
+  },
+  {
+   "i": "lb10",
+   "c": "localbiz",
+   "t": "手作工作室",
+   "k": "手作,職人,質感",
+   "zh": "手作工作室場景：工作檯上散置著工具、材料與半成品，職人的雙手正在製作 {{作品}}，側窗光帶出木屑與材質的紋理，暖棕色調，真實不刻意整理的工作痕跡，職人紀實感。",
+   "en": "Craft studio scene: tools, materials and work-in-progress scattered across the bench, the maker’s hands shaping {{piece}}, side window light revealing shavings and material texture, warm brown palette, honest untidied traces of work, artisan documentary feel."
+  },
+  {
+   "i": "tw1",
+   "c": "taiwan",
+   "t": "廟口小吃街",
+   "k": "廟口,台灣,熱鬧",
+   "zh": "廟口小吃街夜景：廟宇燈火在街尾發亮，兩側攤販的招牌與蒸氣交錯，人潮川流不息，暖黃燈泡與紅色招牌構成主色，高 ISO 顆粒與輕微動態模糊，濃厚的台灣夜生活氣味。",
+   "en": "Temple-front food street at night: the temple glowing at the end of the lane, vendor signage and steam on both sides, a constant flow of people, warm bulbs and red signboards dominating, high-ISO grain and slight motion blur, the unmistakable air of Taiwanese night life."
+  },
+  {
+   "i": "tw2",
+   "c": "taiwan",
+   "t": "老屋咖啡",
+   "k": "老屋,懷舊,質感",
+   "zh": "老屋改造咖啡廳：磨石子地板與檜木窗框，斑駁的白牆與舊式鐵花窗，午後陽光透過窗格在地上投出幾何光影，木桌上有一杯咖啡，低飽和暖色調，安靜的時光感。",
+   "en": "Old-house cafe: terrazzo floor and cypress window frames, weathered white walls and iron grilles, afternoon sun through the lattice casting geometric shadows on the floor, a cup of coffee on a wooden table, muted warm palette, a sense of suspended time."
+  },
+  {
+   "i": "tw3",
+   "c": "taiwan",
+   "t": "鐵皮屋聚落",
+   "k": "鐵皮,城鎮,紀實",
+   "zh": "台灣城鎮鐵皮屋景觀：層疊加蓋的鐵皮屋頂與水塔在午後強光下泛出鏽紅與藍綠，交錯的電線切割天空，遠處是青山，高空俯視構圖，飽和真實的色彩，帶感情的紀實視角。",
+   "en": "Taiwanese corrugated-roof townscape: layers of tin roofs and water tanks glowing rust-red and blue-green in hard afternoon light, tangled power lines cutting the sky, green hills beyond, elevated overhead view, saturated honest color, an affectionate documentary eye."
+  },
+  {
+   "i": "tw4",
+   "c": "taiwan",
+   "t": "茶園梯田",
+   "k": "茶園,山景,晨霧",
+   "zh": "高山茶園清晨：整齊的茶樹沿等高線環繞山坡形成流暢曲線，晨霧在谷地流動，採茶人的身影點綴其中，斜射的晨光讓茶葉泛出嫩綠，層次分明的遠山，寬幅構圖。",
+   "en": "High-mountain tea plantation at dawn: tea bushes following the contours in flowing curves, mist drifting through the valley, tea pickers dotting the slope, low morning light making the leaves glow fresh green, layered ridgelines beyond, wide composition."
+  },
+  {
+   "i": "tw5",
+   "c": "taiwan",
+   "t": "稻田與白鷺",
+   "k": "稻田,農村,靜謐",
+   "zh": "水田倒影：插秧不久的水田映出天空與雲，幾隻白鷺鷥立於水中，遠處是三合院與檳榔樹的剪影，清晨的柔和光線與薄霧，低飽和的青綠與天藍，安靜遼闊的農村景致。",
+   "en": "Flooded paddy reflection: newly transplanted rice fields mirroring the sky and clouds, egrets standing in the shallows, a courtyard house and betel palms silhouetted beyond, soft misty morning light, muted green and sky blue, quiet expansive countryside."
+  },
+  {
+   "i": "tw6",
+   "c": "taiwan",
+   "t": "漁港燈塔",
+   "k": "燈塔,海岸,黃昏",
+   "zh": "海岸燈塔黃昏：白色燈塔立於礁岩上，天空由橘紅漸層到深藍，海浪拍擊岩石被長曝抹成霧白，遠方漁船的燈點綴，冷暖強烈對比，遼闊而孤獨的海岸氣息。",
+   "en": "Coastal lighthouse at dusk: a white tower on volcanic rock, sky graduating from orange-red to deep blue, waves against the rocks smoothed to mist by long exposure, distant fishing boat lights, strong warm-cool contrast, vast and solitary."
+  },
+  {
+   "i": "tw7",
+   "c": "taiwan",
+   "t": "老戲院",
+   "k": "老戲院,懷舊,建築",
+   "zh": "老電影院外觀：斑駁的手繪看板與霓虹燈管招牌，磨石子外牆與舊式售票口，黃昏時燈光剛亮起，街上停著幾輛機車，褪色的紅藍配色，懷舊而略帶蕭條的氛圍。",
+   "en": "Old cinema facade: a weathered hand-painted billboard and neon tube signage, terrazzo walls and a vintage ticket window, lights just coming on at dusk, a few scooters parked outside, faded red and blue palette, nostalgic with a hint of decline."
+  },
+  {
+   "i": "tw8",
+   "c": "taiwan",
+   "t": "眷村巷弄",
+   "k": "眷村,懷舊,生活",
+   "zh": "眷村巷弄：低矮的紅磚與水泥平房，門前有盆栽與竹竿曬衣，牆上有褪色的標語，狹窄巷道延伸出縱深，午後斜光在牆面切出明暗，溫暖的懷舊色調，濃厚的生活痕跡。",
+   "en": "Military dependants’ village alley: low brick and concrete houses, potted plants and laundry poles by the doors, faded slogans on the walls, a narrow lane receding in perspective, late light dividing the wall into light and shade, warm nostalgic grade, dense traces of daily life."
+  },
+  {
+   "i": "tw9",
+   "c": "taiwan",
+   "t": "鹽田夕照",
+   "k": "鹽田,幾何,夕陽",
+   "zh": "鹽田夕照：規整的方格鹽田在夕陽下映出粉橘與淡紫的天空倒影，堆起的鹽山形成白色三角，工作者的剪影行走其間，空拍或低角度廣角，幾何秩序與柔和色彩並存。",
+   "en": "Salt flats at sunset: a grid of evaporation ponds mirroring a pink and violet sky, mounded salt forming white triangles, a worker’s silhouette walking between them, aerial or low wide angle, geometric order set against soft color."
+  },
+  {
+   "i": "tw10",
+   "c": "taiwan",
+   "t": "平交道日常",
+   "k": "鐵道,日常,台灣",
+   "zh": "鐵道平交道日常：柵欄放下，機車與行人在兩側等待，遠方列車正駛近並帶出輕微動態模糊，兩旁是老式街屋與招牌，午後的暖光與長影，飽和的紀實色彩，濃厚的台灣街景感。",
+   "en": "Level crossing moment: the barrier down, scooters and pedestrians waiting on both sides, a train approaching in the distance with slight motion blur, old shophouses and signage lining the track, warm late light and long shadows, saturated documentary color, unmistakably Taiwanese."
+  }
+ ],
+ "mods": [
+  {
+   "g": "光線",
+   "k": "light",
+   "items": [
+    [
+     "柔和窗光",
+     "soft window light"
+    ],
+    [
+     "黃金時刻",
+     "golden hour light"
+    ],
+    [
+     "藍調時刻",
+     "blue hour light"
+    ],
+    [
+     "林布蘭光",
+     "Rembrandt lighting"
+    ],
+    [
+     "逆光輪廓光",
+     "backlit rim lighting"
+    ],
+    [
+     "霓虹光",
+     "neon lighting"
+    ],
+    [
+     "棚拍柔光箱",
+     "softbox studio lighting"
+    ],
+    [
+     "硬光高反差",
+     "hard directional light, high contrast"
+    ],
+    [
+     "燭光",
+     "candlelight"
+    ],
+    [
+     "陰天柔和漫射",
+     "overcast diffused light"
+    ],
+    [
+     "光影斑駁",
+     "dappled light through leaves"
+    ]
+   ]
+  },
+  {
+   "g": "鏡頭",
+   "k": "lens",
+   "items": [
+    [
+     "85mm 淺景深",
+     "85mm f/1.4, shallow depth of field"
+    ],
+    [
+     "35mm 紀實",
+     "35mm documentary framing"
+    ],
+    [
+     "24mm 廣角",
+     "24mm wide angle"
+    ],
+    [
+     "200mm 長焦壓縮",
+     "200mm telephoto compression"
+    ],
+    [
+     "微距",
+     "macro lens, extreme close-up"
+    ],
+    [
+     "魚眼",
+     "fisheye lens"
+    ],
+    [
+     "移軸",
+     "tilt-shift lens"
+    ],
+    [
+     "空拍俯視",
+     "aerial top-down view"
+    ],
+    [
+     "低角度仰視",
+     "low angle looking up"
+    ]
+   ]
+  },
+  {
+   "g": "色調",
+   "k": "color",
+   "items": [
+    [
+     "Kodak Portra 400",
+     "Kodak Portra 400 film palette"
+    ],
+    [
+     "富士軟片感",
+     "Fujifilm color science"
+    ],
+    [
+     "電影青橙",
+     "cinematic teal and orange grade"
+    ],
+    [
+     "莫蘭迪低飽和",
+     "muted Morandi palette"
+    ],
+    [
+     "高飽和普普",
+     "high-saturation pop color"
+    ],
+    [
+     "黑白高反差",
+     "high-contrast black and white"
+    ],
+    [
+     "復古褪色",
+     "faded vintage tones"
+    ],
+    [
+     "冷藍調",
+     "cool blue grade"
+    ],
+    [
+     "暖金調",
+     "warm golden grade"
+    ]
+   ]
+  },
+  {
+   "g": "構圖",
+   "k": "comp",
+   "items": [
+    [
+     "三分法",
+     "rule of thirds"
+    ],
+    [
+     "置中對稱",
+     "centered symmetrical composition"
+    ],
+    [
+     "極簡留白",
+     "minimalist, generous negative space"
+    ],
+    [
+     "對角線動態",
+     "dynamic diagonal composition"
+    ],
+    [
+     "框中框",
+     "frame within a frame"
+    ],
+    [
+     "平拍俯視",
+     "flat lay, top-down"
+    ],
+    [
+     "留出文字空間",
+     "clear area reserved for text"
+    ]
+   ]
+  },
+  {
+   "g": "質感",
+   "k": "qual",
+   "items": [
+    [
+     "照片級寫實",
+     "photorealistic"
+    ],
+    [
+     "8K 超細節",
+     "8K, ultra detailed"
+    ],
+    [
+     "皮膚紋理自然",
+     "natural skin texture, no over-smoothing"
+    ],
+    [
+     "電影劇照",
+     "cinematic film still"
+    ],
+    [
+     "雜誌封面級",
+     "magazine cover quality"
+    ],
+    [
+     "底片顆粒",
+     "fine film grain"
+    ],
+    [
+     "3D 渲染",
+     "3D render, octane"
+    ],
+    [
+     "手繪水彩",
+     "hand-painted watercolor"
+    ],
+    [
+     "向量扁平",
+     "flat vector illustration"
+    ]
+   ]
+  },
+  {
+   "g": "情緒",
+   "k": "mood",
+   "items": [
+    [
+     "溫暖療癒",
+     "warm and comforting"
+    ],
+    [
+     "專業可信",
+     "professional and trustworthy"
+    ],
+    [
+     "神秘高冷",
+     "mysterious and aloof"
+    ],
+    [
+     "歡樂熱鬧",
+     "joyful and lively"
+    ],
+    [
+     "靜謐禪意",
+     "serene and meditative"
+    ],
+    [
+     "史詩壯闊",
+     "epic and majestic"
+    ],
+    [
+     "懷舊",
+     "nostalgic"
+    ]
+   ]
+  }
+ ],
+ "negs": [
+  [
+   "變形的手",
+   "deformed hands, extra fingers"
+  ],
+  [
+   "多餘肢體",
+   "extra limbs"
+  ],
+  [
+   "文字亂碼",
+   "garbled text, misspelled words"
+  ],
+  [
+   "浮水印",
+   "watermark, signature, logo"
+  ],
+  [
+   "塑膠感皮膚",
+   "plastic waxy skin, over-smoothed"
+  ],
+  [
+   "過曝",
+   "blown highlights, overexposed"
+  ],
+  [
+   "雜亂背景",
+   "cluttered messy background"
+  ],
+  [
+   "低畫質",
+   "low quality, blurry, jpeg artifacts"
+  ]
+ ],
+ "sites": [
+  {
+   "n": "Gemini",
+   "u": "https://gemini.google.com/app",
+   "q": null
+  },
+  {
+   "n": "ChatGPT",
+   "u": "https://chatgpt.com/?q=",
+   "q": 1
+  },
+  {
+   "n": "Grok",
+   "u": "https://grok.com/?q=",
+   "q": 1
+  },
+  {
+   "n": "Copilot 影像",
+   "u": "https://www.bing.com/images/create?q=",
+   "q": 1
+  },
+  {
+   "n": "Ideogram",
+   "u": "https://ideogram.ai/t/explore",
+   "q": null
+  },
+  {
+   "n": "Leonardo",
+   "u": "https://app.leonardo.ai/",
+   "q": null
+  },
+  {
+   "n": "Midjourney",
+   "u": "https://www.midjourney.com/imagine",
+   "q": null
+  },
+  {
+   "n": "Firefly",
+   "u": "https://firefly.adobe.com/generate/images",
+   "q": null
+  },
+  {
+   "n": "即夢 Dreamina",
+   "u": "https://dreamina.capcut.com/ai-tool/home",
+   "q": null
+  },
+  {
+   "n": "Recraft",
+   "u": "https://www.recraft.ai/",
+   "q": null
+  },
+  {
+   "n": "Krea",
+   "u": "https://www.krea.ai/",
+   "q": null
+  },
+  {
+   "n": "Playground",
+   "u": "https://playground.com/create",
+   "q": null
+  }
+ ],
+ "modes": [
+  {
+   "k": "t2i",
+   "n": "文生圖",
+   "d": "從零生成，用完整描述",
+   "zh": "",
+   "en": ""
+  },
+  {
+   "k": "i2i_face",
+   "n": "放我的照片·保留長相",
+   "d": "人像換風格、換場景、換服裝",
+   "zh": "以我上傳的照片為基準，完整保留照片中人物的臉部特徵、五官比例、膚色與髮型，長相必須一致、可辨識為同一人。忽略下方描述中關於年齡、性別與外貌的設定，只採用其中的服裝、光線、場景與風格。\n\n",
+   "en": "Use my uploaded photo as the base. Preserve the subject’s facial features, proportions, skin tone and hairstyle exactly — the person must remain recognizably the same. Ignore any age, gender or appearance details below; apply only the wardrobe, lighting, setting and style described.\n\n"
+  },
+  {
+   "k": "i2i_obj",
+   "n": "放我的商品·保留物件",
+   "d": "商品換背景、換情境",
+   "zh": "以我上傳的照片中的物件為主體，完整保留其外型、比例、顏色、材質與標籤文字，不要更動物件本身。只依下方描述更換背景、光線與擺設情境。\n\n",
+   "en": "Use the object in my uploaded photo as the subject. Preserve its shape, proportions, color, material and any label text exactly — do not alter the object itself. Change only the background, lighting and staging as described below.\n\n"
+  },
+  {
+   "k": "style",
+   "n": "風格轉繪",
+   "d": "把照片轉成插畫、油畫等",
+   "zh": "將我上傳的照片轉繪成下列風格。保留原始構圖、主要元素的位置與人物姿態，只改變畫風、筆觸與色彩表現。\n\n",
+   "en": "Reinterpret my uploaded photo in the style described below. Keep the original composition, the placement of the main elements and the subject’s pose; change only the rendering style, mark-making and color treatment.\n\n"
+  },
+  {
+   "k": "edit",
+   "n": "局部修改",
+   "d": "只改一個地方，其餘不動",
+   "zh": "只修改我指定的部分，畫面其餘區域必須與原圖完全一致，包括構圖、光線方向與色彩。要修改的內容如下：\n\n",
+   "en": "Modify only the area I specify. Everything else must match the original exactly, including composition, lighting direction and color. The change to make:\n\n"
+  },
+  {
+   "k": "extend",
+   "n": "延伸畫布",
+   "d": "把照片往外補畫",
+   "zh": "將我上傳的照片向外延伸擴展畫布，新增的區域必須與原圖的透視、光線、色調與質感完全銜接，看不出接縫。延伸出來的區域內容為：\n\n",
+   "en": "Extend the canvas of my uploaded photo outward. The new area must match the original’s perspective, lighting, color and texture seamlessly. Content for the extended area:\n\n"
+  }
+ ],
+ "ratios": [
+  {
+   "r": "1:1",
+   "w": 1,
+   "h": 1,
+   "use": "IG 貼文、頭像、Podcast 封面"
+  },
+  {
+   "r": "4:5",
+   "w": 4,
+   "h": 5,
+   "use": "IG 直式貼文（版面最大）"
+  },
+  {
+   "r": "3:4",
+   "w": 3,
+   "h": 4,
+   "use": "證件照、直式人像、列印 6×8"
+  },
+  {
+   "r": "2:3",
+   "w": 2,
+   "h": 3,
+   "use": "相片直式、海報、明信片"
+  },
+  {
+   "r": "9:16",
+   "w": 9,
+   "h": 16,
+   "use": "限時動態、Reels、手機桌布"
+  },
+  {
+   "r": "4:3",
+   "w": 4,
+   "h": 3,
+   "use": "橫式相片、LINE 貼圖主圖、簡報 4:3"
+  },
+  {
+   "r": "3:2",
+   "w": 3,
+   "h": 2,
+   "use": "單眼相機橫式、印刷 4×6"
+  },
+  {
+   "r": "16:9",
+   "w": 16,
+   "h": 9,
+   "use": "YouTube 縮圖、簡報、封面橫幅"
+  },
+  {
+   "r": "21:9",
+   "w": 21,
+   "h": 9,
+   "use": "寬幅電影感、網頁 Banner"
+  }
+ ],
+ "packs": [
+  {
+   "id": "sticker16",
+   "n": "LINE 貼圖 16 動作",
+   "hint": "一次產出 16 格貼圖提示詞",
+   "items": [
+    [
+     "揮手打招呼，開朗笑臉",
+     "waving hello with a bright smile"
+    ],
+    [
+     "雙手合十拜託，眼神懇求",
+     "hands pressed together pleading"
+    ],
+    [
+     "比出大拇指讚，得意表情",
+     "giving a thumbs up, smug expression"
+    ],
+    [
+     "鞠躬道謝，恭敬姿態",
+     "bowing in thanks, respectful posture"
+    ],
+    [
+     "趴倒在桌上，疲憊到極點",
+     "collapsed face-down on a desk, utterly exhausted"
+    ],
+    [
+     "大哭噴淚，誇張的淚水",
+     "bawling with exaggerated gushing tears"
+    ],
+    [
+     "生氣跳腳，頭上冒怒氣符號",
+     "stomping in anger with anger marks above the head"
+    ],
+    [
+     "嚇一大跳，瞳孔縮小往後仰",
+     "startled, pupils shrunk, leaning back"
+    ],
+    [
+     "歪頭疑惑，頭上一個問號",
+     "head tilted in confusion with a question mark above"
+    ],
+    [
+     "捧著手機大笑",
+     "holding a phone and laughing hard"
+    ],
+    [
+     "吃東西吃得很滿足",
+     "eating happily with a satisfied face"
+    ],
+    [
+     "舉手發問，眼神認真",
+     "raising a hand to ask, earnest expression"
+    ],
+    [
+     "奔跑趕路，速度線在後",
+     "running in a hurry with speed lines behind"
+    ],
+    [
+     "睡著流口水，頭上有泡泡",
+     "asleep and drooling with a sleep bubble"
+    ],
+    [
+     "害羞臉紅，雙手摀臉",
+     "blushing shyly with hands covering the face"
+    ],
+    [
+     "灑花慶祝，周圍飄落花瓣",
+     "celebrating with petals showering down"
+    ]
+   ]
+  },
+  {
+   "id": "expr9",
+   "n": "表情九宮格",
+   "hint": "同一角色九種情緒",
+   "items": [
+    [
+     "開心微笑",
+     "happy smile"
+    ],
+    [
+     "放聲大笑",
+     "laughing out loud"
+    ],
+    [
+     "生氣皺眉",
+     "angry frown"
+    ],
+    [
+     "驚訝張嘴",
+     "surprised, mouth open"
+    ],
+    [
+     "難過落淚",
+     "sad with tears"
+    ],
+    [
+     "害羞臉紅",
+     "shy and blushing"
+    ],
+    [
+     "疑惑歪頭",
+     "puzzled, head tilted"
+    ],
+    [
+     "得意挑眉",
+     "smug, eyebrow raised"
+    ],
+    [
+     "疲倦半闔眼",
+     "tired, half-closed eyes"
+    ]
+   ]
+  },
+  {
+   "id": "char12",
+   "n": "角色變體 12 套",
+   "hint": "同一張臉換 12 種場合",
+   "items": [
+    [
+     "穿著合身襯衫與西裝外套，在辦公大樓前的晨光中",
+     "in a fitted shirt and blazer outside an office building in morning light"
+    ],
+    [
+     "穿著寬鬆家居服蜷在沙發上捧著馬克杯",
+     "in loose loungewear curled on a sofa holding a mug"
+    ],
+    [
+     "穿著機能運動服在戶外跑道上",
+     "in technical sportswear on an outdoor running track"
+    ],
+    [
+     "穿著剪裁俐落的正式禮服在宴會廳中",
+     "in a sharply tailored formal outfit in a banquet hall"
+    ],
+    [
+     "穿著風衣撐傘走在雨後反光的街道",
+     "in a trench coat with an umbrella on a rain-slicked street"
+    ],
+    [
+     "穿著亞麻襯衫赤腳走在退潮的沙灘",
+     "in a linen shirt walking barefoot on wet sand"
+    ],
+    [
+     "穿著針織上衣在咖啡廳窗邊翻書",
+     "in a knit top reading by a cafe window"
+    ],
+    [
+     "穿著短T在夜市邊走邊吃",
+     "in a tee eating street food at a night market"
+    ],
+    [
+     "穿著防風外套背登山包站在稜線上",
+     "in a shell jacket and backpack on a mountain ridge"
+    ],
+    [
+     "穿著圍裙在廚房裡料理",
+     "in an apron cooking in a kitchen"
+    ],
+    [
+     "穿著醫師白袍站在明亮診間",
+     "in a white coat standing in a bright clinic"
+    ],
+    [
+     "穿著厚外套與圍巾走在飄雪的街道",
+     "in a heavy coat and scarf on a snowy street"
+    ]
+   ]
+  },
+  {
+   "id": "angle4",
+   "n": "四視圖",
+   "hint": "正面／四分之三／側面／背面",
+   "items": [
+    [
+     "正面直立視角",
+     "straight-on front view"
+    ],
+    [
+     "四分之三側身視角",
+     "three-quarter view"
+    ],
+    [
+     "正側面視角",
+     "strict profile view"
+    ],
+    [
+     "背面視角",
+     "rear view"
+    ]
+   ]
+  },
+  {
+   "id": "ecom6",
+   "n": "網拍六件組",
+   "hint": "一個商品的完整上架圖",
+   "items": [
+    [
+     "純白背景去背主圖，商品置中佔畫面七成",
+     "pure white cut-out hero shot, product centered filling 70 percent of the frame"
+    ],
+    [
+     "45 度角展示整體外觀與厚度",
+     "three-quarter angle showing overall form and thickness"
+    ],
+    [
+     "關鍵細節的微距特寫，強調做工與材質",
+     "macro close-up of a key detail emphasizing craftsmanship and material"
+    ],
+    [
+     "旁邊放一隻手作為尺寸比例參考",
+     "with a hand beside it as a size reference"
+    ],
+    [
+     "真實生活場景中的使用情境",
+     "being used in a real everyday setting"
+    ],
+    [
+     "與所有附件在淺色背景上網格排列",
+     "arranged in a grid with all included accessories on a light background"
+    ]
+   ]
+  },
+  {
+   "id": "season4",
+   "n": "四季系列",
+   "hint": "同構圖換四季",
+   "items": [
+    [
+     "春天，櫻花或新綠，柔和的粉綠色調",
+     "spring, cherry blossom or fresh green, soft pink-green palette"
+    ],
+    [
+     "夏天，強烈日光與濃烈綠意，高飽和藍天",
+     "summer, harsh sun and deep foliage, saturated blue sky"
+    ],
+    [
+     "秋天，楓紅與金黃落葉，暖橘色調",
+     "autumn, red maples and golden leaves, warm orange grade"
+    ],
+    [
+     "冬天，落雪與枯枝，冷藍灰色調",
+     "winter, snowfall and bare branches, cool blue-grey grade"
+    ]
+   ]
+  },
+  {
+   "id": "week7",
+   "n": "一週問候",
+   "hint": "週一到週日七張",
+   "items": [
+    [
+     "星期一，重新開機的振作感",
+     "Monday, the feeling of restarting"
+    ],
+    [
+     "星期二，逐漸進入狀況的節奏",
+     "Tuesday, settling into rhythm"
+    ],
+    [
+     "星期三，過了一半的小鼓勵",
+     "Wednesday, halfway encouragement"
+    ],
+    [
+     "星期四，撐住就快到了",
+     "Thursday, almost there"
+    ],
+    [
+     "星期五，即將解放的輕快",
+     "Friday, the lightness before release"
+    ],
+    [
+     "星期六，放鬆愜意的悠閒",
+     "Saturday, relaxed and unhurried"
+    ],
+    [
+     "星期日，安靜充電的平靜",
+     "Sunday, quiet recharging"
+    ]
+   ]
+  },
+  {
+   "id": "ratio5",
+   "n": "多尺寸同版",
+   "hint": "同一張圖的五種比例",
+   "items": [
+    [
+     "1:1 正方形構圖，主體置中",
+     "1:1 square composition, subject centered"
+    ],
+    [
+     "4:5 直式構圖，主體略偏上",
+     "4:5 vertical composition, subject slightly above center"
+    ],
+    [
+     "9:16 全屏直式，上下留出安全區",
+     "9:16 full-screen vertical with safe margins top and bottom"
+    ],
+    [
+     "16:9 橫式構圖，主體偏右留出文字空間",
+     "16:9 horizontal with the subject to the right, space for text"
+    ],
+    [
+     "3:4 直式構圖，適合列印",
+     "3:4 vertical composition suited to print"
+    ]
+   ]
+  }
+ ],
+ "dnaTemplate": {
+  "zh": "【固定外貌】\n性別年齡：{{性別}}，約 {{年齡}} 歲\n臉型五官：{{臉型}}臉，{{眼睛}}，{{鼻子}}，{{嘴唇}}\n髮型髮色：{{髮型}}\n膚色體型：{{膚色}}，{{體型}}\n標誌特徵：{{特徵}}",
+  "en": "[FIXED APPEARANCE]\nGender & age: {{gender}}, around {{age}} years old\nFace: {{face shape}} face, {{eyes}}, {{nose}}, {{lips}}\nHair: {{hair}}\nSkin & build: {{skin}}, {{build}}\nSignature: {{signature}}"
+ },
+ "dnaLock": {
+  "zh": "\n以上外貌特徵必須完全一致，每一張都是同一個人，不可改變臉型、五官比例、髮型與膚色。以下是這次要畫的內容：\n\n",
+  "en": "\nThese features must remain exactly consistent — every image is the same person. Do not alter the face shape, feature proportions, hairstyle or skin tone. Here is what to render this time:\n\n"
+ }
+}
