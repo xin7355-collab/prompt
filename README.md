@@ -35,6 +35,23 @@ npm run web          # 瀏覽器
 npm run typecheck    # TypeScript 檢查
 ```
 
+## 網頁版（iPhone / 電腦都能開）
+
+iOS 沒辦法安裝 APK —— 那是 Android 專用格式。要在 iPhone 上檢查，用網頁版：
+
+```bash
+npm run build:web-single      # 產出單一檔案 spellbox-web.html（約 2.5 MB）
+```
+
+整個 App（含 353 則提示詞）會內嵌成一個 HTML 檔，**不需要伺服器、不連任何外部網址**，
+存到手機「檔案」App 後用 Safari 開就能用。資料存在瀏覽器的 localStorage，關掉再開還在。
+
+要一般的多檔部署版本（GitHub Pages、Netlify 之類）用 `npm run build:web`，
+輸出在 `dist-web/`。注意部署在子路徑時要設 `experiments.baseUrl`。
+
+網頁版與 App 的差異：觸覺回饋沒有作用，成品圖存成 data URI 而不是檔案，
+其餘（組裝、連發、角色鎖定、匯出入）行為相同。
+
 ## 拿 APK（Android 測試安裝）
 
 不用自己裝任何東西 —— repo 裡的 GitHub Actions 會直接建置：
