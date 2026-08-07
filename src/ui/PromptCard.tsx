@@ -146,6 +146,8 @@ function PromptCardImpl({
 
 export const PromptCard = memo(PromptCardImpl);
 
+const noSelect = { userSelect: 'none' } as const;
+
 const styles = StyleSheet.create({
   card: {
     borderRadius: radius.lg,
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
   },
   headText: { flex: 1, minWidth: 0 },
   eyebrow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 4 },
-  eyebrowText: { fontFamily: fonts.mono, fontSize: 9.5, letterSpacing: 1.4, fontWeight: '700' },
+  eyebrowText: { ...noSelect, fontFamily: fonts.mono, fontSize: 9.5, letterSpacing: 1.4, fontWeight: '700' },
   badge: {
     fontFamily: fonts.mono,
     fontSize: 9,
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     paddingVertical: 1,
     overflow: 'hidden',
   },
-  title: { fontFamily: fonts.uiMedium, fontSize: 16, fontWeight: '700', lineHeight: 22 },
+  title: { ...noSelect, fontFamily: fonts.uiMedium, fontSize: 16, fontWeight: '700', lineHeight: 22 },
   star: { paddingLeft: space.xs },
 
   shot: {
@@ -218,13 +220,14 @@ const styles = StyleSheet.create({
     paddingTop: space.md,
   },
   action: {
+    ...noSelect,
     flex: 1,
     minHeight: 42,
     borderRadius: radius.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  actionLabel: { fontFamily: fonts.uiMedium, fontSize: 14, fontWeight: '700' },
+  actionLabel: { ...noSelect, fontFamily: fonts.uiMedium, fontSize: 14, fontWeight: '700' },
   actionIcon: {
     width: 46,
     minHeight: 42,

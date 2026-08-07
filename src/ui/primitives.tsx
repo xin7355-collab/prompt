@@ -288,8 +288,16 @@ export function EmptyState({ title, body }: { title: string; body: string }) {
   );
 }
 
+/**
+ * Labels inside controls must not be selectable: on a touch screen a press that lands
+ * slightly off target otherwise turns into a text selection with drag handles instead
+ * of activating the control.
+ */
+const noSelect = { userSelect: 'none' } as const;
+
 export const styles = StyleSheet.create({
   button: {
+    ...noSelect,
     minHeight: 44,
     paddingHorizontal: space.md,
     borderRadius: radius.md,
@@ -298,9 +306,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonCompact: { minHeight: 36, paddingHorizontal: space.sm + 2 },
-  buttonLabel: { fontFamily: fonts.uiMedium, fontSize: 14, fontWeight: '700' },
+  buttonLabel: { ...noSelect, fontFamily: fonts.uiMedium, fontSize: 14, fontWeight: '700' },
 
   chip: {
+    ...noSelect,
     minHeight: 36,
     flexDirection: 'row',
     alignItems: 'center',
@@ -309,12 +318,12 @@ export const styles = StyleSheet.create({
     borderRadius: radius.pill,
     borderWidth: 1,
   },
-  chipLabel: { fontFamily: fonts.ui, fontSize: 13, fontWeight: '600' },
-  chipCount: { fontFamily: fonts.mono, fontSize: 10.5 },
+  chipLabel: { ...noSelect, fontFamily: fonts.ui, fontSize: 13, fontWeight: '600' },
+  chipCount: { ...noSelect, fontFamily: fonts.mono, fontSize: 10.5 },
 
   section: { marginTop: space.xl },
   sectionHead: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
-  sectionTitle: { fontFamily: fonts.mono, fontSize: 11, letterSpacing: 1.6, fontWeight: '700' },
+  sectionTitle: { ...noSelect, fontFamily: fonts.mono, fontSize: 11, letterSpacing: 1.6, fontWeight: '700' },
   rule: { flex: 1, height: 1 },
 
   field: { marginTop: space.md },
@@ -348,7 +357,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconGlyph: { fontSize: 17, lineHeight: 21 },
+  iconGlyph: { ...noSelect, fontSize: 17, lineHeight: 21 },
 
   empty: {
     borderWidth: 2,

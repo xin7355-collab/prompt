@@ -13,7 +13,6 @@ import {
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
-import * as WebBrowser from 'expo-web-browser';
 
 import { categoryOf, MODES, MODIFIERS, NEGATIVES, SITES } from '../../src/data/corpus';
 import { bodyOf, compose, placeholdersIn } from '../../src/lib/compose';
@@ -26,6 +25,7 @@ import { Button, Chip, EmptyState, Field, Section } from '../../src/ui/primitive
 import { RatioPicker } from '../../src/ui/RatioPicker';
 import { useToast } from '../../src/ui/Toast';
 import { pickImage, shareText } from '../../src/lib/io';
+import { openExternal } from '../../src/lib/openExternal';
 import { BRAND } from '../../src/brand';
 
 export default function BenchScreen() {
@@ -61,12 +61,20 @@ export default function BenchScreen() {
   }, [output, toast]);
 
   const sendTo = useCallback(
-    async (index: number) => {
+    (index: number) => {
       const site = SITES[index];
-      await Clipboard.setStringAsync(output);
       const url = site.q ? site.u + encodeURIComponent(output) : site.u;
-      toast(`已複製，正在開啟 ${site.n}`);
-      await WebBrowser.openBrowserAsync(url).catch(() => {});
+
+      // Open first, copy second: on web an await here would end the tap's user
+      // activation and the browser would silently refuse the new tab.
+      const result = openExternal(url);
+      Clipboard.setStringAsync(output).catch(() => {});
+
+      if (result === 'opened') {
+        toast(`已複製，正在開啟 ${site.n}`);
+      } else {
+        toast(`瀏覽器擋掉了新分頁。提示詞已複製，請自己開 ${site.n} 貼上`, 'error');
+      }
     },
     [output, toast]
   );
@@ -492,6 +500,9 @@ export default function BenchScreen() {
   );
 }
 
+/** Control labels must not be selectable — see the note in ui/primitives. */
+const noSelect = { userSelect: 'none' } as const;
+
 const styles = StyleSheet.create({
   page: { paddingHorizontal: space.md },
   pageTitle: { fontFamily: fonts.uiMedium, fontSize: 26, fontWeight: '800', letterSpacing: -0.6 },
@@ -512,14 +523,15 @@ const styles = StyleSheet.create({
 
   modeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm - 2 },
   mode: {
+    ...noSelect,
     flexGrow: 1,
     flexBasis: 150,
     padding: space.md - 2,
     borderWidth: 1,
     borderRadius: radius.md,
   },
-  modeName: { fontFamily: fonts.uiMedium, fontSize: 14, fontWeight: '700' },
-  modeDesc: { fontFamily: fonts.ui, fontSize: 11.5, lineHeight: 16, marginTop: 3 },
+  modeName: { ...noSelect, fontFamily: fonts.uiMedium, fontSize: 14, fontWeight: '700' },
+  modeDesc: { ...noSelect, fontFamily: fonts.ui, fontSize: 11.5, lineHeight: 16, marginTop: 3 },
 
   chipWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm - 2 },
 
@@ -550,6 +562,7 @@ const styles = StyleSheet.create({
 
   siteGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm - 2 },
   site: {
+    ...noSelect,
     flexGrow: 1,
     flexBasis: 96,
     minHeight: 44,
@@ -559,5 +572,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: space.sm,
   },
-  siteName: { fontFamily: fonts.ui, fontSize: 13, fontWeight: '600' },
+  siteName: { ...noSelect, fontFamily: fonts.ui, fontSize: 13, fontWeight: '600' },
 });
