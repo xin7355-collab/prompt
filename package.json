@@ -10,8 +10,9 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "extract-data": "node tools/extract-data.mjs",
-    "build:web": "expo export --platform web --output-dir dist-web",
-    "build:web-single": "npm run build:web && node tools/bundle-single-html.mjs dist-web spellbox-web.html"
+    "build:web": "expo export --platform web --output-dir dist-web && node tools/pwa-postbuild.mjs dist-web",
+    "build:web-single": "npm run build:web && node tools/bundle-single-html.mjs dist-web spellbox-web.html",
+    "icons": "node tools/render-icons.mjs"
   },
   "dependencies": {
     "@expo/metro-runtime": "~57.0.8",

@@ -50,17 +50,15 @@ jobs:
       # A project site lives at /<repo>/, so the router and every asset URL must be
       # built against that prefix rather than the domain root. base_path comes from
       # the step above so the repo can be renamed without touching this file.
-      - name: Export web build
+      # Also fills the service worker's precache list and writes the 404.html SPA
+      # fallback, both of which need the export to exist first.
+      - name: Export web build and finish the PWA
         env:
           EXPO_BASE_URL: ${{ steps.pages.outputs.base_path }}
         run: |
           echo "base path: ${EXPO_BASE_URL:-<root>}"
           npx expo export --platform web --output-dir dist-web
-
-      # Pages serves 404.html for any unknown path. Making it a copy of index.html is
-      # the standard SPA fallback, so refreshing on /bench still loads the app.
-      - name: Add SPA fallback
-        run: cp dist-web/index.html dist-web/404.html
+          node tools/pwa-postbuild.mjs dist-web
 
       - uses: actions/upload-pages-artifact@v3
         with:

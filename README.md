@@ -35,9 +35,31 @@ npm run web          # 瀏覽器
 npm run typecheck    # TypeScript 檢查
 ```
 
-## 網頁版（iPhone / 電腦都能開）
+## PWA（iPhone 也能像 App 一樣裝起來）
 
-iOS 沒辦法安裝 APK —— 那是 Android 專用格式。要在 iPhone 上檢查，用網頁版：
+網頁版是 PWA：加到主畫面後全螢幕執行、有自己的圖示、離線可用。
+
+**iPhone**：Safari 開網址 → 分享鈕 → 加入主畫面
+**Android**：Chrome 開網址 → 選單 → 安裝應用程式
+
+PWA 的三個條件都做好了：
+
+| | |
+|---|---|
+| `public/manifest.webmanifest` | 名稱、`display: standalone`、192／512 圖示各含 maskable 版、工作台與角色工坊的捷徑 |
+| `public/sw.js` | Service Worker，預先快取整個 app（29 個檔案、2.7 MB），離線可完整使用 |
+| `public/index.html` | `apple-touch-icon`、`apple-mobile-web-app-*`、`theme-color`、`viewport-fit=cover` |
+
+所有路徑都是相對的，所以在網域根目錄或 `/PROMPT-VAULT/` 子路徑都能正常運作。
+
+> **必須用 HTTPS 網址開才裝得起來** —— Service Worker 不支援 `file://`。
+> 下面那個單一 HTML 檔可以離線看內容，但不能安裝成 PWA。
+
+圖示由 `tools/icon.svg` 產生：`npm run icons` 會輸出 App 與 PWA 需要的全部尺寸。
+
+## 單一 HTML 檔（不需伺服器）
+
+要一個丟到「檔案」App 就能開、完全不需要網路的版本：
 
 ```bash
 npm run build:web-single      # 產出單一檔案 spellbox-web.html（約 2.5 MB）

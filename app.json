@@ -24,16 +24,20 @@
       "package": "com.spellbox.app",
       "predictiveBackGestureEnabled": false,
       "adaptiveIcon": {
-        "backgroundColor": "#12171A",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#0E1211",
+        "foregroundImage": "./assets/adaptive-icon.png"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "single",
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "咒語盒 Spellbox",
+      "shortName": "咒語盒",
+      "lang": "zh-Hant",
+      "themeColor": "#0E1211",
+      "backgroundColor": "#0E1211",
+      "description": "401 則中英雙語 AI 繪圖提示詞、提示詞工作台，以及 26 軸角色工坊。"
     },
     "plugins": [
       "expo-router",
