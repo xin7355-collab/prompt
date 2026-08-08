@@ -1,19 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- B: lid ajar, light pouring out. Reads as "open the box and magic comes out". -->
+  <!--
+    B: lid ajar, light pouring out. Reads as "open the box and magic comes out".
+
+    Redrawn for small sizes. The first version had five stacked details and a beam
+    that faded to nothing — below 48px they merged into one gold smear. This one is
+    three shapes with dark gaps between them (spark / tilted lid / body), because the
+    gaps are what the eye resolves at 32px, not the shapes.
+  -->
   <defs>
     <linearGradient id="b" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#1E5245"/><stop offset="1" stop-color="#0E1211"/></linearGradient>
     <linearGradient id="beam" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0" stop-color="#E5B23F" stop-opacity=".95"/>
+      <stop offset="0" stop-color="#E5B23F" stop-opacity=".62"/>
       <stop offset="1" stop-color="#E5B23F" stop-opacity="0"/></linearGradient>
   </defs>
   <rect width="512" height="512" fill="url(#b)"/>
-  <path d="M196 306 L150 108 L362 108 L316 306 Z" fill="url(#beam)"/>
-  <path d="M256 96 L268 138 L310 150 L268 162 L256 204 L244 162 L202 150 L244 138 Z" fill="#F05C42"/>
-  <!-- lid, tilted open -->
-  <rect x="112" y="252" width="272" height="40" rx="14" fill="#E5B23F" transform="rotate(-9 248 272)"/>
-  <!-- body -->
-  <path d="M140 318 h232 v66 a28 28 0 0 1 -28 28 h-176 a28 28 0 0 1 -28 -28 z" fill="#D9A227"/>
-  <rect x="140" y="306" width="232" height="26" rx="10" fill="#E5B23F"/>
-  <rect x="238" y="344" width="36" height="34" rx="9" fill="#0E1211" opacity=".55"/>
+
+  <!--
+    Widens upward, so the box reads as the source of the light. It runs down past the
+    lip rather than stopping between the two — a flat cut edge floating in the gap
+    announces itself as a shape instead of as light.
+  -->
+  <path d="M204 326 L308 326 L386 106 L126 106 Z" fill="url(#beam)"/>
+
+  <path d="M256 78 L270 118 L310 132 L270 146 L256 186 L242 146 L202 132 L242 118 Z" fill="#F05C42"/>
+
+  <!-- lid, lifted clear of the body — the dark gap is the whole idea -->
+  <rect x="131" y="220" width="250" height="42" rx="21" fill="#F0C55C"
+        transform="rotate(-12 256 241)"/>
+
+  <rect x="128" y="310" width="256" height="32" rx="16" fill="#F0C55C"/>
+  <path d="M140 342 h232 v46 a30 30 0 0 1 -30 30 h-172 a30 30 0 0 1 -30 -30 z" fill="#D9A227"/>
+  <rect x="238" y="360" width="36" height="32" rx="10" fill="#0E1211" opacity=".5"/>
 </svg>
