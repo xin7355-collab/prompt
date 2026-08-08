@@ -13,7 +13,7 @@ iOS、Android 與網頁共用同一份程式碼（Expo / React Native）。
 
 中文 AI 繪圖圈本來就把提示詞叫「咒語」，一講就懂，不用解釋。
 「盒」對應收納 401 則的倉庫，`Spellbox` 英文短、好唸、好記，做 logo 也單純
-（一個盒子加一顆火花）。App Store 全名建議寫成：
+（「咒」字加一顆火花）。App Store 全名建議寫成：
 
 ```
 咒語盒 Spellbox — AI 繪圖提示詞
@@ -55,7 +55,27 @@ PWA 的三個條件都做好了：
 > **必須用 HTTPS 網址開才裝得起來** —— Service Worker 不支援 `file://`。
 > 下面那個單一 HTML 檔可以離線看內容，但不能安裝成 PWA。
 
-圖示由 `tools/icon.svg` 產生：`npm run icons` 會輸出 App 與 PWA 需要的全部尺寸。
+## 圖示
+
+現行的標誌是**「咒」字加一顆火花**，火花放在「兀」的空隙裡，是字的一部分而不是掛在旁邊。
+
+選它的理由是**小尺寸**。圖示真正被看到的尺寸是 48px 的通知列和 32px 的分頁列，
+不是 512px 的展示圖；筆畫少、對比高的字比畫得再細的盒子撐得住。
+（早期版本把紅點放在右上角，看起來像未讀數字的紅色徽章，所以移到字裡面。）
+
+`tools/icon-variants/` 裡放了七顆候選，換一顆只要一行：
+
+```bash
+npm run icons:sheet          # 把七顆都渲染成 180/120/76/48/32 px 並排比較
+npm run icons:pick -- G      # 換成 G（A 盒＋火花／B 開盒放光／C 咒字／D 純火花／E 寶箱／F 提示詞入槽／G 咒字＋火花）
+npm run icons                # 改了 tools/icon.svg 之後重新輸出全部尺寸
+```
+
+`npm run icons` 會輸出 App、PWA 與啟動畫面需要的全部尺寸。背景與圖案是**分兩層**畫的：
+
+- **maskable**（Android 會把圖示裁成圓形或方形）：背景滿版出血，圖案縮到中間 80% 的安全區。
+  兩層一起縮的話，裁切後會露出一圈深色邊框。
+- **啟動畫面**：只有圖案、背景透明，才能疊在 `app.json` 設定的底色上。
 
 ## 單一 HTML 檔（不需伺服器）
 
@@ -126,9 +146,7 @@ eas submit --platform ios
 
 不想用 EAS 就本地建置：`npx expo prebuild` 產出 `ios/` 與 `android/`，再用
 Xcode / Android Studio 開。`app.json` 已經設好 bundle id（`com.spellbox.app`）、
-顯示名稱與相簿權限說明。
-
-圖示由 `tools/icon.svg` 產生，改圖後跑 `npm run icons` 重新輸出全部尺寸。
+顯示名稱、啟動畫面與相簿權限說明。
 
 ---
 
@@ -165,7 +183,10 @@ public/                   PWA：manifest、service worker、圖示、HTML 範本
 tools/extract-data.mjs    從原始 HTML 抽出語料
 tools/bundle-single-html.mjs  把 web 輸出摺成單一檔案
 tools/pwa-postbuild.mjs   填入 SW 預快取清單、產生 404.html
-tools/render-icons.mjs    由 icon.svg 產出所有尺寸
+tools/render-icons.mjs    由 icon.svg 產出所有尺寸（背景與圖案分層）
+tools/icon-variants/      七顆候選標誌
+tools/pick-icon.mjs       換一顆候選並重新輸出
+tools/icon-contact-sheet.mjs  把候選渲染成實際尺寸並排比較
 assets/data/corpus.json   抽出來的結果（勿手改）
 ```
 
@@ -200,6 +221,7 @@ Negative prompt）依「更多」裡選的輸出格式改寫語法。
 | 橫式 | 無 | 橫放自動兩欄、內容置中限寬、避開側邊瀏海 |
 | 字級 | 固定 | 小／中／大／特大，按鈕與欄位一起長高 |
 | 角色 | 手寫外貌設定 | 角色工坊 26 軸 365 選項，點一點就生成 |
+| 圖示 | 瀏覽器預設 | 自製標誌，含 maskable 與啟動畫面，七顆候選可一行切換 |
 
 資料相容：舊的 `promptvault.v2` 備份可以直接匯入。
 

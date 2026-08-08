@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- E: solid treasure chest, vermilion clasp. Heavier, more object-like. -->
+  <defs>
+    <linearGradient id="e" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1E5245"/><stop offset="1" stop-color="#0E1211"/></linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0C55C"/><stop offset="1" stop-color="#D9A227"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#e)"/>
+  <path d="M256 92 L270 140 L318 154 L270 168 L256 216 L242 168 L194 154 L242 140 Z" fill="#F05C42"/>
+  <path d="M132 262 a124 62 0 0 1 248 0 z" fill="url(#g)"/>
+  <rect x="126" y="262" width="260" height="36" rx="12" fill="#B8871C"/>
+  <rect x="132" y="298" width="248" height="112" rx="22" fill="url(#g)"/>
+  <rect x="230" y="272" width="52" height="66" rx="14" fill="#F05C42"/>
+  <circle cx="256" cy="302" r="11" fill="#0E1211"/>
+</svg>

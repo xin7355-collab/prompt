@@ -42,6 +42,18 @@
     "plugins": [
       "expo-router",
       [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#0E1211",
+          "dark": {
+            "backgroundColor": "#0E1211"
+          }
+        }
+      ],
+      [
         "expo-image-picker",
         {
           "photosPermission": "選擇參考圖來反推提示詞，或把生成的成品圖存回卡片。圖片只留在這台裝置上。"

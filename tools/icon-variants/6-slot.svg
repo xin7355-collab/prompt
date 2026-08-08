@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- F: abstract — three stacked "prompt lines" sliding into a slot, spark above. -->
+  <defs><linearGradient id="f" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#1E5245"/><stop offset="1" stop-color="#0E1211"/></linearGradient></defs>
+  <rect width="512" height="512" fill="url(#f)"/>
+  <path d="M256 88 L268 130 L310 142 L268 154 L256 196 L244 154 L202 142 L244 130 Z" fill="#F05C42"/>
+  <rect x="150" y="228" width="212" height="30" rx="15" fill="#E5B23F"/>
+  <rect x="176" y="278" width="160" height="30" rx="15" fill="#E5B23F" opacity=".78"/>
+  <rect x="202" y="328" width="108" height="30" rx="15" fill="#E5B23F" opacity=".56"/>
+  <rect x="132" y="392" width="248" height="34" rx="17" fill="#F0C55C"/>
+</svg>

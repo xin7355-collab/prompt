@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- D: the spark alone. Survives the smallest sizes because it is one shape. -->
+  <defs><radialGradient id="d" cx=".5" cy=".42" r=".7">
+    <stop offset="0" stop-color="#28624F"/><stop offset="1" stop-color="#0E1211"/></radialGradient></defs>
+  <rect width="512" height="512" fill="url(#d)"/>
+  <path d="M256 74 C272 176 336 240 438 256 C336 272 272 336 256 438 C240 336 176 272 74 256 C176 240 240 176 256 74 Z"
+        fill="#E5B23F"/>
+  <path d="M256 150 C266 214 298 246 362 256 C298 266 266 298 256 362 C246 298 214 266 150 256 C214 246 246 214 256 150 Z"
+        fill="#F05C42"/>
+</svg>

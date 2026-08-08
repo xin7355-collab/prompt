@@ -2,8 +2,7 @@
  * Rasterises tools/icon.svg into every size the app and the PWA manifest need.
  *
  * Uses the headless browser already present for testing rather than adding an image
- * dependency. `maskable` variants re-render the artwork scaled into the 80% safe zone,
- * because Android crops maskable icons to whatever shape the launcher uses.
+ * dependency.
  *
  *   node tools/render-icons.mjs
  */
@@ -13,6 +12,25 @@ import { chromium } from 'playwright';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const svg = fs.readFileSync(path.join(ROOT, 'tools/icon.svg'), 'utf8');
+
+/**
+ * Background and artwork have to be rendered as separate layers.
+ *
+ * A maskable icon is cropped to whatever shape the launcher uses, so the artwork must
+ * stay inside the middle 80% while the background still reaches all four edges —
+ * scaling the whole SVG shrinks its background rect too and leaves a dark ring inside
+ * the crop. The splash icon has the mirror problem: it needs the artwork alone on a
+ * transparent ground, and an opaque rect inside the SVG defeats `omitBackground`.
+ *
+ * Every variant is laid out the same way (defs, then one full-bleed rect, then the
+ * mark), so the split is a string slice. If that ever stops holding, both layers fall
+ * back to the whole file and the icons merely lose the safe-zone treatment.
+ */
+const BG_RECT = svg.match(/<rect\b[^>]*\bwidth="512"[^>]*\bheight="512"[^>]*\/>/);
+const at = BG_RECT ? svg.indexOf(BG_RECT[0]) : -1;
+const background = at < 0 ? svg : svg.slice(0, at + BG_RECT[0].length) + '</svg>';
+// The <defs> stay with the foreground too — variants use gradients on the mark itself.
+const foreground = at < 0 ? svg : svg.slice(0, at) + svg.slice(at + BG_RECT[0].length);
 
 /** [file, size, options] */
 const TARGETS = [
@@ -36,16 +54,15 @@ for (const [file, size, opts] of TARGETS) {
     deviceScaleFactor: 1,
   });
 
-  // Maskable icons must survive a circular crop, so the artwork is inset to 80%
-  // and the background colour is painted edge to edge behind it.
   const inner = opts.safe ? Math.round(size * 0.8) : size;
   const pad = Math.round((size - inner) / 2);
-  const bg = opts.transparent ? 'transparent' : '#0E1211';
+  const layer = (content, px, offset) =>
+    `<div style="position:absolute;left:${offset}px;top:${offset}px;width:${px}px;height:${px}px">${content}</div>`;
 
   await page.setContent(
-    `<!doctype html><html><body style="margin:0;width:${size}px;height:${size}px;background:${bg};
-       display:flex;align-items:center;justify-content:center;overflow:hidden">
-       <div style="width:${inner}px;height:${inner}px;margin:${pad}px">${svg}</div>
+    `<!doctype html><html><body style="margin:0;width:${size}px;height:${size}px;position:relative;overflow:hidden">
+       ${opts.transparent ? '' : layer(background, size, 0)}
+       ${layer(foreground, inner, pad)}
      </body></html>`,
     { waitUntil: 'load' }
   );
@@ -55,7 +72,10 @@ for (const [file, size, opts] of TARGETS) {
   await page.screenshot({ path: out, omitBackground: !!opts.transparent });
   await page.close();
 
-  console.log(`${file.padEnd(36)} ${size}x${size}${opts.safe ? ' (maskable safe zone)' : ''}`);
+  console.log(
+    `${file.padEnd(36)} ${size}x${size}` +
+      (opts.transparent ? ' (mark only, transparent)' : opts.safe ? ' (maskable safe zone)' : '')
+  );
 }
 
 await browser.close();

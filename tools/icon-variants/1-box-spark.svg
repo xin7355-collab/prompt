@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- A: the shipping mark — outlined chest with a spark rising out. -->
+  <defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#1E5245"/><stop offset="1" stop-color="#0E1211"/></linearGradient></defs>
+  <rect width="512" height="512" fill="url(#a)"/>
+  <path d="M256 118 L272 172 L326 188 L272 204 L256 258 L240 204 L186 188 L240 172 Z" fill="#F05C42"/>
+  <circle cx="344" cy="146" r="13" fill="#E5B23F"/>
+  <circle cx="176" cy="234" r="9" fill="#E5B23F" opacity=".8"/>
+  <rect x="126" y="268" width="260" height="42" rx="16" fill="#E5B23F"/>
+  <path d="M152 320 h208 a12 12 0 0 1 12 12 v52 a24 24 0 0 1 -24 24 h-184 a24 24 0 0 1 -24 -24 v-52 a12 12 0 0 1 12 -12 z"
+        fill="none" stroke="#E5B23F" stroke-width="24" stroke-linejoin="round"/>
+  <rect x="238" y="342" width="36" height="30" rx="8" fill="#E5B23F"/>
+</svg>

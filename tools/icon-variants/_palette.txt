@@ -1,0 +1,3 @@
+pine   #1E5245   ink #0E1211
+gold   #E5B23F   deep gold #D9A227
+verm   #F05C42
