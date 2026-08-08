@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 
 import { categoryOf, tagsOf } from '../data/corpus';
 import type { Lang, ResolvedPrompt } from '../data/types';
@@ -7,6 +7,7 @@ import { bodyOf } from '../lib/compose';
 import { fonts, radius, space } from '../theme';
 import { useTheme } from './ThemeProvider';
 import { PromptBody } from './primitives';
+import { AppText as Text } from './AppText';
 
 export interface PromptCardProps {
   prompt: ResolvedPrompt;

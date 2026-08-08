@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
@@ -17,6 +17,8 @@ import { fonts, radius, space } from '../src/theme';
 import { useTheme } from '../src/ui/ThemeProvider';
 import { Button, Chip, Field, Section } from '../src/ui/primitives';
 import { useToast } from '../src/ui/Toast';
+import { AppText as Text } from '../src/ui/AppText';
+import { useLayout } from '../src/ui/useLayout';
 
 /**
  * 角色工坊 — build a character from option axes instead of writing a sheet by hand.
@@ -26,6 +28,7 @@ import { useToast } from '../src/ui/Toast';
  */
 export default function ForgeScreen() {
   const { c } = useTheme();
+  const layout = useLayout();
   const router = useRouter();
   const toast = useToast();
   const insets = useSafeAreaInsets();
@@ -83,7 +86,7 @@ export default function ForgeScreen() {
   return (
     <ScrollView
       style={{ backgroundColor: c.bg }}
-      contentContainerStyle={[styles.page, { paddingBottom: insets.bottom + space.xxl }]}
+      contentContainerStyle={[styles.page, layout.gutter, layout.column, { paddingBottom: insets.bottom + space.xxl }]}
       keyboardShouldPersistTaps="handled"
     >
       <Text style={[styles.intro, { color: c.textDim }]}>
@@ -196,7 +199,7 @@ export default function ForgeScreen() {
 }
 
 const styles = StyleSheet.create({
-  page: { paddingHorizontal: space.md, paddingTop: space.md },
+  page: { paddingTop: space.md },
   intro: { fontFamily: fonts.ui, fontSize: 13.5, lineHeight: 21 },
   topActions: { flexDirection: 'row', gap: space.sm, marginTop: space.lg },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm - 2 },

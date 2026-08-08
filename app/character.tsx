@@ -10,9 +10,11 @@ import { space } from '../src/theme';
 import { useTheme } from '../src/ui/ThemeProvider';
 import { Button, Field } from '../src/ui/primitives';
 import { useToast } from '../src/ui/Toast';
+import { useLayout } from '../src/ui/useLayout';
 
 export default function CharacterScreen() {
   const { c } = useTheme();
+  const layout = useLayout();
   const router = useRouter();
   const toast = useToast();
   const insets = useSafeAreaInsets();
@@ -95,7 +97,7 @@ export default function CharacterScreen() {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
     >
       <ScrollView
-        contentContainerStyle={[styles.page, { paddingBottom: insets.bottom + space.xxl }]}
+        contentContainerStyle={[styles.page, layout.gutter, layout.column, { paddingBottom: insets.bottom + space.xxl }]}
         keyboardShouldPersistTaps="handled"
       >
         <Field
@@ -152,6 +154,6 @@ export default function CharacterScreen() {
 }
 
 const styles = StyleSheet.create({
-  page: { paddingHorizontal: space.md, paddingTop: space.sm },
+  page: { paddingTop: space.sm },
   actions: { flexDirection: 'row', gap: space.sm, marginTop: space.lg },
 });

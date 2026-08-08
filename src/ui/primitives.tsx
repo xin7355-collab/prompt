@@ -1,19 +1,11 @@
 import React from 'react';
-import {
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  type StyleProp,
-  type TextInputProps,
-  type ViewStyle,
-} from 'react-native';
+import { Platform, Pressable, StyleSheet, TextInput, View, type StyleProp, type TextInputProps, type ViewStyle } from 'react-native';
 import * as Haptics from 'expo-haptics';
 
 import { fonts, radius, space } from '../theme';
 import { useTheme } from './ThemeProvider';
+import { scaleTextStyle } from './AppText';
+import { AppText as Text } from './AppText';
 
 function tap() {
   if (Platform.OS !== 'web') Haptics.selectionAsync().catch(() => {});
@@ -44,7 +36,7 @@ export function Button({
   style?: StyleProp<ViewStyle>;
   compact?: boolean;
 }) {
-  const { c } = useTheme();
+  const { c, sz } = useTheme();
 
   const fills: Record<ButtonTone, { bg: string; fg: string; border: string }> = {
     primary: { bg: c.vermilion, fg: c.onAccent, border: c.vermilion },
@@ -68,6 +60,9 @@ export function Button({
       style={({ pressed }) => [
         styles.button,
         compact && styles.buttonCompact,
+        // The label is capped at one line, so the box has to keep up with the type
+        // or a long Chinese label gets truncated at the larger sizes.
+        { minHeight: sz(compact ? 36 : 44) },
         {
           backgroundColor: f.bg,
           borderColor: f.border,
@@ -103,7 +98,7 @@ export function Chip({
   dashed?: boolean;
   count?: number;
 }) {
-  const { c } = useTheme();
+  const { c, sz } = useTheme();
   const on = tone === 'danger' ? c.vermilion : c.gold;
   const onFg = tone === 'danger' ? c.onAccent : c.onGold;
 
@@ -119,6 +114,7 @@ export function Chip({
       hitSlop={4}
       style={({ pressed }) => [
         styles.chip,
+        { minHeight: sz(36) },
         {
           backgroundColor: selected ? on : c.surface,
           borderColor: selected ? on : c.borderStrong,
@@ -171,7 +167,7 @@ export function Field({
   style,
   ...props
 }: TextInputProps & { label?: string; hint?: string; mono?: boolean }) {
-  const { c } = useTheme();
+  const { c, scale, sz } = useTheme();
   return (
     <View style={styles.field}>
       {label ? <Text style={[styles.fieldLabel, { color: c.textFaint }]}>{label}</Text> : null}
@@ -184,6 +180,12 @@ export function Field({
           { backgroundColor: c.surface, borderColor: c.borderStrong, color: c.text },
           props.multiline && styles.inputMultiline,
           style,
+          // TextInput is not AppText, so its own metrics are scaled here.
+          scaleTextStyle(
+            { fontSize: mono ? 13 : 15, lineHeight: mono ? 21 : undefined },
+            scale
+          ),
+          { minHeight: sz(props.multiline ? 120 : 46) },
         ]}
       />
       {hint ? <Text style={[styles.hint, { color: c.textFaint }]}>{hint}</Text> : null}
@@ -252,7 +254,7 @@ export function IconButton({
   /** Set when the button sits on the dark header rather than on a page surface. */
   onChrome?: boolean;
 }) {
-  const { c } = useTheme();
+  const { c, sz } = useTheme();
   return (
     <Pressable
       accessibilityRole="button"
@@ -264,6 +266,7 @@ export function IconButton({
       }}
       style={({ pressed }) => [
         styles.iconButton,
+        { width: sz(38), height: sz(38) },
         {
           backgroundColor: onChrome ? 'rgba(255,255,255,0.12)' : c.surface,
           borderColor: onChrome ? 'transparent' : c.border,

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { RATIOS } from '../data/corpus';
 import { fonts, radius, space } from '../theme';
 import { useTheme } from './ThemeProvider';
+import { AppText as Text } from './AppText';
 
 /**
  * Aspect ratios drawn at their actual shape. Reading "9:16" tells you nothing at a

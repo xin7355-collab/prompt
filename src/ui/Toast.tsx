@@ -1,10 +1,11 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Animated, Platform, StyleSheet, Text } from 'react-native';
+import { Animated, Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 
 import { fonts, radius, space } from '../theme';
 import { useTheme } from './ThemeProvider';
+import { AppText as Text } from './AppText';
 
 type ToastKind = 'info' | 'success' | 'error';
 

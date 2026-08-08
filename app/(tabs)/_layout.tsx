@@ -1,11 +1,12 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Text, type ColorValue } from 'react-native';
+import { type ColorValue } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { fonts } from '../../src/theme';
 import { useTheme } from '../../src/ui/ThemeProvider';
 import { useVault } from '../../src/store/vault';
+import { AppText as Text } from '../../src/ui/AppText';
 
 /**
  * Emoji-free glyph tabs: the icon is a single typographic mark so the bar renders
@@ -16,13 +17,14 @@ function TabGlyph({ glyph, color }: { glyph: string; color: ColorValue }) {
 }
 
 export default function TabsLayout() {
-  const { c } = useTheme();
+  const { c, sz } = useTheme();
   const { bench } = useVault();
   const insets = useSafeAreaInsets();
 
   // 56pt of content plus the gesture inset — the default bar clips the label at
   // these glyph sizes, and edge-to-edge Android supplies no padding of its own.
-  const barHeight = 56 + insets.bottom;
+  // sz() grows it with the type setting so the label never collides with the icon.
+  const barHeight = sz(56) + insets.bottom;
 
   return (
     <Tabs

@@ -1,15 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
@@ -27,9 +17,12 @@ import { useToast } from '../../src/ui/Toast';
 import { pickImage, shareText } from '../../src/lib/io';
 import { openExternal } from '../../src/lib/openExternal';
 import { BRAND } from '../../src/brand';
+import { AppText as Text } from '../../src/ui/AppText';
+import { useLayout } from '../../src/ui/useLayout';
 
 export default function BenchScreen() {
   const { c, accentFor } = useTheme();
+  const layout = useLayout();
   const router = useRouter();
   const toast = useToast();
   const insets = useSafeAreaInsets();
@@ -113,6 +106,8 @@ export default function BenchScreen() {
       <ScrollView
         contentContainerStyle={[
           styles.page,
+        layout.gutter,
+        layout.column,
           { paddingTop: insets.top + space.xl, paddingBottom: insets.bottom + space.xxl },
         ]}
         style={{ backgroundColor: c.bg }}
@@ -147,6 +142,8 @@ export default function BenchScreen() {
       <ScrollView
         contentContainerStyle={[
           styles.page,
+        layout.gutter,
+        layout.column,
           { paddingTop: insets.top + space.lg, paddingBottom: insets.bottom + space.xxl },
         ]}
         keyboardShouldPersistTaps="handled"

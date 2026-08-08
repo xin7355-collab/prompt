@@ -1,15 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import {
-  Alert,
-  FlatList,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Alert, FlatList, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
@@ -24,6 +14,8 @@ import { useTheme } from '../../src/ui/ThemeProvider';
 import { PromptCard } from '../../src/ui/PromptCard';
 import { Chip, EmptyState, IconButton } from '../../src/ui/primitives';
 import { useToast } from '../../src/ui/Toast';
+import { AppText as Text } from '../../src/ui/AppText';
+import { useLayout } from '../../src/ui/useLayout';
 
 /** Filters that narrow the library beyond category and search. */
 type Facet = 'fav' | 'mine' | 'shot';
@@ -33,7 +25,7 @@ export default function LibraryScreen() {
   const router = useRouter();
   const toast = useToast();
   const insets = useSafeAreaInsets();
-  const { width } = useWindowDimensions();
+  const layout = useLayout();
 
   const vault = useVault();
   const { prompts, lang, fav, shots } = vault;
@@ -107,8 +99,9 @@ export default function LibraryScreen() {
     toast(`隨機抽到「${pick.t}」`);
   }, [prompts, openBench, toast]);
 
-  // Two columns once there is room for two readable cards side by side.
-  const columns = width >= 700 ? (width >= 1050 ? 3 : 2) : 1;
+  // Two columns once there is room for two readable cards side by side. In landscape
+  // on a phone this kicks in, which is the whole point of rotating.
+  const columns = layout.columns;
 
   const renderCard = useCallback(
     ({ item }: { item: ResolvedPrompt }) => (
@@ -138,7 +131,7 @@ export default function LibraryScreen() {
     <View style={{ flex: 1, backgroundColor: c.bg }}>
       {/* ── Header ─────────────────────────────────────────────── */}
       <View style={[styles.header, { backgroundColor: c.chrome, paddingTop: insets.top + space.sm }]}>
-        <View style={styles.headerRow}>
+        <View style={[styles.headerRow, layout.gutter]}>
           <View style={{ flex: 1 }}>
             <Text style={[styles.wordmark, { color: c.onChrome }]}>{BRAND.zh}</Text>
             <Text style={[styles.wordmarkSub, { color: c.onChromeDim }]}>{BRAND.en}</Text>
@@ -172,8 +165,8 @@ export default function LibraryScreen() {
           <IconButton glyph="＋" label="新增提示詞" onChrome onPress={() => router.push('/edit')} />
         </View>
 
-        <View style={styles.searchRow}>
-          <Text style={[styles.searchGlyph, { color: c.textFaint }]}>⌕</Text>
+        <View style={[styles.searchRow, layout.gutter]}>
+          <Text style={[styles.searchGlyph, { left: layout.gutter.paddingLeft + 12, color: c.textFaint }]}>⌕</Text>
           <TextInput
             value={query}
             onChangeText={setQuery}
@@ -190,7 +183,7 @@ export default function LibraryScreen() {
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.strip}
-          contentContainerStyle={styles.tabStrip}
+          contentContainerStyle={[styles.tabStrip, layout.gutter]}
         >
           <CategoryTab
             label="全部"
@@ -222,7 +215,7 @@ export default function LibraryScreen() {
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.strip}
-        contentContainerStyle={styles.facetBar}
+        contentContainerStyle={[styles.facetBar, layout.gutter]}
       >
         <Text style={[styles.count, { color: c.textFaint }]}>{visible.length} 則</Text>
         <Chip label="★ 收藏" selected={facets.includes('fav')} onPress={() => toggleFacet('fav')} />
@@ -237,7 +230,7 @@ export default function LibraryScreen() {
       </ScrollView>
 
       {tagsOpen && (
-        <View style={[styles.tagCloud, { backgroundColor: c.surfaceSunken }]}>
+        <View style={[styles.tagCloud, layout.gutter, { backgroundColor: c.surfaceSunken }]}>
           {tagCloud.map(([tag, n]) => (
             <Chip
               key={tag}
@@ -262,8 +255,10 @@ export default function LibraryScreen() {
         numColumns={columns}
         contentContainerStyle={[
           styles.list,
+          layout.gutter,
           { paddingBottom: insets.bottom + space.xxl },
-          columns > 1 && { paddingHorizontal: space.md - space.xs },
+          columns > 1 && { paddingLeft: layout.gutter.paddingLeft - space.xs,
+                           paddingRight: layout.gutter.paddingRight - space.xs },
         ]}
         columnWrapperStyle={columns > 1 ? { alignItems: 'flex-start' } : undefined}
         keyboardDismissMode="on-drag"
@@ -329,7 +324,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.sm,
-    paddingHorizontal: space.md,
     paddingBottom: space.md,
   },
   wordmark: { fontFamily: fonts.uiMedium, fontSize: 21, fontWeight: '800', letterSpacing: -0.5 },
@@ -339,8 +333,8 @@ const styles = StyleSheet.create({
   langOption: { paddingHorizontal: 10, paddingVertical: 7, borderRadius: radius.sm },
   langLabel: { fontFamily: fonts.mono, fontSize: 11, fontWeight: '700' },
 
-  searchRow: { paddingHorizontal: space.md, paddingBottom: space.md, justifyContent: 'center' },
-  searchGlyph: { position: 'absolute', left: space.md + 12, zIndex: 1, fontSize: 17 },
+  searchRow: { paddingBottom: space.md, justifyContent: 'center' },
+  searchGlyph: { position: 'absolute', left: 12, zIndex: 1, fontSize: 17 },
   search: {
     height: 44,
     borderRadius: radius.md,
@@ -352,7 +346,7 @@ const styles = StyleSheet.create({
 
   /** Horizontal strips must not grow, or they steal height from the grid below. */
   strip: { flexGrow: 0, flexShrink: 0 },
-  tabStrip: { gap: space.xs, paddingHorizontal: space.md },
+  tabStrip: { gap: space.xs },
   tab: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -366,18 +360,17 @@ const styles = StyleSheet.create({
   tabLabel: { fontFamily: fonts.ui, fontSize: 13.5 },
   tabCount: { fontFamily: fonts.mono, fontSize: 10 },
 
-  facetBar: { gap: space.sm, paddingHorizontal: space.md, paddingVertical: space.md, alignItems: 'center' },
+  facetBar: { gap: space.sm, paddingVertical: space.md, alignItems: 'center' },
   count: { fontFamily: fonts.mono, fontSize: 11, letterSpacing: 0.5, marginRight: space.xs },
 
   tagCloud: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: space.sm - 2,
-    marginHorizontal: space.md,
     marginBottom: space.md,
     padding: space.md,
     borderRadius: radius.md,
   },
 
-  list: { paddingHorizontal: space.md },
+  list: {},
 });

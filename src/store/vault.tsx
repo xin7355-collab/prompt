@@ -20,7 +20,7 @@ import type {
   ResolvedPrompt,
 } from '../data/types';
 import { emptyBench, type BenchState } from '../lib/compose';
-import type { ThemePreference } from '../ui/ThemeProvider';
+import type { TextSize, ThemePreference } from '../ui/ThemeProvider';
 import { pruneShots, removeShot } from './shots';
 
 const STORAGE_KEY = 'spellbox.v1';
@@ -45,6 +45,8 @@ interface PersistedState {
   lang: Lang;
   /** Appearance: follow the system, or pin light/dark. */
   theme: ThemePreference;
+  /** Type size, applied on top of any OS-level accessibility scaling. */
+  textSize: TextSize;
 }
 
 const initialPersisted: PersistedState = {
@@ -59,6 +61,7 @@ const initialPersisted: PersistedState = {
   fmt: 'plain',
   lang: 'zh',
   theme: 'system',
+  textSize: 'md',
 };
 
 const MAX_HISTORY_PER_PROMPT = 6;
@@ -86,6 +89,7 @@ interface VaultValue extends PersistedState {
   setLang(lang: Lang): void;
   setFormat(format: Format): void;
   setTheme(theme: ThemePreference): void;
+  setTextSize(size: TextSize): void;
   toggleFavourite(id: string): void;
 
   savePrompt(draft: PromptDraft, editing: ResolvedPrompt | null): void;
@@ -179,6 +183,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
   const setLang = useCallback((lang: Lang) => patch((p) => ({ ...p, lang })), [patch]);
   const setFormat = useCallback((fmt: Format) => patch((p) => ({ ...p, fmt })), [patch]);
   const setTheme = useCallback((theme: ThemePreference) => patch((p) => ({ ...p, theme })), [patch]);
+  const setTextSize = useCallback((textSize: TextSize) => patch((p) => ({ ...p, textSize })), [patch]);
 
   const toggleFavourite = useCallback(
     (id: string) =>
@@ -323,6 +328,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
         fmt: p.fmt,
         lang: p.lang,
         theme: p.theme,
+        textSize: p.textSize,
         ...next,
       })),
     [patch]
@@ -331,7 +337,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
   const resetToFactory = useCallback(() => {
     patch((p) => {
       Object.values(p.shots).forEach(removeShot);
-      return { ...initialPersisted, fmt: p.fmt, lang: p.lang, theme: p.theme };
+      return { ...initialPersisted, fmt: p.fmt, lang: p.lang, theme: p.theme, textSize: p.textSize };
     });
     setBench(emptyBench);
   }, [patch]);
@@ -368,6 +374,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
     setLang,
     setFormat,
     setTheme,
+    setTextSize,
     toggleFavourite,
     savePrompt,
     deletePrompt,

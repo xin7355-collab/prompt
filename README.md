@@ -157,6 +157,8 @@ src/
   lib/io.ts               選圖、分享、讀檔
   store/vault.tsx         全域狀態 + AsyncStorage 持久化
   store/shots.ts          成品縮圖（存檔案系統，不是 key-value）
+  ui/AppText.tsx          會跟著字級設定縮放的 Text（各畫面都用它）
+  ui/useLayout.ts         橫式：安全區、欄數、閱讀欄寬
   ui/                     設計系統元件
 
 public/                   PWA：manifest、service worker、圖示、HTML 範本
@@ -195,6 +197,8 @@ Negative prompt）依「更多」裡選的輸出格式改寫語法。
 | 種子值 | 無 | 可指定，系列圖的臉更穩 |
 | 觸控 | 網頁按鈕尺寸 | 全部 44pt 以上，含觸覺回饋與無障礙標籤 |
 | 安裝 | 只能開網頁 | PWA，加到主畫面全螢幕執行、離線可用 |
+| 橫式 | 無 | 橫放自動兩欄、內容置中限寬、避開側邊瀏海 |
+| 字級 | 固定 | 小／中／大／特大，按鈕與欄位一起長高 |
 | 角色 | 手寫外貌設定 | 角色工坊 26 軸 365 選項，點一點就生成 |
 
 資料相容：舊的 `promptvault.v2` 備份可以直接匯入。

@@ -1,14 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -20,6 +11,8 @@ import { fonts, radius, space } from '../src/theme';
 import { useTheme } from '../src/ui/ThemeProvider';
 import { Button, Field, Section } from '../src/ui/primitives';
 import { useToast } from '../src/ui/Toast';
+import { AppText as Text } from '../src/ui/AppText';
+import { useLayout } from '../src/ui/useLayout';
 
 /**
  * Create / edit a prompt. Reached three ways: the ＋ button (blank), a card's pencil
@@ -27,6 +20,7 @@ import { useToast } from '../src/ui/Toast';
  */
 export default function EditScreen() {
   const { c } = useTheme();
+  const layout = useLayout();
   const router = useRouter();
   const toast = useToast();
   const insets = useSafeAreaInsets();
@@ -119,7 +113,7 @@ export default function EditScreen() {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
     >
       <ScrollView
-        contentContainerStyle={[styles.page, { paddingBottom: insets.bottom + space.xxl }]}
+        contentContainerStyle={[styles.page, layout.gutter, layout.column, { paddingBottom: insets.bottom + space.xxl }]}
         keyboardShouldPersistTaps="handled"
       >
         <Field label="標題" value={title} onChangeText={setTitle} placeholder="例：溫柔逆光生活寫真" />
@@ -262,7 +256,7 @@ export default function EditScreen() {
 }
 
 const styles = StyleSheet.create({
-  page: { paddingHorizontal: space.md, paddingTop: space.sm },
+  page: { paddingTop: space.sm },
 
   field: { marginTop: space.md },
   label: {

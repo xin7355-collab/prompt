@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -8,6 +8,8 @@ import { fonts, radius, space } from '../../src/theme';
 import { useTheme } from '../../src/ui/ThemeProvider';
 import { Button, EmptyState } from '../../src/ui/primitives';
 import { useToast } from '../../src/ui/Toast';
+import { AppText as Text } from '../../src/ui/AppText';
+import { useLayout } from '../../src/ui/useLayout';
 
 /**
  * The character roster. Locking a character prepends its fixed-appearance block to
@@ -15,6 +17,7 @@ import { useToast } from '../../src/ui/Toast';
  */
 export default function CastScreen() {
   const { c } = useTheme();
+  const layout = useLayout();
   const router = useRouter();
   const toast = useToast();
   const insets = useSafeAreaInsets();
@@ -25,6 +28,8 @@ export default function CastScreen() {
       style={{ backgroundColor: c.bg }}
       contentContainerStyle={[
         styles.page,
+        layout.gutter,
+        layout.column,
         { paddingTop: insets.top + space.lg, paddingBottom: insets.bottom + space.xxl },
       ]}
     >

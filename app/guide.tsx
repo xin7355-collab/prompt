@@ -1,19 +1,22 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { GUIDE, type GuideBlock } from '../src/data/guide';
 import { fonts, radius, space } from '../src/theme';
 import { useTheme } from '../src/ui/ThemeProvider';
+import { AppText as Text } from '../src/ui/AppText';
+import { useLayout } from '../src/ui/useLayout';
 
 export default function GuideScreen() {
   const { c } = useTheme();
+  const layout = useLayout();
   const insets = useSafeAreaInsets();
 
   return (
     <ScrollView
       style={{ backgroundColor: c.bg }}
-      contentContainerStyle={[styles.page, { paddingBottom: insets.bottom + space.xxl }]}
+      contentContainerStyle={[styles.page, layout.gutter, layout.column, { paddingBottom: insets.bottom + space.xxl }]}
     >
       {GUIDE.map((chapter) => (
         <View key={chapter.title} style={styles.chapter}>
@@ -75,7 +78,7 @@ function Block({ block }: { block: GuideBlock }) {
 }
 
 const styles = StyleSheet.create({
-  page: { paddingHorizontal: space.md, paddingTop: space.lg },
+  page: { paddingTop: space.lg },
   chapter: { marginBottom: space.xl },
 
   headingRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -10,14 +10,23 @@ import { readJsonFile, shareText } from '../../src/lib/io';
 import { getApiKey, setApiKey } from '../../src/lib/translate';
 import { useVault } from '../../src/store/vault';
 import { fonts, radius, space } from '../../src/theme';
-import { useTheme, type ThemePreference } from '../../src/ui/ThemeProvider';
+import { useTheme, type TextSize, type ThemePreference } from '../../src/ui/ThemeProvider';
 import { Button, Field, Section } from '../../src/ui/primitives';
 import { useToast } from '../../src/ui/Toast';
+import { AppText as Text } from '../../src/ui/AppText';
+import { useLayout } from '../../src/ui/useLayout';
 
 const THEMES: { value: ThemePreference; label: string }[] = [
   { value: 'system', label: '跟隨系統' },
   { value: 'light', label: '淺色' },
   { value: 'dark', label: '深色' },
+];
+
+const TEXT_SIZES: { value: TextSize; label: string; sample: number }[] = [
+  { value: 'sm', label: '小', sample: 13 },
+  { value: 'md', label: '中', sample: 15 },
+  { value: 'lg', label: '大', sample: 17 },
+  { value: 'xl', label: '特大', sample: 19 },
 ];
 
 const FORMATS: { value: Format; label: string; hint: string }[] = [
@@ -28,6 +37,7 @@ const FORMATS: { value: Format; label: string; hint: string }[] = [
 
 export default function MoreScreen() {
   const { c } = useTheme();
+  const layout = useLayout();
   const router = useRouter();
   const toast = useToast();
   const insets = useSafeAreaInsets();
@@ -106,6 +116,8 @@ export default function MoreScreen() {
       style={{ backgroundColor: c.bg }}
       contentContainerStyle={[
         styles.page,
+        layout.gutter,
+        layout.column,
         { paddingTop: insets.top + space.lg, paddingBottom: insets.bottom + space.xxl },
       ]}
     >
@@ -166,6 +178,44 @@ export default function MoreScreen() {
                 ]}
               >
                 <Text style={[styles.formatLabel, { color: selected ? c.onAccent : c.text }]}>
+                  {option.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </Section>
+
+      <Section
+        title="文字大小"
+        hint="整個 App 的字都會跟著變，按鈕與欄位也會一起長高，不會被切到。這個設定會疊加在手機系統的字級之上。"
+      >
+        <View style={styles.formatRow}>
+          {TEXT_SIZES.map((option) => {
+            const selected = vault.textSize === option.value;
+            return (
+              <Pressable
+                key={option.value}
+                accessibilityRole="button"
+                accessibilityLabel={`文字大小：${option.label}`}
+                accessibilityState={{ selected }}
+                onPress={() => vault.setTextSize(option.value)}
+                style={[
+                  styles.format,
+                  {
+                    backgroundColor: selected ? c.pine : c.surface,
+                    borderColor: selected ? c.pine : c.border,
+                  },
+                ]}
+              >
+                {/* Each chip previews its own size, so the choice is visible before
+                    committing to it rather than only after the whole app reflows. */}
+                <Text
+                  style={[
+                    styles.formatLabel,
+                    { fontSize: option.sample, color: selected ? c.onAccent : c.text },
+                  ]}
+                >
                   {option.label}
                 </Text>
               </Pressable>
