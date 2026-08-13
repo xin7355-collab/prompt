@@ -8,6 +8,7 @@ import { categoryOf, PROMPTS } from '../../src/data/corpus';
 import { STYLES } from '../../src/data/styles';
 import type { Format } from '../../src/data/types';
 import { readJsonFile, shareText } from '../../src/lib/io';
+import { getImageKey, IMAGE_MODEL, setImageKey } from '../../src/lib/imagegen';
 import { getApiKey, setApiKey } from '../../src/lib/translate';
 import { useVault } from '../../src/store/vault';
 import { fonts, radius, space } from '../../src/theme';
@@ -45,8 +46,10 @@ export default function MoreScreen() {
   const vault = useVault();
 
   const [apiKey, setApiKeyState] = useState('');
+  const [imageKey, setImageKeyState] = useState('');
   useEffect(() => {
     getApiKey().then(setApiKeyState);
+    getImageKey().then(setImageKeyState);
   }, []);
 
   const exportBackup = async () => {
@@ -231,6 +234,41 @@ export default function MoreScreen() {
 
       <Section title="心法筆記">
         <Button label="打開心法筆記" tone="accent" onPress={() => router.push('/guide')} />
+      </Section>
+
+      <Section
+        title="生成圖片"
+        hint={`選填，但填了差很多。貼上自己的 Google AI Studio 金鑰（aistudio.google.com/apikey 免費申請），風格牆的「⚡ 生成」就會直接畫出圖來並存成封面，不用再跳到別的網站。不填也能用——按下去會複製提示詞並開啟你選的網站。用的模型是 ${IMAGE_MODEL}，金鑰只存在這台裝置上，直接送到 Google，不經過任何中間伺服器。`}
+      >
+        <Field
+          label="Google API Key"
+          value={imageKey}
+          onChangeText={setImageKeyState}
+          placeholder="AIza…"
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry
+        />
+        <View style={styles.dataGrid}>
+          <Button
+            label="儲存金鑰"
+            style={styles.dataButton}
+            onPress={async () => {
+              await setImageKey(imageKey);
+              toast(imageKey.trim() ? '金鑰已儲存，去風格牆按「⚡ 生成」' : '金鑰已清除', 'success');
+            }}
+          />
+          <Button
+            label="清除金鑰"
+            tone="danger"
+            style={styles.dataButton}
+            onPress={async () => {
+              await setImageKey('');
+              setImageKeyState('');
+              toast('金鑰已清除');
+            }}
+          />
+        </View>
       </Section>
 
       <Section

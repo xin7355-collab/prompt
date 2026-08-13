@@ -1,3 +1,4 @@
+import { POSTERS } from './posters';
 import type { Lang } from './types';
 
 /**
@@ -31,15 +32,29 @@ export interface VisualStyle {
   f: string;
   /** Comma-joined search tags. */
   k: string;
-  /** The style clause, Traditional Chinese. */
-  zh: string;
+  /**
+   * The style clause, Traditional Chinese. Absent on the poster collection, whose
+   * prompts are English-only by design — see posters.ts.
+   */
+  zh?: string;
   /** The style clause, English. */
   en: string;
+  /** One-line Chinese explanation of the look, shown on the card. */
+  d?: string;
+  /**
+   * Set when the entry is a finished prompt that already names its own subject,
+   * rather than a clause waiting for one. Changes how composeStyle treats `subject`.
+   */
+  full?: boolean;
   /** Swatch palette: [ground, primary, accent]. */
   sw: [string, string, string];
 }
 
 export const FAMILIES: StyleFamily[] = [
+  // The poster collection leads: those entries are ready to fire as-is, which is the
+  // shortest path from opening the wall to having an image.
+  { k: 'cnfashion', n: '華流國風', g: '龍' },
+  { k: 'fashion', n: '時尚海報', g: '衣' },
   { k: 'photo', n: '攝影寫實', g: '◉' },
   { k: 'film', n: '電影感', g: '▭' },
   { k: 'anime', n: '動漫', g: '✧' },
@@ -54,7 +69,8 @@ export const FAMILIES: StyleFamily[] = [
   { k: 'dream', n: '夢幻清新', g: '❀' },
 ];
 
-export const STYLES: VisualStyle[] = [
+/** The style clauses. Combined with POSTERS into STYLES at the bottom of this file. */
+const CLAUSES: VisualStyle[] = [
   // ── 攝影寫實 ────────────────────────────────────────────────────
   {
     id: 's-cine-portrait',
@@ -910,6 +926,8 @@ export const STYLES: VisualStyle[] = [
   },
 ];
 
+export const STYLES: VisualStyle[] = [...POSTERS, ...CLAUSES];
+
 /** Family key -> its glyph, for the tiles that have no saved image yet. */
 const familyGlyph = new Map(FAMILIES.map((f) => [f.k, f.g]));
 
@@ -944,20 +962,28 @@ export interface StyleComposeArgs {
 }
 
 /**
- * Subject first, style second.
+ * Subject first, style second — for clause entries.
  *
  * The models weight the opening of a prompt most heavily, so the thing being drawn
- * has to lead; the style clause then modifies it. Firing the style on its own (no
+ * has to lead; the style clause then modifies it. Firing a clause on its own (no
  * subject) is deliberately allowed — it reads as "make something in this style",
  * which is a legitimate way to explore what a style even looks like.
+ *
+ * Poster entries (`full`) invert this. They already name their subject, so the
+ * prompt goes out untouched and a typed subject is appended as an override rather
+ * than pushed in front — putting it first would fight the prompt's own opening line
+ * and usually produces a worse image than either would alone.
  */
 export function composeStyle({ style, subject, lang, ratio }: StyleComposeArgs): string {
   const zh = lang === 'zh';
-  const body = zh ? style.zh : style.en;
+  // Poster entries carry no Chinese body; fall back rather than emit an empty prompt.
+  const body = (zh ? style.zh : style.en) || style.en || style.zh || '';
   const topic = subject.trim();
 
   let text: string;
-  if (!topic) {
+  if (style.full) {
+    text = topic ? `${body} Subject: ${topic}.` : body;
+  } else if (!topic) {
     text = zh
       ? `請自由發揮一個最能展現這個風格的畫面。${body}`
       : `Create any subject that best demonstrates this style. ${body}`;
@@ -965,6 +991,9 @@ export function composeStyle({ style, subject, lang, ratio }: StyleComposeArgs):
     text = zh ? `${topic}。${body}` : `${topic}. ${body}`;
   }
 
-  if (ratio) text += zh ? ` 畫面比例 ${ratio}。` : ` Aspect ratio ${ratio}.`;
+  if (ratio) {
+    // A full prompt is already English; keep the appended switch in the same language.
+    text += zh && !style.full ? ` 畫面比例 ${ratio}。` : ` Aspect ratio ${ratio}.`;
+  }
   return text;
 }

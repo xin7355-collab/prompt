@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
 
 import { SITES } from '../src/data/corpus';
 import { composeStyle, familyOf, styleOf, styleTags } from '../src/data/styles';
+import { generateImage, getImageKey } from '../src/lib/imagegen';
 import { pickImage, shareText } from '../src/lib/io';
 import { openExternal } from '../src/lib/openExternal';
 import { storeShot } from '../src/store/shots';
@@ -42,6 +43,20 @@ export default function StyleScreen() {
   const visual = styleOf(String(params.id ?? ''));
   const [ratio, setRatio] = useState(String(params.ratio ?? ''));
   const [saving, setSaving] = useState(false);
+  const [drawing, setDrawing] = useState(false);
+  const [canDraw, setCanDraw] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      getImageKey().then((key) => {
+        if (!cancelled) setCanDraw(Boolean(key));
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, [])
+  );
 
   const shots = visual ? (styleShots[visual.id] ?? []) : [];
 
@@ -70,6 +85,25 @@ export default function StyleScreen() {
     },
     [output, toast]
   );
+
+  const draw = useCallback(async () => {
+    if (!visual || drawing) return;
+    setDrawing(true);
+    try {
+      const result = await generateImage(output, ratio || undefined);
+      if (!result.ok) {
+        toast(result.message, 'error');
+        return;
+      }
+      const stored = await storeShot(visual.id, result.dataUri);
+      vault.addStyleShot(visual.id, stored);
+      toast('畫好了，已存成這個風格的封面', 'success');
+    } catch {
+      toast('存不下這張圖，再試一次', 'error');
+    } finally {
+      setDrawing(false);
+    }
+  }, [visual, drawing, output, ratio, vault, toast]);
 
   const saveShot = useCallback(async () => {
     if (!visual || saving) return;
@@ -154,6 +188,10 @@ export default function StyleScreen() {
         </Pressable>
       </View>
 
+      {visual.d ? (
+        <Text style={[styles.blurb, { color: c.textDim }]}>{visual.d}</Text>
+      ) : null}
+
       <View style={styles.tags}>
         {styleTags(visual).map((tag) => (
           <Text key={tag} style={[styles.tag, { color: c.textFaint, borderColor: c.border }]}>
@@ -163,7 +201,27 @@ export default function StyleScreen() {
       </View>
 
       {/* ── Subject ────────────────────────────────────────────── */}
-      <Section title="主題" hint="留白也可以，模型會自己挑一個最能展現這個風格的畫面。">
+      <Section
+        title="生成"
+        hint={
+          canDraw
+            ? '直接用你的 Google 金鑰畫一張，畫好會自動存成這個風格的封面。'
+            : '還沒設定金鑰，所以只能複製提示詞再自己貼。到「更多 → 生成圖片」貼上 Google API 金鑰就能在這裡直接畫。'
+        }
+      >
+        <Button
+          label={drawing ? '生成中…' : canDraw ? '⚡ 立即生成一張' : '⚡ 設定金鑰後可直接生成'}
+          tone="primary"
+          disabled={drawing || !canDraw}
+          onPress={draw}
+        />
+      </Section>
+
+      <Section title="主題" hint={
+        visual.full
+          ? '這一則本身已經是完整的提示詞。留白就照原樣生成；填了就會把主體換成你寫的。'
+          : '留白也可以，模型會自己挑一個最能展現這個風格的畫面。'
+      }>
         <TextInput
           value={subject}
           onChangeText={vault.setSubject}
@@ -323,6 +381,7 @@ const styles = StyleSheet.create({
   family: { fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: 1, marginBottom: 4 },
   title: { fontFamily: fonts.uiMedium, fontSize: 24, fontWeight: '800', letterSpacing: -0.5 },
 
+  blurb: { fontFamily: fonts.ui, fontSize: 13, lineHeight: 20, marginTop: space.sm },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginTop: space.md },
   tag: {
     fontFamily: fonts.mono,

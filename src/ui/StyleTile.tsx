@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import { familyOf, type VisualStyle } from '../data/styles';
 import { fonts, radius, space } from '../theme';
@@ -14,11 +14,14 @@ export interface StyleTileProps {
   shotUri?: string;
   shotCount: number;
   favourite: boolean;
+  /** True while this tile's image is being generated. */
+  busy?: boolean;
   onOpen(): void;
-  onCast(): void;
+  onDraw(): void;
+  onCopy(): void;
   onToggleFavourite(): void;
-  /** Label of the site 「生成」 will open, shown so the button is not a mystery. */
-  castLabel: string;
+  /** What 「生成」 will do: draw in place, or hand off to a site by this name. */
+  drawHint: string;
 }
 
 function StyleTileImpl({
@@ -26,10 +29,12 @@ function StyleTileImpl({
   shotUri,
   shotCount,
   favourite,
+  busy,
   onOpen,
-  onCast,
+  onDraw,
+  onCopy,
   onToggleFavourite,
-  castLabel,
+  drawHint,
 }: StyleTileProps) {
   const { c } = useTheme();
   const family = familyOf(visual.f);
@@ -48,7 +53,14 @@ function StyleTileImpl({
           <StyleSwatch style={visual} />
         )}
 
-        {shotCount > 1 && (
+        {busy && (
+          <View style={[styles.busy, { backgroundColor: c.scrim }]}>
+            <ActivityIndicator color="#FFFFFF" />
+            <Text style={styles.busyLabel}>生成中…</Text>
+          </View>
+        )}
+
+        {shotCount > 1 && !busy && (
           <Text style={[styles.countBadge, { backgroundColor: c.scrim, color: '#FFFFFF' }]}>
             {shotCount} 張
           </Text>
@@ -80,21 +92,44 @@ function StyleTileImpl({
         <Text style={[styles.name, { color: c.text }]} numberOfLines={1}>
           {visual.n}
         </Text>
+        {visual.d ? (
+          <Text style={[styles.desc, { color: c.textFaint }]} numberOfLines={2}>
+            {visual.d}
+          </Text>
+        ) : null}
       </Pressable>
 
-      <Pressable
-        accessibilityRole="link"
-        accessibilityLabel={`用 ${visual.n} 生成，開啟 ${castLabel}`}
-        onPress={onCast}
-        style={({ pressed }) => [
-          styles.cast,
-          { backgroundColor: c.vermilion, opacity: pressed ? 0.8 : 1 },
-        ]}
-      >
-        <Text style={[styles.castLabel, { color: c.onAccent }]} numberOfLines={1}>
-          ⚡ 生成
-        </Text>
-      </Pressable>
+      <View style={styles.actions}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`複製 ${visual.n} 的提示詞`}
+          onPress={onCopy}
+          style={({ pressed }) => [
+            styles.copy,
+            { borderColor: c.borderStrong, opacity: pressed ? 0.7 : 1 },
+          ]}
+        >
+          <Text style={[styles.copyLabel, { color: c.textDim }]} numberOfLines={1}>
+            複製
+          </Text>
+        </Pressable>
+
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`${visual.n}：${drawHint}`}
+          accessibilityState={{ disabled: !!busy }}
+          disabled={busy}
+          onPress={onDraw}
+          style={({ pressed }) => [
+            styles.draw,
+            { backgroundColor: c.vermilion, opacity: busy ? 0.5 : pressed ? 0.8 : 1 },
+          ]}
+        >
+          <Text style={[styles.drawLabel, { color: c.onAccent }]} numberOfLines={1}>
+            {busy ? '生成中' : '⚡ 生成'}
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -112,6 +147,24 @@ const styles = StyleSheet.create({
 
   cover: { width: '100%', aspectRatio: 1 },
   coverImage: { width: '100%', height: '100%' },
+
+  busy: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: space.sm,
+  },
+  busyLabel: {
+    ...noSelect,
+    fontFamily: fonts.mono,
+    fontSize: 10,
+    letterSpacing: 1.2,
+    color: '#FFFFFF',
+  },
 
   countBadge: {
     ...noSelect,
@@ -140,14 +193,26 @@ const styles = StyleSheet.create({
   caption: { paddingHorizontal: space.sm + 2, paddingTop: space.sm },
   family: { ...noSelect, fontFamily: fonts.mono, fontSize: 9, letterSpacing: 1, marginBottom: 2 },
   name: { ...noSelect, fontFamily: fonts.uiMedium, fontSize: 13.5, fontWeight: '700' },
+  desc: { ...noSelect, fontFamily: fonts.ui, fontSize: 10.5, lineHeight: 15, marginTop: 3 },
 
-  cast: {
+  actions: { flexDirection: 'row', gap: space.sm - 3, padding: space.sm },
+  copy: {
     ...noSelect,
-    margin: space.sm,
+    flex: 1,
+    minHeight: 34,
+    borderWidth: 1,
+    borderRadius: radius.sm,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  copyLabel: { ...noSelect, fontFamily: fonts.uiMedium, fontSize: 12, fontWeight: '700' },
+  draw: {
+    ...noSelect,
+    flex: 1.25,
     minHeight: 34,
     borderRadius: radius.sm,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  castLabel: { ...noSelect, fontFamily: fonts.uiMedium, fontSize: 12.5, fontWeight: '700' },
+  drawLabel: { ...noSelect, fontFamily: fonts.uiMedium, fontSize: 12, fontWeight: '700' },
 });
