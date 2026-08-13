@@ -51,6 +51,11 @@ interface PersistedState {
   styleFav: string[];
   /** The last thing typed into the style wall's subject field. */
   subject: string;
+  /**
+   * Which site 「生成」 hands off to, by name rather than index so reordering the
+   * list cannot silently repoint it at something else.
+   */
+  sendTo: string;
   fmt: Format;
   lang: Lang;
   /** Appearance: follow the system, or pin light/dark. */
@@ -71,6 +76,9 @@ const initialPersisted: PersistedState = {
   styleShots: {},
   styleFav: [],
   subject: '',
+  // Gemini by default: it is the one people already have open and already pay for
+  // (or don't), and unlike the others it needs no key to produce an image.
+  sendTo: 'Gemini',
   fmt: 'plain',
   lang: 'zh',
   theme: 'system',
@@ -124,6 +132,7 @@ interface VaultValue extends PersistedState {
   removeStyleShot(styleId: string, uri: string): void;
   toggleStyleFavourite(styleId: string): void;
   setSubject(subject: string): void;
+  setSendTo(name: string): void;
 
   replaceAll(next: Partial<PersistedState>): void;
   resetToFactory(): void;
@@ -391,6 +400,8 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
 
   const setSubject = useCallback((subject: string) => patch((p) => ({ ...p, subject })), [patch]);
 
+  const setSendTo = useCallback((sendTo: string) => patch((p) => ({ ...p, sendTo })), [patch]);
+
   const replaceAll = useCallback(
     (next: Partial<PersistedState>) =>
       patch((p) => ({
@@ -468,6 +479,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
     removeStyleShot,
     toggleStyleFavourite,
     setSubject,
+    setSendTo,
     replaceAll,
     resetToFactory,
     exportPayload,

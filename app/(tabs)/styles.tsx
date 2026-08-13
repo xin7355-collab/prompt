@@ -1,14 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { FlatList, Pressable, ScrollView, StyleSheet, TextInput, View, useWindowDimensions } from 'react-native';
-import { useFocusEffect, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
 
 import { RATIOS, SITES } from '../../src/data/corpus';
 import { composeStyle, FAMILIES, STYLES, type VisualStyle } from '../../src/data/styles';
-import { generateImage, getImageKey } from '../../src/lib/imagegen';
-import { openExternal } from '../../src/lib/openExternal';
-import { storeShot } from '../../src/store/shots';
 import { useVault } from '../../src/store/vault';
 import { fonts, radius, space } from '../../src/theme';
 import { useTheme } from '../../src/ui/ThemeProvider';
@@ -16,17 +13,12 @@ import { AppText as Text } from '../../src/ui/AppText';
 import { Chip, EmptyState } from '../../src/ui/primitives';
 import { ShotViewer } from '../../src/ui/ShotViewer';
 import { StyleTile } from '../../src/ui/StyleTile';
+import { useImageDraw } from '../../src/ui/useImageDraw';
 import { useToast } from '../../src/ui/Toast';
 import { useLayout } from '../../src/ui/useLayout';
 
 /** Ratios worth a one-tap chip on the wall. The full set lives on the bench. */
 const QUICK_RATIOS = ['1:1', '4:5', '9:16', '16:9', '3:2'];
-
-/** Sites that take the prompt as a query parameter start generating on arrival. */
-const DEFAULT_SITE = Math.max(
-  0,
-  SITES.findIndex((s) => s.n === 'Copilot 影像')
-);
 
 type Facet = 'fav' | 'shot';
 
@@ -54,28 +46,11 @@ export default function StylesScreen() {
   const [facets, setFacets] = useState<Facet[]>([]);
   const [query, setQuery] = useState('');
   const [ratio, setRatio] = useState('');
-  const [site, setSite] = useState(DEFAULT_SITE);
 
-  /** Style ids currently being drawn. Several can run at once. */
-  const [drawing, setDrawing] = useState<Record<string, boolean>>({});
-  /** Whether a key is set, so the button can say what it will do before you press it. */
-  const [canDraw, setCanDraw] = useState(false);
   /** The image open in the full-screen viewer, if any. */
   const [viewing, setViewing] = useState<{ uri: string; title: string; id: string } | null>(null);
 
-  // Re-read on focus: the key is set on another screen, and the label has to catch up
-  // when the user comes back from setting it.
-  useFocusEffect(
-    useCallback(() => {
-      let cancelled = false;
-      getImageKey().then((key) => {
-        if (!cancelled) setCanDraw(Boolean(key));
-      });
-      return () => {
-        cancelled = true;
-      };
-    }, [])
-  );
+  const { busy: drawing, canDraw, site, draw: runDraw, hint } = useImageDraw();
 
   const familyCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -103,71 +78,15 @@ export default function StylesScreen() {
     [router, ratio]
   );
 
-  /** The hand-off path: copy the prompt and open a site. Used when no key is set. */
-  const handOff = useCallback(
-    (visual: VisualStyle, text: string) => {
-      const target = SITES[site];
-      const url = target.q ? target.u + encodeURIComponent(text) : target.u;
-
-      // Open first, copy second: on web an await here would end the tap's user
-      // activation and the browser would silently refuse the new tab.
-      const result = openExternal(url);
-      Clipboard.setStringAsync(text).catch(() => {});
-
-      if (result === 'blocked') {
-        toast(`瀏覽器擋掉了新分頁。提示詞已複製，請自己開 ${target.n} 貼上`, 'error');
-      } else if (target.q) {
-        toast(`${visual.n} → ${target.n} 生成中`);
-      } else {
-        toast(`已複製，正在開啟 ${target.n}，貼上就能生成`);
-      }
-    },
-    [site, toast]
-  );
-
-  /**
-   * Draw this style.
-   *
-   * With a key set the image is generated here and saved onto the tile. Without one
-   * we fall back to the hand-off, so the button does something useful either way —
-   * and `needsKey` is re-checked at call time rather than trusted from state, because
-   * the key can be cleared while this screen is mounted.
-   */
   const draw = useCallback(
-    async (visual: VisualStyle) => {
-      const text = composeStyle({ style: visual, subject, lang, ratio: ratio || undefined });
-
-      if (!canDraw) {
-        handOff(visual, text);
-        return;
-      }
-
-      setDrawing((prev) => ({ ...prev, [visual.id]: true }));
-      try {
-        const result = await generateImage(text, ratio || undefined);
-        if (!result.ok) {
-          if (result.needsKey) {
-            setCanDraw(false);
-            handOff(visual, text);
-          }
-          toast(result.message, 'error');
-          return;
-        }
-        const stored = await storeShot(visual.id, result.dataUri);
-        vault.addStyleShot(visual.id, stored);
-        toast(`「${visual.n}」畫好了`, 'success');
-      } catch {
-        toast('存不下這張圖，再試一次', 'error');
-      } finally {
-        setDrawing((prev) => {
-          if (!prev[visual.id]) return prev;
-          const next = { ...prev };
-          delete next[visual.id];
-          return next;
-        });
-      }
-    },
-    [subject, lang, ratio, canDraw, handOff, vault, toast]
+    (visual: VisualStyle) =>
+      runDraw({
+        id: visual.id,
+        text: composeStyle({ style: visual, subject, lang, ratio: ratio || undefined }),
+        label: visual.n,
+        onImage: (stored) => vault.addStyleShot(visual.id, stored),
+      }),
+    [runDraw, subject, lang, ratio, vault]
   );
 
   const copyPrompt = useCallback(
@@ -200,7 +119,7 @@ export default function StylesScreen() {
               shotCount={shots.length}
               favourite={styleFav.includes(item.id)}
               busy={drawing[item.id]}
-              drawHint={canDraw ? '直接生成圖片' : `複製並開啟 ${SITES[site].n}`}
+              drawHint={hint}
               onOpen={() => openStyle(item)}
               onViewImage={() => setViewing({ uri: shots[0], title: item.n, id: item.id })}
               onDraw={() => draw(item)}
@@ -260,7 +179,7 @@ export default function StylesScreen() {
             <Text style={[styles.sendTo, { color: c.onChromeDim }]}>
               {canDraw
                 ? '⚡ 直接生成 · 畫好自動存成封面'
-                : `送到 · ${SITES[site].q ? '開啟後直接開始生成' : '會先複製，到了貼上即可'}`}
+                : `送到 ${site.n} · 會先複製提示詞，貼上即可`}
             </Text>
           </Pressable>
         </View>
@@ -273,23 +192,23 @@ export default function StylesScreen() {
             style={styles.strip}
             contentContainerStyle={[styles.siteStrip, layout.gutter]}
           >
-            {SITES.map((s, index) => (
+            {SITES.map((s) => (
               <Pressable
                 key={s.n}
                 accessibilityRole="button"
-                accessibilityState={{ selected: site === index }}
-                onPress={() => setSite(index)}
+                accessibilityState={{ selected: site.n === s.n }}
+                onPress={() => vault.setSendTo(s.n)}
                 style={[
                   styles.site,
                   {
-                    backgroundColor: site === index ? c.gold : 'rgba(255,255,255,0.1)',
+                    backgroundColor: site.n === s.n ? c.gold : 'rgba(255,255,255,0.1)',
                   },
                 ]}
               >
                 <Text
                   style={[
                     styles.siteLabel,
-                    { color: site === index ? c.onGold : c.onChromeDim },
+                    { color: site.n === s.n ? c.onGold : c.onChromeDim },
                   ]}
                 >
                   {s.n}

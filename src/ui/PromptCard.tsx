@@ -14,8 +14,11 @@ export interface PromptCardProps {
   lang: Lang;
   favourite: boolean;
   shotUri?: string;
+  /** True while this prompt's image is being generated. */
+  busy?: boolean;
   onToggleFavourite(): void;
   onCopy(): void;
+  onDraw(): void;
   onSendToBench(): void;
   onEdit(): void;
   onOpenShot(): void;
@@ -31,8 +34,10 @@ function PromptCardImpl({
   lang,
   favourite,
   shotUri,
+  busy,
   onToggleFavourite,
   onCopy,
+  onDraw,
   onSendToBench,
   onEdit,
   onOpenShot,
@@ -107,16 +112,33 @@ function PromptCardImpl({
       )}
 
       <View style={styles.actions}>
+        {/* Same gesture as the style wall: one button that turns a prompt into a
+            picture, whichever way the user has that set up. */}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`用「${prompt.t}」生成圖片`}
+          accessibilityState={{ disabled: !!busy }}
+          disabled={busy}
+          onPress={onDraw}
+          style={({ pressed }) => [
+            styles.action,
+            { backgroundColor: c.vermilion, opacity: busy ? 0.5 : pressed ? 0.8 : 1 },
+          ]}
+        >
+          <Text style={[styles.actionLabel, { color: c.onAccent }]} numberOfLines={1}>
+            {busy ? '生成中' : '⚡ 生成'}
+          </Text>
+        </Pressable>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="複製提示詞"
           onPress={onCopy}
           style={({ pressed }) => [
-            styles.action,
-            { backgroundColor: c.vermilion, opacity: pressed ? 0.8 : 1 },
+            styles.actionOutline,
+            { borderColor: c.borderStrong, opacity: pressed ? 0.7 : 1 },
           ]}
         >
-          <Text style={[styles.actionLabel, { color: c.onAccent }]}>複製</Text>
+          <Text style={[styles.actionLabel, { color: c.textDim }]}>複製</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
@@ -127,7 +149,9 @@ function PromptCardImpl({
             { backgroundColor: accent, opacity: pressed ? 0.8 : 1 },
           ]}
         >
-          <Text style={[styles.actionLabel, { color: c.onAccent }]}>送工作台</Text>
+          <Text style={[styles.actionLabel, { color: c.onAccent }]} numberOfLines={1}>
+            工作台
+          </Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
@@ -224,6 +248,15 @@ const styles = StyleSheet.create({
     ...noSelect,
     flex: 1,
     minHeight: 42,
+    borderRadius: radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionOutline: {
+    ...noSelect,
+    flex: 0.8,
+    minHeight: 42,
+    borderWidth: 1.5,
     borderRadius: radius.md,
     alignItems: 'center',
     justifyContent: 'center',

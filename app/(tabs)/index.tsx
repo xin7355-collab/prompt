@@ -14,6 +14,7 @@ import { useTheme } from '../../src/ui/ThemeProvider';
 import { PromptCard } from '../../src/ui/PromptCard';
 import { Chip, EmptyState, IconButton } from '../../src/ui/primitives';
 import { useToast } from '../../src/ui/Toast';
+import { useImageDraw } from '../../src/ui/useImageDraw';
 import { AppText as Text } from '../../src/ui/AppText';
 import { useLayout } from '../../src/ui/useLayout';
 
@@ -35,6 +36,8 @@ export default function LibraryScreen() {
   const [facets, setFacets] = useState<Facet[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [tagsOpen, setTagsOpen] = useState(false);
+
+  const { busy, draw } = useImageDraw();
 
   const categories = useCategoryCounts(prompts);
 
@@ -111,8 +114,17 @@ export default function LibraryScreen() {
           lang={lang}
           favourite={fav.includes(item.i)}
           shotUri={shots[item.i]}
+          busy={busy[item.i]}
           onToggleFavourite={() => vault.toggleFavourite(item.i)}
           onCopy={() => copy(item, lang)}
+          onDraw={() =>
+            draw({
+              id: item.i,
+              text: bodyOf(item, lang),
+              label: item.t,
+              onImage: (stored) => vault.setShot(item.i, stored),
+            })
+          }
           onSendToBench={() => openBench(item)}
           onEdit={() => router.push({ pathname: '/edit', params: { id: item.i } })}
           onOpenShot={() =>
@@ -124,8 +136,11 @@ export default function LibraryScreen() {
         />
       </View>
     ),
-    [columns, lang, fav, shots, vault, copy, openBench, router]
+    [columns, lang, fav, shots, busy, draw, vault, copy, openBench, router]
   );
+
+  /** See the note on the style wall's extraData: rows do not redraw without it. */
+  const extraData = useMemo(() => ({ fav, shots, busy, lang }), [fav, shots, busy, lang]);
 
   return (
     <View style={{ flex: 1, backgroundColor: c.bg }}>
@@ -252,6 +267,7 @@ export default function LibraryScreen() {
         data={visible}
         keyExtractor={(item) => item.i}
         renderItem={renderCard}
+        extraData={extraData}
         numColumns={columns}
         contentContainerStyle={[
           styles.list,
