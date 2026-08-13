@@ -8,7 +8,13 @@ import { categoryOf, PROMPTS } from '../../src/data/corpus';
 import { STYLES } from '../../src/data/styles';
 import type { Format } from '../../src/data/types';
 import { readJsonFile, shareText } from '../../src/lib/io';
-import { getImageKey, IMAGE_MODEL, setImageKey } from '../../src/lib/imagegen';
+import {
+  getImageKey,
+  getImageModel,
+  IMAGE_MODEL,
+  setImageKey,
+  setImageModel,
+} from '../../src/lib/imagegen';
 import { getApiKey, setApiKey } from '../../src/lib/translate';
 import { useVault } from '../../src/store/vault';
 import { fonts, radius, space } from '../../src/theme';
@@ -47,9 +53,11 @@ export default function MoreScreen() {
 
   const [apiKey, setApiKeyState] = useState('');
   const [imageKey, setImageKeyState] = useState('');
+  const [imageModel, setImageModelState] = useState('');
   useEffect(() => {
     getApiKey().then(setApiKeyState);
     getImageKey().then(setImageKeyState);
+    getImageModel().then(setImageModelState);
   }, []);
 
   const exportBackup = async () => {
@@ -238,7 +246,7 @@ export default function MoreScreen() {
 
       <Section
         title="生成圖片"
-        hint={`選填，但填了差很多。貼上自己的 Google AI Studio 金鑰（aistudio.google.com/apikey 免費申請），風格牆的「⚡ 生成」就會直接畫出圖來並存成封面，不用再跳到別的網站。不填也能用——按下去會複製提示詞並開啟你選的網站。用的模型是 ${IMAGE_MODEL}，金鑰只存在這台裝置上，直接送到 Google，不經過任何中間伺服器。`}
+        hint={'選填。貼上自己的 Google AI Studio 金鑰（aistudio.google.com/apikey），風格牆的「⚡ 生成」就會直接畫出圖並存成封面。\n\n注意：申請金鑰免費，但 Imagen 系列要在 Google 開通付費才叫得動；如果按下去說「需要開通付費」，可以把下面的模型換成別的試試。完全不想付費就別填金鑰——按「⚡ 生成」會複製提示詞並開啟你選的網站（Gemini、Copilot 影像都免費），效果一樣，只是多一步。\n\n金鑰只存在這台裝置，直接送到 Google，不經過任何中間伺服器。'}
       >
         <Field
           label="Google API Key"
@@ -249,13 +257,24 @@ export default function MoreScreen() {
           autoCorrect={false}
           secureTextEntry
         />
+        <Field
+          label="圖片模型"
+          value={imageModel}
+          onChangeText={setImageModelState}
+          placeholder={IMAGE_MODEL}
+          autoCapitalize="none"
+          autoCorrect={false}
+          mono
+          hint={`預設 ${IMAGE_MODEL}。名字以 imagen 開頭的走 :predict，其餘走 :generateContent，App 會自己分辨，所以換模型只要改這一欄。留白就回到預設。`}
+        />
         <View style={styles.dataGrid}>
           <Button
-            label="儲存金鑰"
+            label="儲存"
             style={styles.dataButton}
             onPress={async () => {
               await setImageKey(imageKey);
-              toast(imageKey.trim() ? '金鑰已儲存，去風格牆按「⚡ 生成」' : '金鑰已清除', 'success');
+              await setImageModel(imageModel);
+              toast(imageKey.trim() ? '已儲存，去風格牆按「⚡ 生成」' : '金鑰已清除', 'success');
             }}
           />
           <Button

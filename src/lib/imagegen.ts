@@ -15,11 +15,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  */
 
 const KEY_STORAGE = 'spellbox.geminikey';
+const MODEL_STORAGE = 'spellbox.geminimodel';
 
 /** The model the reference collection used, and the one these prompts are tuned for. */
 export const IMAGE_MODEL = 'imagen-4.0-generate-001';
 
-const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${IMAGE_MODEL}:predict`;
+const BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
+
+export async function getImageModel(): Promise<string> {
+  try {
+    return (await AsyncStorage.getItem(MODEL_STORAGE)) || IMAGE_MODEL;
+  } catch {
+    return IMAGE_MODEL;
+  }
+}
+
+export async function setImageModel(model: string) {
+  const trimmed = model.trim();
+  if (trimmed && trimmed !== IMAGE_MODEL) await AsyncStorage.setItem(MODEL_STORAGE, trimmed);
+  else await AsyncStorage.removeItem(MODEL_STORAGE);
+}
 
 /**
  * Imagen accepts only these five. The app's ratio picker offers more (4:5, 2:3, 21:9
@@ -46,9 +61,39 @@ export type GenerateResult =
   | { ok: true; dataUri: string }
   | { ok: false; message: string; needsKey?: boolean };
 
-interface PredictResponse {
+interface ApiResponse {
+  /** imagen-* models, via :predict */
   predictions?: { bytesBase64Encoded?: string; raiFilteredReason?: string }[];
+  /** gemini-* image models, via :generateContent */
+  candidates?: {
+    content?: { parts?: { inlineData?: { mimeType?: string; data?: string } }[] };
+    finishReason?: string;
+  }[];
+  promptFeedback?: { blockReason?: string };
   error?: { message?: string; status?: string };
+}
+
+/** Pulls the image out of whichever response shape came back. */
+function imageFrom(data: ApiResponse): { dataUri: string } | { reason?: string } {
+  const prediction = data.predictions?.[0];
+  if (prediction?.bytesBase64Encoded) {
+    return { dataUri: `data:image/png;base64,${prediction.bytesBase64Encoded}` };
+  }
+
+  for (const part of data.candidates?.[0]?.content?.parts ?? []) {
+    if (part.inlineData?.data) {
+      return {
+        dataUri: `data:${part.inlineData.mimeType || 'image/png'};base64,${part.inlineData.data}`,
+      };
+    }
+  }
+
+  return {
+    reason:
+      prediction?.raiFilteredReason ??
+      data.promptFeedback?.blockReason ??
+      data.candidates?.[0]?.finishReason,
+  };
 }
 
 /**
@@ -69,43 +114,84 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
   }
   if (!prompt.trim()) return { ok: false, message: '沒有可以生成的提示詞' };
 
-  const parameters: Record<string, unknown> = {
-    sampleCount: 1,
-    // Almost every prompt in the poster collection has a model in it. Without this
-    // the endpoint returns an empty prediction list rather than an error, which
-    // looks like a bug and is really a policy default.
-    personGeneration: 'allow_adult',
-  };
-  if (ratio && SUPPORTED_RATIOS.has(ratio)) parameters.aspectRatio = ratio;
+  const model = await getImageModel();
+
+  /**
+   * The two families speak different protocols. Imagen answers `:predict` with
+   * `instances`/`parameters`; the Gemini image models answer `:generateContent` and
+   * return the bytes as an inline part. The model name decides which, so switching
+   * model in settings is enough — no second setting for "which kind".
+   */
+  const isImagen = model.startsWith('imagen');
+  const method = isImagen ? 'predict' : 'generateContent';
+
+  let body: unknown;
+  if (isImagen) {
+    const parameters: Record<string, unknown> = {
+      sampleCount: 1,
+      // Almost every prompt in the poster collection has a model in it. Without this
+      // the endpoint returns an empty prediction list rather than an error, which
+      // looks like a bug and is really a policy default.
+      personGeneration: 'allow_adult',
+    };
+    if (ratio && SUPPORTED_RATIOS.has(ratio)) parameters.aspectRatio = ratio;
+    body = { instances: [{ prompt }], parameters };
+  } else {
+    // These take no aspect-ratio parameter; composeStyle has already written the
+    // ratio into the prompt in words, which is the only lever available here.
+    body = {
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { responseModalities: ['IMAGE'] },
+    };
+  }
 
   let response: Response;
   try {
     // The key goes in the query string rather than a header on purpose: that is the
     // form Google's own browser samples use, and it avoids a CORS preflight that the
     // endpoint does not always answer.
-    response = await fetch(`${ENDPOINT}?key=${encodeURIComponent(key)}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ instances: [{ prompt }], parameters }),
-    });
+    response = await fetch(
+      `${BASE}/${encodeURIComponent(model)}:${method}?key=${encodeURIComponent(key)}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }
+    );
   } catch {
     return { ok: false, message: '連不到 Google 的伺服器，檢查網路後再試一次' };
   }
 
-  let data: PredictResponse;
+  let data: ApiResponse;
   try {
-    data = (await response.json()) as PredictResponse;
+    data = (await response.json()) as ApiResponse;
   } catch {
     return { ok: false, message: `伺服器回應無法解析（HTTP ${response.status}）` };
   }
 
   if (!response.ok) {
     const detail = data.error?.message ?? `HTTP ${response.status}`;
+
     if (response.status === 400 && /API key/i.test(detail)) {
       return { ok: false, needsKey: true, message: '金鑰無效，請到「更多」重新貼一次' };
     }
+    // The one people actually hit: Imagen is not on Google's free tier, so a brand
+    // new key gets refused until billing is switched on. Say that, rather than
+    // echoing an English sentence about billed users.
+    if (/billed|billing|paid tier|quota project/i.test(detail)) {
+      return {
+        ok: false,
+        message: `${model} 需要在 Google 開通付費才能用。到「更多 → 生成圖片」把模型改成別的，或改用不填金鑰的複製＋開網站模式（免費）`,
+      };
+    }
+    if (response.status === 404) {
+      return {
+        ok: false,
+        message: `找不到模型 ${model}。到「更多 → 生成圖片」確認名稱是否正確`,
+      };
+    }
     if (response.status === 403) {
-      return { ok: false, message: `沒有權限用這個模型：${detail}` };
+      return { ok: false, message: `沒有權限用 ${model}：${detail}` };
     }
     if (response.status === 429) {
       return { ok: false, message: '已達 Google 的用量上限，等一下再試' };
@@ -113,17 +199,14 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
     return { ok: false, message: detail };
   }
 
-  const prediction = data.predictions?.[0];
-  if (!prediction?.bytesBase64Encoded) {
-    // A filtered prompt comes back 200 with no image, sometimes with a reason.
-    const reason = prediction?.raiFilteredReason;
-    return {
-      ok: false,
-      message: reason
-        ? `這則被 Google 的安全過濾擋掉了：${reason}`
-        : '沒有生成出圖片，可能是提示詞被安全過濾擋掉了。換一則或改寫試試',
-    };
-  }
+  const found = imageFrom(data);
+  if ('dataUri' in found) return { ok: true, dataUri: found.dataUri };
 
-  return { ok: true, dataUri: `data:image/png;base64,${prediction.bytesBase64Encoded}` };
+  // A filtered prompt comes back 200 with no image, sometimes with a reason.
+  return {
+    ok: false,
+    message: found.reason
+      ? `沒有生成出圖片，Google 給的原因是 ${found.reason}。換一則或改寫試試`
+      : '沒有生成出圖片，可能是提示詞被安全過濾擋掉了。換一則或改寫試試',
+  };
 }
