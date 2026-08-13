@@ -27,6 +27,7 @@ execFileSync(
   path.join(ROOT, 'node_modules/.bin/tsc'),
   [
     'src/data/addendum.ts', 'src/data/forge.ts', 'src/data/guide.ts',
+    'src/data/styles.ts', 'src/data/posters.ts',
     '--outDir', tmp, '--rootDir', '.',
     '--module', 'esnext', '--target', 'es2022', '--skipLibCheck',
     // The project tsconfig targets React Native and emits nothing; this run needs
@@ -37,9 +38,21 @@ execFileSync(
 );
 fs.writeFileSync(path.join(tmp, 'package.json'), '{"type":"module"}');
 
+// tsc emits `from './posters'` — valid TypeScript, unresolvable to Node's ESM loader,
+// which requires the extension. styles.ts is the only module here with a runtime
+// import, and without this the whole export dies on it.
+const emitted = path.join(tmp, 'src/data');
+for (const file of fs.readdirSync(emitted).filter((f) => f.endsWith('.js'))) {
+  const full = path.join(emitted, file);
+  fs.writeFileSync(
+    full,
+    fs.readFileSync(full, 'utf8').replace(/(from\s+['"]\.\/[^'"]+)(['"])/g, '$1.js$2')
+  );
+}
+
 const load = (name) => import(pathToFileURL(path.join(tmp, 'src/data', name)).href);
-const [addendum, forge, guide] = await Promise.all([
-  load('addendum.js'), load('forge.js'), load('guide.js'),
+const [addendum, forge, guide, styles] = await Promise.all([
+  load('addendum.js'), load('forge.js'), load('guide.js'), load('styles.js'),
 ]);
 const raw = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/data/corpus.json'), 'utf8'));
 
@@ -87,8 +100,44 @@ const axes = forge.FORGE_AXES ?? forge.AXES ?? [];
 write('character-forge.json', JSON.stringify({ guard: forge.FORGE_GUARD, axes }, null, 2));
 write('guide.json', JSON.stringify(guide, null, 2));
 
+// The style wall: 150 finished poster prompts plus 83 style clauses. `full` is what
+// separates them — see the note in src/data/styles.ts.
+write(
+  'styles.json',
+  JSON.stringify(
+    {
+      exportedFrom: '咒語盒 Spellbox — 風格牆',
+      counts: {
+        total: styles.STYLES.length,
+        posters: styles.STYLES.filter((s) => s.full).length,
+        clauses: styles.STYLES.filter((s) => !s.full).length,
+        families: styles.FAMILIES.length,
+      },
+      families: styles.FAMILIES,
+      styles: styles.STYLES,
+    },
+    null,
+    2
+  )
+);
+
+const famName = new Map(styles.FAMILIES.map((f) => [f.k, f.n]));
+const styleRows = [['家族', '中文名', '英文名', '種類', '說明', '中文提示詞', '英文提示詞']];
+for (const s of styles.STYLES) {
+  styleRows.push([
+    famName.get(s.f) ?? s.f,
+    s.n,
+    s.e,
+    s.full ? '完整提示詞' : '風格句',
+    s.d ?? '',
+    s.zh ?? '',
+    s.en,
+  ]);
+}
+write('styles.csv', '﻿' + styleRows.map((r) => r.map(cell).join(',')).join('\r\n'));
+
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log(
   `\n  ${PROMPTS.length} prompts · ${CATEGORIES.length} categories · ${PACKS.length} packs` +
-    ` · ${axes.length} forge axes`
+    ` · ${axes.length} forge axes · ${styles.STYLES.length} styles`
 );
