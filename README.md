@@ -2,8 +2,8 @@
 
 > 把一句話，鑄成一張圖。
 
-401 則中英雙語的 AI 繪圖提示詞、一張把它們組裝成完整咒語的工作台，以及 26 軸的角色工坊。
-iOS、Android 與網頁共用同一份程式碼（Expo / React Native）。
+401 則中英雙語的 AI 繪圖提示詞、83 種可以用縮圖挑選的視覺風格、一張把它們組裝成完整咒語的
+工作台，以及 26 軸的角色工坊。iOS、Android 與網頁共用同一份程式碼（Expo / React Native）。
 
 原型是一份 1,784 行的單檔 HTML；這個版本把它重寫成可以真的上架的 App。
 
@@ -159,8 +159,10 @@ Xcode / Android Studio 開。`app.json` 已經設好 bundle id（`com.spellbox.a
 app/                      畫面（expo-router，檔案即路由）
   (tabs)/index.tsx        倉庫：搜尋、分類、標籤、篩選
   (tabs)/bench.tsx        工作台：模式、角色、填空、修飾器、比例、排除項、連發
+  (tabs)/styles.tsx       風格牆：主題寫一次，點縮圖直接生成
   (tabs)/cast.tsx         角色：外貌鎖定
   (tabs)/more.tsx         設定、備份、外觀、API 金鑰
+  style.tsx               單一風格：完整提示詞、送出、成品縮圖庫
   edit / character / pack / reverse / guide
 
 src/
@@ -168,6 +170,7 @@ src/
   theme.ts                設計 token：明暗兩套色盤、間距、圓角、字體
   data/corpus.ts          合併後的語料（generated + addendum）
   data/addendum.ts        後來新增的 48 則與 6 個組合包
+  data/styles.ts          ★ 83 種視覺風格：風格句、家族、色票、組裝函式
   data/forge.ts           角色工坊的 26 軸 / 365 選項
   data/guide.ts           心法筆記
   lib/compose.ts          ★ 提示詞組裝引擎
@@ -177,7 +180,10 @@ src/
   lib/translate.ts        翻譯 / 照片反推（含無金鑰的降級路徑）
   lib/io.ts               選圖、分享、讀檔
   store/vault.tsx         全域狀態 + AsyncStorage 持久化
-  store/shots.ts          成品縮圖（存檔案系統，不是 key-value）
+  store/shots.ts          成品縮圖：原生寫檔案系統，網頁寫 IndexedDB
+  ui/StyleTile.tsx        風格牆的一格
+  ui/StyleSwatch.tsx      還沒有成品圖時的替身色票
+  ui/ShotImage.tsx        會解析 sbshot: 的 <Image>
   ui/AppText.tsx          會跟著字級設定縮放的 Text（各畫面都用它）
   ui/useLayout.ts         橫式：安全區、欄數、閱讀欄寬
   ui/                     設計系統元件
@@ -204,6 +210,23 @@ assets/data/corpus.json   抽出來的結果（勿手改）
 模式指令必須最前面，模型才知道不要重畫那張臉；機器參數（`--ar`、`--no`、
 Negative prompt）依「更多」裡選的輸出格式改寫語法。
 
+### 風格牆怎麼運作
+
+倉庫回答「要畫什麼」，風格牆回答「要長什麼樣」。`src/data/styles.ts` 的每一則
+只有風格句、沒有主體，所以在牆上方寫一次主題就能套進任何一格：
+
+```
+[主題]。[風格句] [比例]
+```
+
+牆上的每一格在你還沒存成品圖之前，用該風格的三色色票加上名字的第一個字當替身
+（`ui/StyleSwatch.tsx`）——同一家族的圖示每格都一樣，分辨不出來，但「電」「柔」
+「黃」可以。存了成品圖之後，照片就取代色票，牆從別人的風格目錄變成你自己的作品索引。
+
+縮圖的位元組不進狀態檔：原生寫進 document 目錄，網頁寫進 IndexedDB（URI 長
+`sbshot:<key>`，由 `ui/ShotImage.tsx` 解析成 object URL）。localStorage 只放那串
+URI，所以原型「60 張就爆」的上限在網頁版也不存在了。
+
 ---
 
 ## 和原型比，改了什麼
@@ -213,7 +236,8 @@ Negative prompt）依「更多」裡選的輸出格式改寫語法。
 | 平台 | 單檔網頁 | iOS / Android / Web 同一份程式碼 |
 | 深色模式 | 無 | 明暗兩套完整色盤，可跟隨系統或手動指定 |
 | 版面 | 底部滑出面板塞下所有功能 | 四個分頁，工作台是完整一頁 |
-| 成品圖 | base64 塞 localStorage，60 張上限 | 縮圖寫入檔案系統，無上限，開機自動清孤兒檔 |
+| 成品圖 | base64 塞 localStorage，60 張上限 | 原生寫檔案系統、網頁寫 IndexedDB，兩邊都無上限，開機自動清孤兒檔 |
+| 挑風格 | 只能讀文字 | 風格牆：83 種風格用縮圖挑，主題寫一次，點一下直接送去生成 |
 | 分類色 | 一組色，深底下會糊掉 | 每個分類明暗各一組 |
 | 比例選擇 | 文字清單 | 照實際形狀畫的方框 + 用途說明 |
 | 翻譯 / 反推 | 直接打 API 且沒有金鑰，實際上必失敗 | 自己填金鑰則自動跑；不填會複製指令給任何 AI 用 |

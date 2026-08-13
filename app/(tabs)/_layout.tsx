@@ -66,6 +66,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="styles"
+        options={{
+          title: '風格',
+          tabBarIcon: ({ color }) => <TabGlyph glyph="❋" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="cast"
         options={{
           title: '角色',

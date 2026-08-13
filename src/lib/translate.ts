@@ -12,7 +12,7 @@ import * as Clipboard from 'expo-clipboard';
  */
 
 const KEY_STORAGE = 'spellbox.apikey';
-const MODEL = 'claude-sonnet-4-6';
+const MODEL = 'claude-sonnet-5';
 const ENDPOINT = 'https://api.anthropic.com/v1/messages';
 
 export const TRANSLATE_INSTRUCTION =

@@ -5,15 +5,114 @@ import { Platform } from 'react-native';
 /**
  * Result-image storage.
  *
- * The web prototype base64-encoded every screenshot into localStorage, which capped it
- * at roughly 60 images before the quota blew up. On device we downscale to a 640px
- * thumbnail and write a real JPEG into the app's document directory, keeping only the
- * file URI in the persisted state. That removes the cap and keeps the state blob small.
+ * The original web prototype base64-encoded every screenshot into localStorage, which
+ * capped it at roughly 60 images before the quota blew up. Both platforms now store a
+ * downscaled JPEG outside the persisted state blob and keep only a URI in it:
+ *
+ *   native — a real file in the app's document directory, URI `file://…`
+ *   web    — a Blob in IndexedDB, URI `sbshot:<key>`
+ *
+ * IndexedDB is the important half now that the wall can hold a thumbnail per style:
+ * localStorage is a few megabytes of *string*, while IndexedDB stores binary and is
+ * measured in hundreds. `sbshot:` URIs are not something <Image> understands, so they
+ * are resolved to object URLs by `resolveShot` — see ui/ShotImage.
  */
 
 const DIR_NAME = 'shots';
 const MAX_EDGE = 640;
 const QUALITY = 0.72;
+
+/** Marks a URI whose bytes live in IndexedDB rather than in the URI itself. */
+export const SHOT_SCHEME = 'sbshot:';
+
+const isWeb = Platform.OS === 'web';
+
+// ─────────────────────────────────────────────────────────── web: IndexedDB
+
+const DB_NAME = 'spellbox-shots';
+const STORE = 'shots';
+
+let dbPromise: Promise<IDBDatabase> | null = null;
+
+function openDb(): Promise<IDBDatabase> {
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
+    if (typeof indexedDB === 'undefined') {
+      reject(new Error('IndexedDB unavailable'));
+      return;
+    }
+    const request = indexedDB.open(DB_NAME, 1);
+    request.onupgradeneeded = () => {
+      if (!request.result.objectStoreNames.contains(STORE)) request.result.createObjectStore(STORE);
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error ?? new Error('IndexedDB open failed'));
+  });
+  // A rejected promise must not be cached, or one failure disables storage for the session.
+  dbPromise.catch(() => {
+    dbPromise = null;
+  });
+  return dbPromise;
+}
+
+function tx<T>(mode: IDBTransactionMode, run: (store: IDBObjectStore) => IDBRequest<T>): Promise<T> {
+  return openDb().then(
+    (db) =>
+      new Promise<T>((resolve, reject) => {
+        const request = run(db.transaction(STORE, mode).objectStore(STORE));
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error ?? new Error('IndexedDB request failed'));
+      })
+  );
+}
+
+/** Object URLs, kept for the life of the page so the same thumbnail is decoded once. */
+const objectUrls = new Map<string, string>();
+
+/** Loads an <img> from any URI the browser can decode. */
+function loadImage(uri: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error('image decode failed'));
+    image.src = uri;
+  });
+}
+
+/** Downscales to a JPEG blob with canvas — no native module involved. */
+async function downscaleWeb(sourceUri: string): Promise<Blob> {
+  const image = await loadImage(sourceUri);
+  const longest = Math.max(image.naturalWidth, image.naturalHeight) || MAX_EDGE;
+  const scale = Math.min(1, MAX_EDGE / longest);
+  const width = Math.max(1, Math.round(image.naturalWidth * scale));
+  const height = Math.max(1, Math.round(image.naturalHeight * scale));
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error('canvas unavailable');
+  context.drawImage(image, 0, 0, width, height);
+
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new Error('encode failed'))),
+      'image/jpeg',
+      QUALITY
+    );
+  });
+}
+
+function blobToDataUri(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error ?? new Error('read failed'));
+    reader.readAsDataURL(blob);
+  });
+}
+
+// ─────────────────────────────────────────────────────────── native: files
 
 function shotsDir(): Directory {
   const dir = new Directory(Paths.document, DIR_NAME);
@@ -21,32 +120,75 @@ function shotsDir(): Directory {
   return dir;
 }
 
+// ─────────────────────────────────────────────────────────── public API
+
 /**
- * Downscales `sourceUri` and stores it as this prompt's result image.
- * Returns the URI to render, or a data URI on web where the filesystem is unavailable.
+ * Downscales `sourceUri` and stores it under `key` (a prompt id or a style id).
+ * Returns the URI to persist. Falls back to an inline data URI only when IndexedDB
+ * is unavailable — private-mode Safari, mainly — so saving never simply fails.
  */
-export async function storeShot(promptId: string, sourceUri: string): Promise<string> {
+export async function storeShot(key: string, sourceUri: string): Promise<string> {
+  // Distinct per save so <Image> cannot serve the previous thumbnail from cache.
+  const stamped = `${key}-${Date.now().toString(36)}`;
+
+  if (isWeb) {
+    const blob = await downscaleWeb(sourceUri);
+    try {
+      await tx('readwrite', (store) => store.put(blob, stamped));
+      objectUrls.set(stamped, URL.createObjectURL(blob));
+      return SHOT_SCHEME + stamped;
+    } catch {
+      return blobToDataUri(blob);
+    }
+  }
+
   const context = ImageManipulator.ImageManipulator.manipulate(sourceUri).resize({ width: MAX_EDGE });
   const image = await context.renderAsync();
   const result = await image.saveAsync({
     compress: QUALITY,
     format: ImageManipulator.SaveFormat.JPEG,
-    base64: Platform.OS === 'web',
   });
 
-  if (Platform.OS === 'web') {
-    return `data:image/jpeg;base64,${result.base64}`;
-  }
-
-  // Cache-bust the filename so <Image> does not show the previous thumbnail from memory.
-  const target = new File(shotsDir(), `${promptId}-${Date.now()}.jpg`);
+  const target = new File(shotsDir(), `${stamped}.jpg`);
   await new File(result.uri).move(target);
   return target.uri;
 }
 
-/** Deletes the backing file, if there is one. Safe to call for a URI that is already gone. */
+/**
+ * Turns a stored URI into something <Image> can render. Only `sbshot:` needs work;
+ * file and data URIs pass straight through.
+ */
+export async function resolveShot(uri: string): Promise<string> {
+  if (!uri.startsWith(SHOT_SCHEME)) return uri;
+  const key = uri.slice(SHOT_SCHEME.length);
+
+  const cached = objectUrls.get(key);
+  if (cached) return cached;
+
+  const blob = await tx<Blob | undefined>('readonly', (store) => store.get(key));
+  if (!blob) throw new Error('thumbnail missing');
+
+  const url = URL.createObjectURL(blob);
+  objectUrls.set(key, url);
+  return url;
+}
+
+/** Deletes the backing bytes, if there are any. Safe for a URI that is already gone. */
 export function removeShot(uri: string | undefined) {
-  if (!uri || Platform.OS === 'web' || uri.startsWith('data:')) return;
+  if (!uri || uri.startsWith('data:')) return;
+
+  if (uri.startsWith(SHOT_SCHEME)) {
+    const key = uri.slice(SHOT_SCHEME.length);
+    const url = objectUrls.get(key);
+    if (url) {
+      URL.revokeObjectURL(url);
+      objectUrls.delete(key);
+    }
+    tx('readwrite', (store) => store.delete(key)).catch(() => {});
+    return;
+  }
+
+  if (isWeb) return;
   try {
     const file = new File(uri);
     if (file.exists) file.delete();
@@ -56,15 +198,31 @@ export function removeShot(uri: string | undefined) {
 }
 
 /**
- * Drops orphaned thumbnails — files whose prompt was deleted, or leftovers from a
- * replaced image. Runs once at startup so the directory cannot grow without bound.
+ * Drops orphaned thumbnails — bytes whose prompt or style was deleted, and leftovers
+ * from a replaced image. Runs once at startup so storage cannot grow without bound.
  */
-export function pruneShots(keep: Record<string, string>) {
-  if (Platform.OS === 'web') return;
+export function pruneShots(live: Iterable<string>) {
+  const keep = new Set(live);
+
+  if (isWeb) {
+    const keepKeys = new Set(
+      [...keep].filter((u) => u.startsWith(SHOT_SCHEME)).map((u) => u.slice(SHOT_SCHEME.length))
+    );
+    tx<IDBValidKey[]>('readonly', (store) => store.getAllKeys())
+      .then((keys) => {
+        for (const key of keys) {
+          if (typeof key === 'string' && !keepKeys.has(key)) {
+            tx('readwrite', (store) => store.delete(key)).catch(() => {});
+          }
+        }
+      })
+      .catch(() => {});
+    return;
+  }
+
   try {
-    const live = new Set(Object.values(keep));
     for (const entry of shotsDir().list()) {
-      if (entry instanceof File && !live.has(entry.uri)) entry.delete();
+      if (entry instanceof File && !keep.has(entry.uri)) entry.delete();
     }
   } catch {
     // Pruning is housekeeping; never let it break startup.

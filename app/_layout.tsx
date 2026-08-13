@@ -45,6 +45,7 @@ function Navigation() {
         <Stack.Screen name="forge" options={{ title: '角色工坊' }} />
         <Stack.Screen name="pack" options={{ presentation: 'modal', title: '組合包' }} />
         <Stack.Screen name="reverse" options={{ presentation: 'modal', title: '從照片反推' }} />
+        <Stack.Screen name="style" options={{ title: '風格' }} />
         <Stack.Screen name="guide" options={{ title: '心法筆記' }} />
       </Stack>
     </>

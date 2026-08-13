@@ -41,6 +41,16 @@ interface PersistedState {
   hist: Record<string, HistoryEntry[]>;
   /** Prompt id -> result thumbnail URI. */
   shots: Record<string, string>;
+  /**
+   * Style id -> saved thumbnails, newest first. A style keeps several because the
+   * wall is a visual index: seeing three results from one style tells you far more
+   * about it than one does.
+   */
+  styleShots: Record<string, string[]>;
+  /** Style ids the user starred. */
+  styleFav: string[];
+  /** The last thing typed into the style wall's subject field. */
+  subject: string;
   fmt: Format;
   lang: Lang;
   /** Appearance: follow the system, or pin light/dark. */
@@ -58,6 +68,9 @@ const initialPersisted: PersistedState = {
   packs: [],
   hist: {},
   shots: {},
+  styleShots: {},
+  styleFav: [],
+  subject: '',
   fmt: 'plain',
   lang: 'zh',
   theme: 'system',
@@ -66,6 +79,8 @@ const initialPersisted: PersistedState = {
 
 const MAX_HISTORY_PER_PROMPT = 6;
 const MAX_HISTORY_PROMPTS = 80;
+/** Beyond this a style's gallery stops being a glance and starts being a scroll. */
+const MAX_SHOTS_PER_STYLE = 8;
 
 export interface PromptDraft {
   t: string;
@@ -105,6 +120,11 @@ interface VaultValue extends PersistedState {
   setShot(promptId: string, uri: string): void;
   clearShot(promptId: string): void;
 
+  addStyleShot(styleId: string, uri: string): void;
+  removeStyleShot(styleId: string, uri: string): void;
+  toggleStyleFavourite(styleId: string): void;
+  setSubject(subject: string): void;
+
   replaceAll(next: Partial<PersistedState>): void;
   resetToFactory(): void;
   exportPayload(): string;
@@ -132,7 +152,10 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
           const parsed = JSON.parse(raw) as Partial<PersistedState>;
           const merged = { ...initialPersisted, ...parsed };
           setState(merged);
-          pruneShots(merged.shots ?? {});
+          pruneShots([
+            ...Object.values(merged.shots ?? {}),
+            ...Object.values(merged.styleShots ?? {}).flat(),
+          ]);
         }
       } catch {
         // A corrupt blob should not brick the app; fall back to factory state.
@@ -318,6 +341,47 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
     [patch]
   );
 
+  const addStyleShot = useCallback(
+    (styleId: string, uri: string) =>
+      patch((p) => {
+        const current = p.styleShots[styleId] ?? [];
+        const next = [uri, ...current];
+        // Oldest fall off the end; their bytes go with them.
+        next.slice(MAX_SHOTS_PER_STYLE).forEach(removeShot);
+        return {
+          ...p,
+          styleShots: { ...p.styleShots, [styleId]: next.slice(0, MAX_SHOTS_PER_STYLE) },
+        };
+      }),
+    [patch]
+  );
+
+  const removeStyleShot = useCallback(
+    (styleId: string, uri: string) =>
+      patch((p) => {
+        removeShot(uri);
+        const next = (p.styleShots[styleId] ?? []).filter((x) => x !== uri);
+        const styleShots = { ...p.styleShots };
+        if (next.length) styleShots[styleId] = next;
+        else delete styleShots[styleId];
+        return { ...p, styleShots };
+      }),
+    [patch]
+  );
+
+  const toggleStyleFavourite = useCallback(
+    (styleId: string) =>
+      patch((p) => ({
+        ...p,
+        styleFav: p.styleFav.includes(styleId)
+          ? p.styleFav.filter((x) => x !== styleId)
+          : [...p.styleFav, styleId],
+      })),
+    [patch]
+  );
+
+  const setSubject = useCallback((subject: string) => patch((p) => ({ ...p, subject })), [patch]);
+
   const replaceAll = useCallback(
     (next: Partial<PersistedState>) =>
       patch((p) => ({
@@ -325,6 +389,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
         // Keep the device's own thumbnails and display preferences; a backup from
         // another device carries file URIs that do not resolve here.
         shots: p.shots,
+        styleShots: p.styleShots,
         fmt: p.fmt,
         lang: p.lang,
         theme: p.theme,
@@ -337,6 +402,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
   const resetToFactory = useCallback(() => {
     patch((p) => {
       Object.values(p.shots).forEach(removeShot);
+      Object.values(p.styleShots).flat().forEach(removeShot);
       return { ...initialPersisted, fmt: p.fmt, lang: p.lang, theme: p.theme, textSize: p.textSize };
     });
     setBench(emptyBench);
@@ -356,6 +422,10 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
           chars: state.chars,
           packs: state.packs,
           hist: state.hist,
+          // Starred styles travel; the thumbnails behind them do not — their URIs
+          // point at bytes that only exist on the device that saved them.
+          styleFav: state.styleFav,
+          subject: state.subject,
         },
         null,
         2
@@ -385,6 +455,10 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
     deletePack,
     setShot,
     clearShot,
+    addStyleShot,
+    removeStyleShot,
+    toggleStyleFavourite,
+    setSubject,
     replaceAll,
     resetToFactory,
     exportPayload,

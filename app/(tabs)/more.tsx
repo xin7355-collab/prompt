@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BRAND } from '../../src/brand';
 import { categoryOf, PROMPTS } from '../../src/data/corpus';
+import { STYLES } from '../../src/data/styles';
 import type { Format } from '../../src/data/types';
 import { readJsonFile, shareText } from '../../src/lib/io';
 import { getApiKey, setApiKey } from '../../src/lib/translate';
@@ -269,7 +270,9 @@ export default function MoreScreen() {
           Object.keys(vault.over).length
         } · 隱藏 ${vault.del.length} · 收藏 ${vault.fav.length} · 成品圖 ${
           Object.keys(vault.shots).length
-        }`}
+        } · 風格 ${STYLES.length} 種，收藏 ${vault.styleFav.length}、縮圖 ${Object.values(
+          vault.styleShots
+        ).reduce((n, list) => n + list.length, 0)}`}
       >
         <View style={styles.dataGrid}>
           <Button label="匯出備份" style={styles.dataButton} onPress={exportBackup} />
