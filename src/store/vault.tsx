@@ -136,6 +136,22 @@ function newId(prefix: string) {
   return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
 
+/**
+ * Returns a copy of `source` without `key`.
+ *
+ * Written out rather than as `const { [key]: _drop, ...rest } = source`, which is
+ * the obvious spelling and does not survive this project's production bundle: a tile
+ * removed from state that way stayed in it, so a finished draw kept its spinner
+ * forever. The explicit form is immune to however the transform decides to compile
+ * a computed key, and reads no worse.
+ */
+function omit<T>(source: Record<string, T>, key: string): Record<string, T> {
+  if (!(key in source)) return source;
+  const next = { ...source };
+  delete next[key];
+  return next;
+}
+
 export function VaultProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<PersistedState>(initialPersisted);
   const [ready, setReady] = useState(false);
@@ -263,12 +279,10 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
           next.mine = next.mine.filter((x) => x.i !== prompt.i);
         } else {
           next.del = [...next.del, prompt.i];
-          const { [prompt.i]: _dropped, ...rest } = next.over;
-          next.over = rest;
+          next.over = omit(next.over, prompt.i);
         }
         removeShot(next.shots[prompt.i]);
-        const { [prompt.i]: _shot, ...shots } = next.shots;
-        next.shots = shots;
+        next.shots = omit(next.shots, prompt.i);
         next.fav = next.fav.filter((x) => x !== prompt.i);
         return next;
       }),
@@ -276,11 +290,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
   );
 
   const revertPrompt = useCallback(
-    (id: string) =>
-      patch((p) => {
-        const { [id]: _dropped, ...over } = p.over;
-        return { ...p, over };
-      }),
+    (id: string) => patch((p) => ({ ...p, over: omit(p.over, id) })),
     [patch]
   );
 
@@ -335,8 +345,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
     (promptId: string) =>
       patch((p) => {
         removeShot(p.shots[promptId]);
-        const { [promptId]: _dropped, ...shots } = p.shots;
-        return { ...p, shots };
+        return { ...p, shots: omit(p.shots, promptId) };
       }),
     [patch]
   );

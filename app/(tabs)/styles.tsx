@@ -14,6 +14,7 @@ import { fonts, radius, space } from '../../src/theme';
 import { useTheme } from '../../src/ui/ThemeProvider';
 import { AppText as Text } from '../../src/ui/AppText';
 import { Chip, EmptyState } from '../../src/ui/primitives';
+import { ShotViewer } from '../../src/ui/ShotViewer';
 import { StyleTile } from '../../src/ui/StyleTile';
 import { useToast } from '../../src/ui/Toast';
 import { useLayout } from '../../src/ui/useLayout';
@@ -59,6 +60,8 @@ export default function StylesScreen() {
   const [drawing, setDrawing] = useState<Record<string, boolean>>({});
   /** Whether a key is set, so the button can say what it will do before you press it. */
   const [canDraw, setCanDraw] = useState(false);
+  /** The image open in the full-screen viewer, if any. */
+  const [viewing, setViewing] = useState<{ uri: string; title: string; id: string } | null>(null);
 
   // Re-read on focus: the key is set on another screen, and the label has to catch up
   // when the user comes back from setting it.
@@ -157,8 +160,10 @@ export default function StylesScreen() {
         toast('存不下這張圖，再試一次', 'error');
       } finally {
         setDrawing((prev) => {
-          const { [visual.id]: _done, ...rest } = prev;
-          return rest;
+          if (!prev[visual.id]) return prev;
+          const next = { ...prev };
+          delete next[visual.id];
+          return next;
         });
       }
     },
@@ -197,6 +202,7 @@ export default function StylesScreen() {
               busy={drawing[item.id]}
               drawHint={canDraw ? '直接生成圖片' : `複製並開啟 ${SITES[site].n}`}
               onOpen={() => openStyle(item)}
+              onViewImage={() => setViewing({ uri: shots[0], title: item.n, id: item.id })}
               onDraw={() => draw(item)}
               onCopy={() => copyPrompt(item)}
               onToggleFavourite={() => vault.toggleStyleFavourite(item.id)}
@@ -211,6 +217,19 @@ export default function StylesScreen() {
   const savedCount = useMemo(
     () => Object.values(styleShots).reduce((n, list) => n + list.length, 0),
     [styleShots]
+  );
+
+  /**
+   * Everything a tile reads that does not live in `data`.
+   *
+   * VirtualizedList memoises each row against `data` and `extraData` only — a new
+   * `renderItem` closure is not enough to get rows redrawn. Without this the tile
+   * that just finished drawing keeps showing its spinner and the image it produced
+   * does not appear until the page is reloaded.
+   */
+  const extraData = useMemo(
+    () => ({ drawing, styleShots, styleFav, canDraw, site }),
+    [drawing, styleShots, styleFav, canDraw, site]
   );
 
   return (
@@ -354,6 +373,7 @@ export default function StylesScreen() {
         data={visible}
         keyExtractor={(item) => item.id}
         renderItem={renderTile}
+        extraData={extraData}
         numColumns={columns}
         contentContainerStyle={[
           layout.gutter,
@@ -374,6 +394,17 @@ export default function StylesScreen() {
             body={'換個分類或關鍵字。\n收藏過的風格會排在「★ 收藏」裡，存過成品圖的在「有縮圖」。'}
           />
         }
+      />
+
+      <ShotViewer
+        uri={viewing?.uri ?? null}
+        title={viewing?.title ?? ''}
+        onClose={() => setViewing(null)}
+        onDelete={() => {
+          const target = viewing;
+          setViewing(null);
+          if (target) vault.removeStyleShot(target.id, target.uri);
+        }}
       />
     </View>
   );

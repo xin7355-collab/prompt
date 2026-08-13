@@ -17,6 +17,8 @@ export interface StyleTileProps {
   /** True while this tile's image is being generated. */
   busy?: boolean;
   onOpen(): void;
+  /** Called instead of onOpen when the cover is a real image the user can view. */
+  onViewImage(): void;
   onDraw(): void;
   onCopy(): void;
   onToggleFavourite(): void;
@@ -31,6 +33,7 @@ function StyleTileImpl({
   favourite,
   busy,
   onOpen,
+  onViewImage,
   onDraw,
   onCopy,
   onToggleFavourite,
@@ -41,10 +44,13 @@ function StyleTileImpl({
 
   return (
     <View style={[styles.tile, { backgroundColor: c.surface, borderColor: c.border }]}>
+      {/* Tapping a picture opens the picture; tapping the words below opens the
+          style. Once a tile has a real image, sending that tap to a detail page
+          instead is the wrong answer to "let me see it". */}
       <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={`${visual.n}，查看這個風格`}
-        onPress={onOpen}
+        accessibilityRole={shotUri ? 'imagebutton' : 'button'}
+        accessibilityLabel={shotUri ? `看 ${visual.n} 的完整圖片` : `${visual.n}，查看這個風格`}
+        onPress={shotUri ? onViewImage : onOpen}
         style={({ pressed }) => [styles.cover, { opacity: pressed ? 0.85 : 1 }]}
       >
         {shotUri ? (

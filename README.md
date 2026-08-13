@@ -188,6 +188,7 @@ src/
   ui/StyleTile.tsx        風格牆的一格
   ui/StyleSwatch.tsx      還沒有成品圖時的替身色票
   ui/ShotImage.tsx        會解析 sbshot: 的 <Image>
+  ui/ShotViewer.tsx       全螢幕看原圖 + 下載原檔
   ui/AppText.tsx          會跟著字級設定縮放的 Text（各畫面都用它）
   ui/useLayout.ts         橫式：安全區、欄數、閱讀欄寬
   ui/                     設計系統元件
@@ -230,6 +231,12 @@ Negative prompt）依「更多」裡選的輸出格式改寫語法。
 縮圖的位元組不進狀態檔：原生寫進 document 目錄，網頁寫進 IndexedDB（URI 長
 `sbshot:<key>`，由 `ui/ShotImage.tsx` 解析成 object URL）。localStorage 只放那串
 URI，所以原型「60 張就爆」的上限在網頁版也不存在了。
+
+每次存圖其實存兩份：牆上用的 640px 縮圖，以及**原尺寸的原圖**（鍵值多一個
+`-full` 後綴）。縮圖是 233 格能順順滑動的原因，原圖是你點開來看、按下載時真正要
+的東西。原圖是 best-effort —— 配額不足時只留縮圖，`ui/ShotViewer.tsx` 會自動退回
+用縮圖顯示。注意 `pruneShots` 必須一併保留 `-full`，否則每次開機都會把原圖當孤兒
+刪掉。
 
 風格分兩種，`composeStyle` 用 `full` 旗標分辨：
 

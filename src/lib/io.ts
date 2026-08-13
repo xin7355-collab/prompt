@@ -52,6 +52,36 @@ export async function shareText(text: string, filename: string) {
   }
 }
 
+/**
+ * Saves an image the user is looking at.
+ *
+ * On web this is a real download — the bytes are already local (an object URL or a
+ * data URI), so there is nothing to fetch from a server and nothing to go wrong
+ * offline. On native it goes to the share sheet, which is where "save to Photos"
+ * lives on both platforms.
+ */
+export async function saveImage(uri: string, filename: string) {
+  if (Platform.OS === 'web') {
+    const blob = await (await fetch(uri)).blob();
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    return;
+  }
+
+  if (!(await Sharing.isAvailableAsync())) return;
+  await Sharing.shareAsync(uri, {
+    mimeType: filename.endsWith('.png') ? 'image/png' : 'image/jpeg',
+    dialogTitle: filename,
+    UTI: filename.endsWith('.png') ? 'public.png' : 'public.jpeg',
+  });
+}
+
 /** Opens a file picker for a JSON backup and returns its contents, or null if cancelled. */
 export async function readJsonFile(): Promise<string | null> {
   const result = await DocumentPicker.getDocumentAsync({

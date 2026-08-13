@@ -17,6 +17,7 @@ import { AppText as Text } from '../src/ui/AppText';
 import { Button, EmptyState, Section } from '../src/ui/primitives';
 import { RatioPicker } from '../src/ui/RatioPicker';
 import { ShotImage } from '../src/ui/ShotImage';
+import { ShotViewer } from '../src/ui/ShotViewer';
 import { StyleSwatch } from '../src/ui/StyleSwatch';
 import { useTheme } from '../src/ui/ThemeProvider';
 import { useToast } from '../src/ui/Toast';
@@ -45,6 +46,8 @@ export default function StyleScreen() {
   const [saving, setSaving] = useState(false);
   const [drawing, setDrawing] = useState(false);
   const [canDraw, setCanDraw] = useState(false);
+  /** Thumbnail URI currently open in the full-screen viewer. */
+  const [viewing, setViewing] = useState<string | null>(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -156,7 +159,13 @@ export default function StyleScreen() {
       keyboardShouldPersistTaps="handled"
     >
       {/* ── Identity ───────────────────────────────────────────── */}
-      <View style={[styles.hero, { borderColor: c.border }]}>
+      <Pressable
+        accessibilityRole={cover ? 'imagebutton' : 'image'}
+        accessibilityLabel={cover ? '看完整圖片' : `${visual.n} 的色票`}
+        disabled={!cover}
+        onPress={() => cover && setViewing(cover)}
+        style={[styles.hero, { borderColor: c.border }]}
+      >
         {cover ? (
           <ShotImage
             uri={cover}
@@ -166,7 +175,10 @@ export default function StyleScreen() {
         ) : (
           <StyleSwatch style={visual} glyphSize={52} />
         )}
-      </View>
+        {cover ? (
+          <Text style={[styles.heroHint, { backgroundColor: c.scrim }]}>點一下看完整圖片</Text>
+        ) : null}
+      </Pressable>
 
       <View style={styles.titleRow}>
         <View style={{ flex: 1 }}>
@@ -327,7 +339,7 @@ export default function StyleScreen() {
       {/* ── Saved thumbnails ───────────────────────────────────── */}
       <Section
         title="我的成品"
-        hint="存下來的圖會變成風格牆上的封面，最多留 8 張。存的是縮圖，不占空間。點一張可以移除。"
+        hint="點任何一張看完整圖片，那裡也可以下載原檔或刪除。最多留 8 張，最新的那張就是風格牆上的封面。"
       >
         <Button
           label={saving ? '讀取中…' : shots.length ? '再存一張成品圖' : '存下這個風格的成品圖'}
@@ -342,17 +354,8 @@ export default function StyleScreen() {
               <Pressable
                 key={uri}
                 accessibilityRole="imagebutton"
-                accessibilityLabel="移除這張成品圖"
-                onPress={() =>
-                  Alert.alert('移除成品圖', `要把這張從「${visual.n}」移除嗎？`, [
-                    { text: '取消', style: 'cancel' },
-                    {
-                      text: '移除',
-                      style: 'destructive',
-                      onPress: () => vault.removeStyleShot(visual.id, uri),
-                    },
-                  ])
-                }
+                accessibilityLabel="看完整圖片"
+                onPress={() => setViewing(uri)}
                 style={[styles.thumb, { borderColor: c.border }]}
               >
                 <ShotImage uri={uri} style={styles.thumbImage} />
@@ -365,6 +368,25 @@ export default function StyleScreen() {
           </Text>
         )}
       </Section>
+
+      <ShotViewer
+        uri={viewing}
+        title={visual.n}
+        onClose={() => setViewing(null)}
+        onDelete={() => {
+          const target = viewing;
+          setViewing(null);
+          if (!target) return;
+          Alert.alert('刪除這張', `要把這張從「${visual.n}」刪掉嗎？`, [
+            { text: '取消', style: 'cancel' },
+            {
+              text: '刪除',
+              style: 'destructive',
+              onPress: () => vault.removeStyleShot(visual.id, target),
+            },
+          ]);
+        }}
+      />
     </ScrollView>
   );
 }
@@ -376,6 +398,20 @@ const styles = StyleSheet.create({
 
   hero: { borderRadius: radius.lg, borderWidth: 1, overflow: 'hidden', aspectRatio: 16 / 10 },
   heroImage: { width: '100%', height: '100%' },
+  heroHint: {
+    ...noSelect,
+    position: 'absolute',
+    right: space.sm,
+    bottom: space.sm,
+    color: '#FFFFFF',
+    fontFamily: fonts.mono,
+    fontSize: 10,
+    letterSpacing: 0.5,
+    borderRadius: radius.sm,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    overflow: 'hidden',
+  },
 
   titleRow: { flexDirection: 'row', alignItems: 'flex-end', gap: space.md, marginTop: space.md },
   family: { fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: 1, marginBottom: 4 },
