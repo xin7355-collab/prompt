@@ -96,10 +96,11 @@ npm run build:web-single      # 產出單一檔案 spellbox-web.html（約 2.5 M
 repo 裡有 `Deploy web to GitHub Pages` workflow，會把網頁版發佈到
 
 ```
-https://8rknrz2dbw-ai.github.io/PROMPT-VAULT/
+https://xin7355-collab.github.io/prompt/
 ```
 
-**第一次要先手動開啟 Pages 一次**（Actions 的 token 沒有建立 Pages 站台的權限）：
+**第一次要先手動開啟 Pages 一次**，這一步沒有辦法自動化：Actions 的 token 建不了
+Pages 站台，會停在 `Create Pages site failed: Resource not accessible by integration`。
 
 1. repo → **Settings → Pages**
 2. **Build and deployment → Source** 選 **GitHub Actions**
@@ -115,8 +116,8 @@ https://8rknrz2dbw-ai.github.io/PROMPT-VAULT/
 （例：`EXPO_BASE_URL=/my-app npm run build:web`），否則所有資源與路由都會對到網域根目錄而 404。
 另外要把 `index.html` 複製一份成 `404.html` 當 SPA fallback，重新整理深層網址才不會壞。
 
-網頁版與 App 的差異：觸覺回饋沒有作用，成品圖存成 data URI 而不是檔案，
-其餘（組裝、連發、角色鎖定、匯出入）行為相同。
+網頁版與 App 的差異：觸覺回饋沒有作用，成品圖存進 IndexedDB 而不是檔案系統，
+其餘（組裝、連發、風格牆、角色鎖定、匯出入）行為相同。
 
 ## 拿 APK（Android 測試安裝）
 

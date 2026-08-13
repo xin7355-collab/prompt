@@ -88,6 +88,10 @@ export default function MoreScreen() {
         chars: data.chars ?? [],
         packs: data.packs ?? [],
         hist: data.hist ?? {},
+        // Absent from backups written before 風格牆 existed; keep what is on this
+        // device rather than blanking it when an older file is restored.
+        styleFav: data.styleFav ?? vault.styleFav,
+        subject: data.subject ?? vault.subject,
       });
       toast('備份已匯入', 'success');
     } catch {
