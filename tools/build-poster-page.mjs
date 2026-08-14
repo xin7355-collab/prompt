@@ -338,11 +338,14 @@ const html = `<!doctype html>
     <input id="keyInput" type="password" placeholder="AIza…（在 aistudio.google.com/apikey 申請）" />
     <label>模型</label>
     <select id="modelInput">
-      <option value="gemini-2.5-flash-image-preview">免費 · gemini-2.5-flash-image-preview（推薦）</option>
-      <option value="gemini-2.0-flash-preview-image-generation">免費 · gemini-2.0-flash-preview-image-generation</option>
+      <option value="gemini-2.0-flash-preview-image-generation">免費 · gemini-2.0-flash-preview-image-generation（推薦）</option>
+      <option value="gemini-2.5-flash-image-preview">免費 · gemini-2.5-flash-image-preview（較新，部分帳號未開放）</option>
       <option value="imagen-4.0-generate-001">付費 · imagen-4.0-generate-001（要開通 Google 帳單）</option>
     </select>
-    <p style="margin:6px 0 0;font-size:11px;line-height:1.7;color:var(--ink-faint)">
+    <button class="btn" id="detectModels" type="button" style="margin-top:8px;flex:none;width:100%">偵測可用模型</button>
+    <p style="margin:8px 0 0;font-size:11px;line-height:1.7;color:var(--ink-faint)">
+      生成一直失敗、或出現「找不到模型」時，先填好金鑰再按「偵測可用模型」，
+      系統會問 Google 你這把金鑰實際能用哪些圖片模型，直接填好給你選。
       免費模型有每日上限；名稱以 imagen 開頭要付費。上傳照片套風格只在免費（gemini）模型有效。
     </p>
     <label>畫面比例</label>

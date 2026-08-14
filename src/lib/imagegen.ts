@@ -21,8 +21,12 @@ const MODEL_STORAGE = 'spellbox.geminimodel';
  * Default model. A free-tier Gemini image model, so a brand-new key draws something
  * rather than hitting Imagen's billing wall on the first press. Imagen stays available
  * by typing its name — the request shape is chosen from the name, see below.
+ *
+ * 2.0 is the default over the newer 2.5-flash-image because 2.0 has the widest region
+ * rollout on the free tier; 2.5 returns 404 on some accounts/regions. Users on those
+ * accounts can switch in settings.
  */
-export const IMAGE_MODEL = 'gemini-2.5-flash-image-preview';
+export const IMAGE_MODEL = 'gemini-2.0-flash-preview-image-generation';
 
 const BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
@@ -193,7 +197,7 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
     if (response.status === 404) {
       return {
         ok: false,
-        message: `找不到模型 ${model}。到「更多 → 生成圖片」確認名稱是否正確`,
+        message: `你的金鑰用不了模型 ${model}（此帳號或地區未開放）。到「更多 → 生成圖片」改用 ${IMAGE_MODEL} 試試`,
       };
     }
     if (response.status === 403) {

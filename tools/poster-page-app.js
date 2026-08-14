@@ -14,7 +14,9 @@
   var STORE_MODEL = 'spellbox.poster.model';
   var STORE_RATIO = 'spellbox.poster.ratio';
   // 免費層可用的 Gemini 原生圖片模型（有每日上限）。imagen 系列要付費，不設為預設。
-  var DEFAULT_MODEL = 'gemini-2.5-flash-image-preview';
+  // 用 2.0 當預設：它上線較久、地區開放最廣；較新的 2.5-flash-image 在部分帳號／
+  // 地區會回 404，這種情況請按設定裡的「偵測可用模型」讓金鑰自己列出能用的名稱。
+  var DEFAULT_MODEL = 'gemini-2.0-flash-preview-image-generation';
   var PAGE = 48;
 
   var STORE_FACE = 'spellbox.poster.face';
@@ -194,7 +196,8 @@
           }
           if (result.response.status === 404) {
             throw new Error(
-              '找不到模型「' + model + '」。到「⚙ 設定」改成 gemini-2.5-flash-image-preview 試試。'
+              '你的金鑰用不了模型「' + model + '」（這個名稱在你的帳號或地區沒開放）。' +
+              '到「⚙ 設定」按「偵測可用模型」，讓系統列出這把金鑰真正能用的圖片模型，再選一個。'
             );
           }
           if (result.response.status === 429) throw new Error('已達 Google 的免費用量上限，等一下再試。');
@@ -431,12 +434,80 @@
   });
 
   // ── Settings ─────────────────────────────────────────────────────
+
+  // A saved model may not be one of the built-in <option>s — e.g. a name that
+  // 「偵測可用模型」found for this key. Add it so the select shows it as selected
+  // rather than silently falling back to the first option.
+  function ensureOption(select, value) {
+    if (!value) return;
+    var has = Array.prototype.some.call(select.options, function (o) { return o.value === value; });
+    if (has) return;
+    var opt = document.createElement('option');
+    opt.value = value;
+    opt.textContent = (value.indexOf('imagen') === 0 ? '付費 · ' : '免費 · ') + value;
+    select.insertBefore(opt, select.firstChild);
+  }
+
   $('openSettings').addEventListener('click', function () {
     $('keyInput').value = read(STORE_KEY, '');
-    $('modelInput').value = read(STORE_MODEL, DEFAULT_MODEL);
+    var model = read(STORE_MODEL, DEFAULT_MODEL);
+    ensureOption($('modelInput'), model);
+    $('modelInput').value = model;
     $('ratioInput').value = read(STORE_RATIO, '3:4');
     $('settings').classList.add('show');
   });
+
+  // 「偵測可用模型」：拿目前這把金鑰去問 Google 有哪些模型，挑出會出圖的，直接填進
+  // 下拉選單。這樣就不用對著一個帳號其實用不了的名稱一直猜——不同帳號、不同地區能用
+  // 的圖片模型不一樣，讓金鑰自己說了算。
+  function detectModels() {
+    var key = $('keyInput').value.trim() || read(STORE_KEY, '');
+    if (!key) { toast('請先在上面貼上 Google API 金鑰，再偵測', true); return; }
+    var btn = $('detectModels');
+    var label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '偵測中…';
+    fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000&key=' +
+          encodeURIComponent(key))
+      .then(function (r) {
+        return r.json().then(function (d) { return { ok: r.ok, status: r.status, data: d }; });
+      })
+      .then(function (res) {
+        if (!res.ok) {
+          throw new Error((res.data.error && res.data.error.message) || ('HTTP ' + res.status));
+        }
+        var models = res.data.models || [];
+        var image = models.filter(function (m) {
+          var name = (m.name || '').replace(/^models\//, '');
+          var methods = m.supportedGenerationMethods || [];
+          var canGen = methods.indexOf('generateContent') !== -1 || methods.indexOf('predict') !== -1;
+          // 名稱含 image / imagen 的才是真的會出圖的那批。
+          return canGen && /image|imagen/i.test(name);
+        }).map(function (m) { return (m.name || '').replace(/^models\//, ''); });
+
+        if (!image.length) {
+          toast('這把金鑰目前沒有可用的圖片模型（可能地區未開放，或此金鑰無權限）', true);
+          return;
+        }
+
+        var select = $('modelInput');
+        select.innerHTML = '';
+        image.forEach(function (name) {
+          var opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = (name.indexOf('imagen') === 0 ? '付費 · ' : '免費 · ') + name;
+          select.appendChild(opt);
+        });
+        // 預設挑第一個免費（gemini）的；沒有免費的才退而用第一個。
+        var free = image.filter(function (n) { return n.indexOf('imagen') !== 0; });
+        select.value = free[0] || image[0];
+        toast('找到 ' + image.length + ' 個可用圖片模型，已自動填入，記得按「儲存」');
+      })
+      .catch(function (e) { toast('偵測失敗：' + (e.message || String(e)), true); })
+      .then(function () { btn.disabled = false; btn.textContent = label; });
+  }
+  $('detectModels').addEventListener('click', detectModels);
+
   var closeSettings = function () { $('settings').classList.remove('show'); };
   $('closeSettings').addEventListener('click', closeSettings);
   $('settings').addEventListener('click', function (event) {
