@@ -145,7 +145,9 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
     // ratio into the prompt in words, which is the only lever available here.
     body = {
       contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { responseModalities: ['IMAGE'] },
+      // Both modalities: gemini-2.0-flash-preview-image-generation rejects an
+      // IMAGE-only request; 2.5 accepts both. Only the image part is kept from the reply.
+      generationConfig: { responseModalities: ['TEXT', 'IMAGE'] },
     };
   }
 

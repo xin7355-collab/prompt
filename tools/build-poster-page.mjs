@@ -134,6 +134,25 @@ const html = `<!doctype html>
   .field:focus { border-color: var(--ink-faint); }
   .field::placeholder { color: var(--ink-faint); }
 
+  .face {
+    display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap;
+  }
+  #facePreview {
+    width: 40px; height: 40px; border-radius: 10px; object-fit: cover;
+    border: 1px solid var(--line); display: none;
+  }
+  .face-btn {
+    flex: 0 0 auto; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 999px; padding: 8px 15px; font-size: 12.5px; color: var(--ink);
+    cursor: pointer;
+  }
+  .face-btn:hover { border-color: var(--ink-faint); }
+  .face-clear {
+    display: none; background: transparent; border: 1px solid var(--line);
+    border-radius: 999px; padding: 8px 13px; font-size: 12px; color: var(--ink-dim); cursor: pointer;
+  }
+  .face-hint { font-size: 11px; color: var(--ink-faint); line-height: 1.5; }
+
   .chips {
     display: flex; gap: 7px; overflow-x: auto; padding: 12px 0 13px;
     scrollbar-width: none;
@@ -280,6 +299,13 @@ const html = `<!doctype html>
       <input class="field" id="subject" placeholder="主題（選填）— 例：一隻黑貓坐在窗邊。填了會套用到「風格句」那類卡片" />
       <input class="field" id="search" placeholder="搜尋名稱、分類或提示詞…" />
     </div>
+    <div class="face">
+      <img id="facePreview" alt="" />
+      <label class="face-btn" for="faceInput">＋ 上傳照片</label>
+      <input id="faceInput" type="file" accept="image/*" hidden />
+      <button id="faceClear" class="face-clear" type="button">移除</button>
+      <span id="faceHint" class="face-hint"></span>
+    </div>
     <div class="chips" id="chips"></div>
   </div>
 </header>
@@ -311,12 +337,13 @@ const html = `<!doctype html>
     <label>Google API Key</label>
     <input id="keyInput" type="password" placeholder="AIza…（在 aistudio.google.com/apikey 申請）" />
     <label>模型</label>
-    <input id="modelInput" placeholder="gemini-2.5-flash-image-preview" />
-    <p style="margin:6px 0 0;font-size:11px;line-height:1.7">
-      免費（有每日上限）：<span style="color:var(--gold)">gemini-2.5-flash-image-preview</span>、
-      gemini-2.0-flash-preview-image-generation<br>
-      付費（要開通 Google 帳單）：imagen-4.0-generate-001<br>
-      <span style="color:var(--ink-faint)">名稱以 imagen 開頭會走付費 API，其餘走免費 API，程式自動判斷。</span>
+    <select id="modelInput">
+      <option value="gemini-2.5-flash-image-preview">免費 · gemini-2.5-flash-image-preview（推薦）</option>
+      <option value="gemini-2.0-flash-preview-image-generation">免費 · gemini-2.0-flash-preview-image-generation</option>
+      <option value="imagen-4.0-generate-001">付費 · imagen-4.0-generate-001（要開通 Google 帳單）</option>
+    </select>
+    <p style="margin:6px 0 0;font-size:11px;line-height:1.7;color:var(--ink-faint)">
+      免費模型有每日上限；名稱以 imagen 開頭要付費。上傳照片套風格只在免費（gemini）模型有效。
     </p>
     <label>畫面比例</label>
     <select id="ratioInput">

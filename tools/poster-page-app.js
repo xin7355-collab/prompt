@@ -17,10 +17,18 @@
   var DEFAULT_MODEL = 'gemini-2.5-flash-image-preview';
   var PAGE = 48;
 
+  var STORE_FACE = 'spellbox.poster.face';
+  var PAGE_UNUSED = 0;
+
   var $ = function (id) { return document.getElementById(id); };
   var read = function (k, fallback) {
     try { return localStorage.getItem(k) || fallback; } catch (e) { return fallback; }
   };
+
+  // 上傳一次的參考照（例如個人大頭照），data: URI。設定後，任何卡片的「⚡ 生成」
+  // 都會帶上這張臉，直接套進那個風格 —— 不用每張卡各別上傳。存進 localStorage 是
+  // 為了重開還在。
+  var subjectImage = read(STORE_FACE, '') || null;
 
   // ── Toast ────────────────────────────────────────────────────────
   var toastTimer = null;
@@ -110,6 +118,12 @@
     return new Blob([bytes], { type: mime || 'image/png' });
   }
 
+  /** data: URI -> { mimeType, data } for an inline API part. */
+  function splitDataUri(uri) {
+    var m = /^data:([^;]+);base64,(.*)$/.exec(uri || '');
+    return m ? { mimeType: m[1], data: m[2] } : null;
+  }
+
   function generate(entry) {
     var key = read(STORE_KEY, '');
     var model = read(STORE_MODEL, DEFAULT_MODEL);
@@ -121,12 +135,33 @@
     // so switching model in settings is all it takes — no separate toggle.
     var isImagen = model.indexOf('imagen') === 0;
     var method = isImagen ? 'predict' : 'generateContent';
-    var body = isImagen
-      ? { instances: { prompt: compose(entry) }, parameters: { sampleCount: 1, aspectRatio: ratio } }
-      : {
-          contents: [{ role: 'user', parts: [{ text: compose(entry) }] }],
-          generationConfig: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: ratio } },
-        };
+
+    var body;
+    if (isImagen) {
+      // Imagen predict is text-only; a reference photo can't ride along.
+      body = { instances: { prompt: compose(entry) }, parameters: { sampleCount: 1, aspectRatio: ratio } };
+    } else {
+      var parts = [];
+      var ref = splitDataUri(subjectImage);
+      var text = compose(entry);
+      if (ref) {
+        // Upload-once, apply-to-any-style: the reference photo leads, and the prompt
+        // is rewritten to keep that person's face while adopting the style.
+        parts.push({ inlineData: { mimeType: ref.mimeType, data: ref.data } });
+        text =
+          'Using the person in the provided photo — keep their face and identity — ' +
+          'restyle them as: ' + text;
+      }
+      parts.push({ text: text });
+      body = {
+        contents: [{ role: 'user', parts: parts }],
+        // Both modalities on purpose: gemini-2.0-flash-preview-image-generation
+        // rejects an IMAGE-only request ("combination of response modalities is not
+        // supported"), and the 2.5 model is happy with both. We keep only the image
+        // part from the reply regardless.
+        generationConfig: { responseModalities: ['TEXT', 'IMAGE'], imageConfig: { aspectRatio: ratio } },
+      };
+    }
 
     // The key is left off the URL when blank on purpose: inside Google AI Studio's
     // canvas the environment injects credentials, and that is the one place this
@@ -273,7 +308,7 @@
 
     var copy = document.createElement('button');
     copy.className = 'btn';
-    copy.textContent = 'COPY';
+    copy.textContent = '複製';
     copy.addEventListener('click', function () {
       var text = compose(entry);
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -286,7 +321,7 @@
 
     var draw = document.createElement('button');
     draw.className = 'btn primary';
-    draw.textContent = 'DRAW';
+    draw.textContent = '⚡ 生成';
     draw.addEventListener('click', function () { runDraw(entry); });
 
     actions.appendChild(copy);
@@ -306,7 +341,7 @@
     paintShot(card, entry);
     var draw = card.querySelector('.btn.primary');
     draw.disabled = !!busy[entry.i];
-    draw.textContent = busy[entry.i] ? '生成中' : 'DRAW';
+    draw.textContent = busy[entry.i] ? '生成中' : '⚡ 生成';
   }
 
   function runDraw(entry) {
@@ -458,6 +493,66 @@
     GROUPS.forEach(function (group) { chips.appendChild(make(group, group, counts[group] || 0)); });
   }
 
+  // ── Reference photo (upload once, apply to any style) ────────────
+  function renderFace() {
+    var preview = $('facePreview');
+    var clear = $('faceClear');
+    var hint = $('faceHint');
+    if (subjectImage) {
+      preview.src = subjectImage;
+      preview.style.display = 'block';
+      clear.style.display = 'inline-flex';
+      hint.textContent = '已套用你的照片 · 按任一張「⚡ 生成」就會把你的臉放進那個風格';
+    } else {
+      preview.removeAttribute('src');
+      preview.style.display = 'none';
+      clear.style.display = 'none';
+      hint.textContent = '上傳一張照片（例如大頭照），之後點任何風格都直接套用，不用每張重傳';
+    }
+  }
+
+  function setFace(dataUri) {
+    subjectImage = dataUri || null;
+    try {
+      if (dataUri) localStorage.setItem(STORE_FACE, dataUri);
+      else localStorage.removeItem(STORE_FACE);
+    } catch (e) {
+      // Face too big for localStorage; keep it in memory for this session at least.
+    }
+    renderFace();
+  }
+
+  // Downscale the upload so it fits localStorage and travels light to the API.
+  function loadFaceFile(file) {
+    if (!file) return;
+    if (!/^image\//.test(file.type)) { toast('請選圖片檔', true); return; }
+    var reader = new FileReader();
+    reader.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var max = 768;
+        var scale = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+        var w = Math.round(img.naturalWidth * scale);
+        var h = Math.round(img.naturalHeight * scale);
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        setFace(canvas.toDataURL('image/jpeg', 0.9));
+        toast('照片已套用');
+      };
+      img.onerror = function () { toast('讀不到這張圖，換一張', true); };
+      img.src = String(reader.result);
+    };
+    reader.onerror = function () { toast('讀取失敗', true); };
+    reader.readAsDataURL(file);
+  }
+
+  $('faceInput').addEventListener('change', function (e) {
+    if (e.target.files && e.target.files[0]) loadFaceFile(e.target.files[0]);
+    e.target.value = '';
+  });
+  $('faceClear').addEventListener('click', function () { setFace(null); toast('已移除照片'); });
+
   var debounce = null;
   $('search').addEventListener('input', function (event) {
     clearTimeout(debounce);
@@ -482,6 +577,7 @@
 
   // ── Boot ─────────────────────────────────────────────────────────
   buildChips();
+  renderFace();
   loadShots().then(function () {
     applyFilter();
     var restored = Object.keys(shots).length;
