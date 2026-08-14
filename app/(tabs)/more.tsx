@@ -8,6 +8,7 @@ import { categoryOf, PROMPTS } from '../../src/data/corpus';
 import { STYLES } from '../../src/data/styles';
 import type { Format } from '../../src/data/types';
 import { readJsonFile, shareText } from '../../src/lib/io';
+import { openExternal } from '../../src/lib/openExternal';
 import {
   getImageKey,
   getImageModel,
@@ -242,6 +243,23 @@ export default function MoreScreen() {
 
       <Section title="心法筆記">
         <Button label="打開心法筆記" tone="accent" onPress={() => router.push('/guide')} />
+      </Section>
+
+      <Section
+        title="海報牆"
+        hint="另一種介面：634 則全部攤成卡片牆，按 DRAW 就在卡片裡生成，圖存在瀏覽器裡下次還在。需要 Google 金鑰。"
+      >
+        <Button
+          label="打開海報牆"
+          onPress={() => {
+            // A plain static page beside the app rather than a route inside it, so
+            // it opens in its own tab and keeps its own storage.
+            const base = typeof window !== 'undefined' ? window.location.pathname.replace(/[^/]*$/, '') : '/';
+            if (openExternal(`${base}poster.html`) === 'blocked') {
+              toast('瀏覽器擋掉了新分頁，請允許彈出視窗', 'error');
+            }
+          }}
+        />
       </Section>
 
       <Section
