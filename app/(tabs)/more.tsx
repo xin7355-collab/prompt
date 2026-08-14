@@ -254,8 +254,11 @@ export default function MoreScreen() {
           onPress={() => {
             // A plain static page beside the app rather than a route inside it, so
             // it opens in its own tab and keeps its own storage.
-            const base = typeof window !== 'undefined' ? window.location.pathname.replace(/[^/]*$/, '') : '/';
-            if (openExternal(`${base}poster.html`) === 'blocked') {
+            //
+            // Deliberately relative: an absolute path is resolved against the origin,
+            // and a file:// origin has none, so the offline copy could never find its
+            // sibling. Relative resolves against the document either way.
+            if (openExternal('poster.html') === 'blocked') {
               toast('瀏覽器擋掉了新分頁，請允許彈出視窗', 'error');
             }
           }}
