@@ -17,8 +17,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const KEY_STORAGE = 'spellbox.geminikey';
 const MODEL_STORAGE = 'spellbox.geminimodel';
 
-/** The model the reference collection used, and the one these prompts are tuned for. */
-export const IMAGE_MODEL = 'imagen-4.0-generate-001';
+/**
+ * Default model. A free-tier Gemini image model, so a brand-new key draws something
+ * rather than hitting Imagen's billing wall on the first press. Imagen stays available
+ * by typing its name — the request shape is chosen from the name, see below.
+ */
+export const IMAGE_MODEL = 'gemini-2.5-flash-image-preview';
 
 const BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 

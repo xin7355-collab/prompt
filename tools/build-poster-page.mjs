@@ -311,7 +311,13 @@ const html = `<!doctype html>
     <label>Google API Key</label>
     <input id="keyInput" type="password" placeholder="AIza…（在 aistudio.google.com/apikey 申請）" />
     <label>模型</label>
-    <input id="modelInput" placeholder="gemini-3.1-flash-image-preview" />
+    <input id="modelInput" placeholder="gemini-2.5-flash-image-preview" />
+    <p style="margin:6px 0 0;font-size:11px;line-height:1.7">
+      免費（有每日上限）：<span style="color:var(--gold)">gemini-2.5-flash-image-preview</span>、
+      gemini-2.0-flash-preview-image-generation<br>
+      付費（要開通 Google 帳單）：imagen-4.0-generate-001<br>
+      <span style="color:var(--ink-faint)">名稱以 imagen 開頭會走付費 API，其餘走免費 API，程式自動判斷。</span>
+    </p>
     <label>畫面比例</label>
     <select id="ratioInput">
       <option value="3:4">3:4 — 海報直式</option>

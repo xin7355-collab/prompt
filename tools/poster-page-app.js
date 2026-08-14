@@ -13,7 +13,8 @@
   var STORE_KEY = 'spellbox.poster.key';
   var STORE_MODEL = 'spellbox.poster.model';
   var STORE_RATIO = 'spellbox.poster.ratio';
-  var DEFAULT_MODEL = 'gemini-3.1-flash-image-preview';
+  // 免費層可用的 Gemini 原生圖片模型（有每日上限）。imagen 系列要付費，不設為預設。
+  var DEFAULT_MODEL = 'gemini-2.5-flash-image-preview';
   var PAGE = 48;
 
   var $ = function (id) { return document.getElementById(id); };
@@ -114,20 +115,25 @@
     var model = read(STORE_MODEL, DEFAULT_MODEL);
     var ratio = read(STORE_RATIO, '3:4');
 
-    var body = {
-      contents: [{ role: 'user', parts: [{ text: compose(entry) }] }],
-      generationConfig: {
-        responseModalities: ['IMAGE'],
-        imageConfig: { aspectRatio: ratio },
-      },
-    };
+    // Two model families, two protocols. Imagen (paid) answers :predict with
+    // instances/parameters; the Gemini native image models (free tier, with limits)
+    // answer :generateContent with an inline-image part. The model name decides which,
+    // so switching model in settings is all it takes — no separate toggle.
+    var isImagen = model.indexOf('imagen') === 0;
+    var method = isImagen ? 'predict' : 'generateContent';
+    var body = isImagen
+      ? { instances: { prompt: compose(entry) }, parameters: { sampleCount: 1, aspectRatio: ratio } }
+      : {
+          contents: [{ role: 'user', parts: [{ text: compose(entry) }] }],
+          generationConfig: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: ratio } },
+        };
 
     // The key is left off the URL when blank on purpose: inside Google AI Studio's
     // canvas the environment injects credentials, and that is the one place this
     // works without a key of your own.
     var url =
       'https://generativelanguage.googleapis.com/v1beta/models/' +
-      encodeURIComponent(model) + ':generateContent' +
+      encodeURIComponent(model) + ':' + method +
       (key ? '?key=' + encodeURIComponent(key) : '');
 
     return fetch(url, {
@@ -146,15 +152,25 @@
             throw new Error('需要 API 金鑰。按右上角「⚙ 設定」貼上你的 Google 金鑰。（原始訊息：' + detail + '）');
           }
           if (/billed|billing|paid tier/i.test(detail)) {
-            throw new Error('這個模型需要在 Google 開通付費。到設定換一個模型試試。');
+            throw new Error(
+              'imagen 系列要在 Google 開通付費才能用。到「⚙ 設定」把模型換成免費的：' +
+              'gemini-2.5-flash-image-preview（或 gemini-2.0-flash-preview-image-generation）'
+            );
           }
           if (result.response.status === 404) {
-            throw new Error('找不到模型「' + model + '」。到設定確認名稱。');
+            throw new Error(
+              '找不到模型「' + model + '」。到「⚙ 設定」改成 gemini-2.5-flash-image-preview 試試。'
+            );
           }
-          if (result.response.status === 429) throw new Error('已達 Google 的用量上限，等一下再試。');
+          if (result.response.status === 429) throw new Error('已達 Google 的免費用量上限，等一下再試。');
           throw new Error(detail);
         }
 
+        // Imagen 回在 predictions[]，Gemini 回在 candidates[].content.parts[].inlineData。
+        var prediction = data.predictions && data.predictions[0];
+        if (prediction && prediction.bytesBase64Encoded) {
+          return base64ToBlob(prediction.bytesBase64Encoded, 'image/png');
+        }
         var parts = (data.candidates && data.candidates[0] && data.candidates[0].content &&
                      data.candidates[0].content.parts) || [];
         for (var i = 0; i < parts.length; i++) {
@@ -163,7 +179,8 @@
             return base64ToBlob(inline.data, inline.mimeType || inline.mime_type);
           }
         }
-        var reason = (data.promptFeedback && data.promptFeedback.blockReason) ||
+        var reason = (prediction && prediction.raiFilteredReason) ||
+                     (data.promptFeedback && data.promptFeedback.blockReason) ||
                      (data.candidates && data.candidates[0] && data.candidates[0].finishReason);
         throw new Error(reason
           ? '沒有生成出圖片，Google 給的原因是 ' + reason

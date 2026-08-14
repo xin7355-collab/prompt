@@ -267,7 +267,7 @@ export default function MoreScreen() {
 
       <Section
         title="生成圖片"
-        hint={'選填。貼上自己的 Google AI Studio 金鑰（aistudio.google.com/apikey），風格牆的「⚡ 生成」就會直接畫出圖並存成封面。\n\n注意：申請金鑰免費，但 Imagen 系列要在 Google 開通付費才叫得動；如果按下去說「需要開通付費」，可以把下面的模型換成別的試試。完全不想付費就別填金鑰——按「⚡ 生成」會複製提示詞並開啟你選的網站（Gemini、Copilot 影像都免費），效果一樣，只是多一步。\n\n金鑰只存在這台裝置，直接送到 Google，不經過任何中間伺服器。'}
+        hint={'選填。貼上自己的 Google AI Studio 金鑰（aistudio.google.com/apikey），風格牆的「⚡ 生成」就會直接畫出圖並存成封面。\n\n預設用免費的 gemini-2.5-flash-image-preview（有每日上限）。imagen 系列要在 Google 開通付費才能用——想用它就在下面模型欄填 imagen-4.0-generate-001，程式會自動改走付費 API。\n\n完全不想碰金鑰就別填——按「⚡ 生成」會複製提示詞並開啟你選的網站（Gemini、Copilot 影像都免費），只是多一步。\n\n金鑰只存在這台裝置，直接送到 Google，不經過任何中間伺服器。'}
       >
         <Field
           label="Google API Key"
