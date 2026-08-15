@@ -9,7 +9,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.2.0';
+  var VERSION = 'v1.2.1';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -517,8 +517,8 @@
     // Free path: the Gemini/ChatGPT consumer web apps generate images for free (the
     // API's free tier does not — every image model is 免費方案「無法使用」). These copy
     // the prompt and open the chosen site so you paste and generate there at no cost.
-    var gem = aiButton('↗ Gemini', 'https://gemini.google.com/app', entry, false);
-    var gpt = aiButton('↗ GPT', 'https://chatgpt.com/', entry, true);
+    var gem = aiButton('↗ Gemini', 'https://gemini.google.com/app', entry);
+    var gpt = aiButton('↗ GPT', 'https://chatgpt.com/', entry);
 
     var draw = document.createElement('button');
     draw.className = 'btn primary';
@@ -537,34 +537,26 @@
     return card;
   }
 
-  // A "open this AI's web app with the prompt" button.
+  // "Open this AI's web app + copy the prompt" button.
   //
-  // Two things the user asked for: open in Chrome (not Safari's in-app view), and
-  // carry the prompt in. We launch Chrome via its own URL scheme (googlechromes://),
-  // which iOS routes to the Chrome app when installed — falling back to whatever
-  // window.open does otherwise. The prompt is pre-filled via ?q= where the site reads
-  // it (ChatGPT does; Gemini ignores URL prompts), and always copied as the backup /
-  // the only way into Gemini.
-  function aiButton(label, base, entry, prefill) {
+  // Open in Chrome (not Safari's in-app view) via Chrome's URL scheme —
+  // https -> googlechromes:// — which iOS routes to the Chrome app when installed.
+  // The prompt is copied, not pushed through the URL: pre-filling via ?q= makes
+  // ChatGPT auto-send (unwanted) and Gemini ignores it entirely, so a paste is the
+  // one behaviour that's consistent, fills the box, and doesn't fire on its own.
+  function aiButton(label, url, entry) {
     var btn = document.createElement('button');
     btn.className = 'btn';
     btn.textContent = label;
-    btn.title = '用 Chrome 開啟 ' + label.replace('↗ ', '') + (prefill ? '，並帶入提示詞' : '，提示詞已複製貼上即可');
+    btn.title = '用 Chrome 開啟 ' + label.replace('↗ ', '') + '；提示詞已複製，長按輸入框貼上';
     btn.addEventListener('click', function () {
       var text = 'Generate an image from this exact description:\n\n' + compose(entry);
-      var httpsUrl = prefill
-        ? base + (base.indexOf('?') >= 0 ? '&' : '?') + 'q=' + encodeURIComponent(text)
-        : base;
-      // Prefer the Chrome app; https -> googlechromes://. Open in a new context so the
-      // wall (and its generated images) stays put.
-      var chromeUrl = httpsUrl.replace(/^https:\/\//, 'googlechromes://');
-      window.open(chromeUrl, '_blank');
+      // New context so the wall (and its generated images) stays put.
+      window.open(url.replace(/^https:\/\//, 'googlechromes://'), '_blank');
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).catch(function () {});
       }
-      toast(prefill
-        ? '用 Chrome 開啟並帶入提示詞（沒裝 Chrome 就開一般瀏覽器；提示詞也已複製）'
-        : 'Gemini 沒法用網址帶提示詞——已複製，貼上即可（若沒裝 Chrome 會開一般瀏覽器）');
+      toast('用 Chrome 開啟，提示詞已複製 —— 長按輸入框貼上即可（沒裝 Chrome 會開一般瀏覽器）');
     });
     return btn;
   }
