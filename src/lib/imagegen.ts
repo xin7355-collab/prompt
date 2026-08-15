@@ -22,11 +22,12 @@ const MODEL_STORAGE = 'spellbox.geminimodel';
  * rather than hitting Imagen's billing wall on the first press. Imagen stays available
  * by typing its name — the request shape is chosen from the name, see below.
  *
- * 2.0 is the default over the newer 2.5-flash-image because 2.0 has the widest region
- * rollout on the free tier; 2.5 returns 404 on some accounts/regions. Users on those
- * accounts can switch in settings.
+ * Default is gemini-2.5-flash-image: the current GA native image model, best quality
+ * and broadly available on new free keys. The older gemini-2.0-flash-preview-image-
+ * generation is retired on some newer accounts (404); users there can switch in
+ * settings, and the poster wall's "偵測可用模型" lists what a key can actually reach.
  */
-export const IMAGE_MODEL = 'gemini-2.0-flash-preview-image-generation';
+export const IMAGE_MODEL = 'gemini-2.5-flash-image';
 
 const BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 

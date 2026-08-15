@@ -338,8 +338,8 @@ const html = `<!doctype html>
     <input id="keyInput" type="password" placeholder="AIza…（在 aistudio.google.com/apikey 申請）" />
     <label>模型</label>
     <select id="modelInput">
-      <option value="gemini-2.0-flash-preview-image-generation">免費 · gemini-2.0-flash-preview-image-generation（相容最廣）</option>
-      <option value="gemini-2.5-flash-image">免費 · gemini-2.5-flash-image（較新、畫質較好）</option>
+      <option value="gemini-2.5-flash-image">免費 · gemini-2.5-flash-image（推薦，畫質最好）</option>
+      <option value="gemini-2.0-flash-preview-image-generation">免費 · gemini-2.0-flash-preview-image-generation（舊版，部分帳號已停用）</option>
       <option value="imagen-4.0-generate-001">付費 · imagen-4.0-generate-001（要開通 Google 帳單）</option>
     </select>
     <button class="btn" id="detectModels" type="button" style="margin-top:8px;flex:none;width:100%">偵測可用模型</button>

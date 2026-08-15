@@ -14,9 +14,10 @@
   var STORE_MODEL = 'spellbox.poster.model';
   var STORE_RATIO = 'spellbox.poster.ratio';
   // 免費層可用的 Gemini 原生圖片模型（有每日上限）。imagen 系列要付費，不設為預設。
-  // 用 2.0 當預設：它上線較久、地區開放最廣；較新的 2.5-flash-image 在部分帳號／
-  // 地區會回 404，這種情況請按設定裡的「偵測可用模型」讓金鑰自己列出能用的名稱。
-  var DEFAULT_MODEL = 'gemini-2.0-flash-preview-image-generation';
+  // 預設用 gemini-2.5-flash-image：這是目前 GA 的原生圖片模型，畫質最好、新帳號普遍
+  // 可用。舊的 gemini-2.0-flash-preview-image-generation 在部分新帳號已停用、會回 404；
+  // 遇到時按設定裡的「偵測可用模型」讓金鑰自己列出真正能用的名稱。
+  var DEFAULT_MODEL = 'gemini-2.5-flash-image';
   var PAGE = 48;
 
   var STORE_FACE = 'spellbox.poster.face';
