@@ -451,11 +451,17 @@
     return m ? { mimeType: m[1], data: m[2] } : null;
   }
 
-  /** "51s" / "1m3s" / "1.5s" -> a human 中文 span like "51 秒" or "1 分 3 秒". */
-  function humanDelay(raw) {
+  /** "51s" / "1m3s" / "1.5s" -> whole seconds (0 if unparseable). */
+  function delaySeconds(raw) {
     var s = 0, m;
     if ((m = /(\d+)m/.exec(raw))) s += parseInt(m[1], 10) * 60;
     if ((m = /([\d.]+)s/.exec(raw))) s += Math.round(parseFloat(m[1]));
+    return s;
+  }
+
+  /** seconds -> a human 中文 span like "51 秒" or "1 分 3 秒" ('' if 0). */
+  function humanDelay(raw) {
+    var s = delaySeconds(raw);
     if (!s) return '';
     if (s < 60) return s + ' 秒';
     var mins = Math.floor(s / 60), secs = s % 60;
@@ -463,32 +469,36 @@
   }
 
   /**
-   * Turns a 429 (RESOURCE_EXHAUSTED) into a message that says which limit was hit
-   * and, crucially, when it lifts — the numbers come from Google's own error
+   * Reads a 429 (RESOURCE_EXHAUSTED) into { message, seconds, perDay, perMin } — which
+   * limit was hit and when it lifts — taking the numbers from Google's own error
    * details (RetryInfo.retryDelay, QuotaFailure.violations[].quotaId), not a guess.
    * A daily free quota resets at Pacific midnight; a per-minute limit lifts in seconds.
+   * `seconds` drives the automatic retry so the user never has to time it by hand.
    */
-  function quotaMessage(data) {
+  function quotaInfo(data) {
     var details = (data.error && data.error.details) || [];
-    var delay = '', quotaId = '';
+    var raw = '', quotaId = '';
     for (var i = 0; i < details.length; i++) {
       var d = details[i] || {};
-      if (d.retryDelay) delay = humanDelay(d.retryDelay);
+      if (d.retryDelay) raw = d.retryDelay;
       var v = d.violations && d.violations[0];
       if (v && (v.quotaId || v.quotaMetric)) quotaId = v.quotaId || v.quotaMetric;
     }
     var perDay = /per\s*day|PerDay/i.test(quotaId);
     var perMin = /per\s*minute|PerMinute/i.test(quotaId);
+    var human = humanDelay(raw);
 
+    var message;
     if (perDay) {
-      return '今天的免費額度用完了。免費層每天會重置一次——重置點是「太平洋時間午夜」，' +
+      message = '今天的免費額度用完了。免費層每天會重置一次——重置點是「太平洋時間午夜」，' +
         '換算台灣大約是下午 3～4 點（依日光節約時間會差一小時）。' +
         '想立刻解除，可到 Google Cloud 幫這把金鑰綁信用卡改用付費層；否則等重置後就能再生成。';
+    } else if (perMin) {
+      message = '每分鐘的免費次數到了' + (human ? '，約 ' + human + '後恢復' : '') + '，稍等再按一次「⚡ 生成」。';
+    } else {
+      message = '已達 Google 免費用量上限' + (human ? '，Google 建議約 ' + human + '後再試' : '，等一下再試') + '。';
     }
-    if (perMin) {
-      return '每分鐘的免費次數到了' + (delay ? '，約 ' + delay + '後恢復' : '') + '，稍等再按一次「⚡ 生成」。';
-    }
-    return '已達 Google 免費用量上限' + (delay ? '，Google 建議約 ' + delay + '後再試' : '，等一下再試') + '。';
+    return { message: message, seconds: delaySeconds(raw), perDay: perDay, perMin: perMin };
   }
 
   function generate(entry) {
@@ -554,8 +564,15 @@
             throw new Error('需要 API 金鑰。按右上角「⚙ 設定」貼上你的 Google 金鑰。（原始訊息：' + detail + '）');
           }
           // 429 first: a quota message can mention "billing" ("enable billing to raise
-          // quota"), which must not be mistaken for a hard paid-tier block below.
-          if (result.response.status === 429) throw new Error(quotaMessage(data));
+          // quota"), which must not be mistaken for a hard paid-tier block below. Carry
+          // the retry seconds so the caller can wait it out automatically.
+          if (result.response.status === 429) {
+            var q = quotaInfo(data);
+            var rateErr = new Error(q.message);
+            rateErr.retryAfter = q.seconds;
+            rateErr.perDay = q.perDay;
+            throw rateErr;
+          }
           if (/billed|billing|paid tier/i.test(detail)) {
             if (isImagen) {
               throw new Error(
@@ -724,20 +741,71 @@
     draw.textContent = busy[entry.i] ? '生成中' : '⚡ 生成';
   }
 
+  // Free-tier image models rate-limit hard, and every manual re-press during the
+  // cooldown makes Google's back-off worse. So on a per-minute 429 the app waits the
+  // cooldown out itself and retries — the user presses once. A few tries; if they all
+  // hit the limit, the free quota is effectively zero and we say so plainly.
+  var MAX_AUTO_RETRY = 4;
+
+  function setOverlayLabel(entry, text) {
+    var card = cardFor(entry.i);
+    if (!card) return;
+    var label = card.querySelector('.overlay .label');
+    if (label) label.textContent = text;
+  }
+
+  function finishDraw(entry) {
+    delete busy[entry.i];
+    refreshCard(entry);
+    updateCount();
+  }
+
+  function attemptDraw(entry, attempt) {
+    generate(entry)
+      .then(function (blob) { return putShot(entry.i, blob); })
+      .then(function () { toast('「' + entry.t + '」畫好了'); finishDraw(entry); })
+      .catch(function (error) {
+        // Only per-minute limits are worth waiting out; a daily cap or a real error
+        // won't clear in seconds.
+        var canWait = error && error.retryAfter && !error.perDay;
+        if (canWait && attempt < MAX_AUTO_RETRY) {
+          // +2s buffer so we clear the window; cap so one wait can't run away.
+          countdownRetry(entry, Math.min(error.retryAfter + 2, 45), attempt);
+          return;
+        }
+        if (canWait) {
+          toast(
+            '自動重試 ' + MAX_AUTO_RETRY + ' 次都被「每分鐘上限」擋住，代表這把免費金鑰對這顆圖片模型的額度極少或為 0。' +
+            '免費要出圖：用卡片「複製」把提示詞貼到 gemini.google.com 自己生，或跟我說要改用「後端代持」（借你登入的 Gemini 網頁帳號自動生）。',
+            true
+          );
+        } else {
+          toast(error.message || String(error), true);
+        }
+        finishDraw(entry);
+      });
+  }
+
+  function countdownRetry(entry, secs, attempt) {
+    var remaining = secs;
+    setOverlayLabel(entry, '額度回血中，' + remaining + ' 秒後自動重試…');
+    var timer = setInterval(function () {
+      remaining -= 1;
+      if (remaining > 0) {
+        setOverlayLabel(entry, '額度回血中，' + remaining + ' 秒後自動重試…');
+        return;
+      }
+      clearInterval(timer);
+      setOverlayLabel(entry, '重試中…');
+      attemptDraw(entry, attempt + 1);
+    }, 1000);
+  }
+
   function runDraw(entry) {
     if (busy[entry.i]) return;
     busy[entry.i] = true;
     refreshCard(entry);
-
-    generate(entry)
-      .then(function (blob) { return putShot(entry.i, blob); })
-      .then(function () { toast('「' + entry.t + '」畫好了'); })
-      .catch(function (error) { toast(error.message || String(error), true); })
-      .then(function () {
-        delete busy[entry.i];
-        refreshCard(entry);
-        updateCount();
-      });
+    attemptDraw(entry, 0);
   }
 
   // ── Filtering and paging ─────────────────────────────────────────
