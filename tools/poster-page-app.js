@@ -230,8 +230,8 @@
           }
           if (/billed|billing|paid tier/i.test(detail)) {
             throw new Error(
-              'imagen 系列要在 Google 開通付費才能用。到「⚙ 設定」把模型換成免費的 ' +
-              'gemini-2.0-flash-preview-image-generation，或按「偵測可用模型」挑一個免費的。'
+              '不用開信用卡！你現在選到的是 imagen（付費）模型才會這樣。' +
+              '按右上「⚙ 設定」→ 直接按「偵測可用模型」，它會自動幫你挑一個免費的 gemini 模型 → 按「儲存」→ 再點「⚡ 生成」就好。'
             );
           }
           if (result.response.status === 404) {

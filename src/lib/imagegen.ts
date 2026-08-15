@@ -235,7 +235,7 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
     if (/billed|billing|paid tier|quota project/i.test(detail)) {
       return {
         ok: false,
-        message: `${model} 需要在 Google 開通付費才能用。到「更多 → 生成圖片」把模型改成別的，或改用不填金鑰的複製＋開網站模式（免費）`,
+        message: `不用開信用卡！${model} 是 imagen 付費模型才要綁卡。到「更多 → 生成圖片」把模型改成免費的 ${IMAGE_MODEL} 就好`,
       };
     }
     if (response.status === 404) {
