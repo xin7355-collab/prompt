@@ -186,11 +186,96 @@ export async function storeShot(key: string, sourceUri: string): Promise<string>
   return target.uri;
 }
 
+// ───────────────────────────────────────── shared pool (web, cross-surface)
+//
+// The poster wall (poster.html) and the app run on the same origin, so a single
+// IndexedDB store lets them show the same batch of images. It is keyed by the item
+// id (a prompt id or a style id) and holds the full-resolution blob. Web only — the
+// poster wall has no native counterpart to share with.
+
+const SHARED_DB = 'spellbox-shared';
+/** URI for an image whose bytes live in the shared pool, keyed by the item id. */
+export const SHARED_SCHEME = 'sbshared:';
+
+let sharedDbPromise: Promise<IDBDatabase> | null = null;
+
+function openSharedDb(): Promise<IDBDatabase> {
+  if (sharedDbPromise) return sharedDbPromise;
+  sharedDbPromise = new Promise((resolve, reject) => {
+    if (typeof indexedDB === 'undefined') {
+      reject(new Error('IndexedDB unavailable'));
+      return;
+    }
+    const request = indexedDB.open(SHARED_DB, 1);
+    request.onupgradeneeded = () => {
+      if (!request.result.objectStoreNames.contains(STORE)) request.result.createObjectStore(STORE);
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error ?? new Error('shared IndexedDB open failed'));
+  });
+  sharedDbPromise.catch(() => {
+    sharedDbPromise = null;
+  });
+  return sharedDbPromise;
+}
+
+function sharedTx<T>(
+  mode: IDBTransactionMode,
+  run: (store: IDBObjectStore) => IDBRequest<T>
+): Promise<T> {
+  return openSharedDb().then(
+    (db) =>
+      new Promise<T>((resolve, reject) => {
+        const request = run(db.transaction(STORE, mode).objectStore(STORE));
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error ?? new Error('shared IndexedDB request failed'));
+      })
+  );
+}
+
 /**
- * Turns a stored URI into something <Image> can render. Only `sbshot:` needs work;
- * file and data URIs pass straight through.
+ * Copies the full image behind `sourceUri` into the shared pool under `id`, so the
+ * other surface shows it too. Best-effort and web-only; a failure never blocks a draw.
+ */
+export async function shareImage(id: string, sourceUri: string): Promise<void> {
+  if (!isWeb) return;
+  try {
+    const blob = await (await fetch(sourceUri)).blob();
+    await sharedTx('readwrite', (store) => store.put(blob, id));
+  } catch {
+    // Quota, or a source we cannot re-read. Sharing is a bonus, not a requirement.
+  }
+}
+
+/** Ids that currently have a shared image (empty off-web or when the pool is missing). */
+export async function sharedKeys(): Promise<string[]> {
+  if (!isWeb) return [];
+  try {
+    const keys = await sharedTx<IDBValidKey[]>('readonly', (store) => store.getAllKeys());
+    return keys.filter((k): k is string => typeof k === 'string');
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Turns a stored URI into something <Image> can render. `sbshared:` resolves from the
+ * shared pool, `sbshot:` from the app's own store; file and data URIs pass straight
+ * through.
  */
 export async function resolveShot(uri: string): Promise<string> {
+  if (uri.startsWith(SHARED_SCHEME)) {
+    const id = uri.slice(SHARED_SCHEME.length);
+    const cacheKey = SHARED_SCHEME + id;
+    const cached = objectUrls.get(cacheKey);
+    if (cached) return cached;
+    const blob = await sharedTx<Blob | undefined>('readonly', (store) => store.get(id));
+    if (!blob) throw new Error('shared image missing');
+    const url = URL.createObjectURL(blob);
+    objectUrls.set(cacheKey, url);
+    return url;
+  }
+
   if (!uri.startsWith(SHOT_SCHEME)) return uri;
   const key = uri.slice(SHOT_SCHEME.length);
 
@@ -211,6 +296,9 @@ export async function resolveShot(uri: string): Promise<string> {
  * existed, and any save where storing the original was refused.
  */
 export async function resolveFull(uri: string): Promise<string> {
+  // The shared pool already holds the full-resolution image, no separate copy.
+  if (uri.startsWith(SHARED_SCHEME)) return resolveShot(uri);
+
   if (uri.startsWith(SHOT_SCHEME)) {
     const key = uri.slice(SHOT_SCHEME.length) + FULL_SUFFIX;
     const cached = objectUrls.get(key);
@@ -243,6 +331,18 @@ export async function resolveFull(uri: string): Promise<string> {
 /** Deletes the backing bytes, if there are any. Safe for a URI that is already gone. */
 export function removeShot(uri: string | undefined) {
   if (!uri || uri.startsWith('data:')) return;
+
+  if (uri.startsWith(SHARED_SCHEME)) {
+    const id = uri.slice(SHARED_SCHEME.length);
+    const cacheKey = SHARED_SCHEME + id;
+    const url = objectUrls.get(cacheKey);
+    if (url) {
+      URL.revokeObjectURL(url);
+      objectUrls.delete(cacheKey);
+    }
+    sharedTx('readwrite', (store) => store.delete(id)).catch(() => {});
+    return;
+  }
 
   if (uri.startsWith(SHOT_SCHEME)) {
     const key = uri.slice(SHOT_SCHEME.length);

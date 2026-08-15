@@ -3,9 +3,9 @@ import { useFocusEffect } from 'expo-router';
 import * as Clipboard from 'expo-clipboard';
 
 import { SITES } from '../data/corpus';
-import { generateImage, getImageKey } from '../lib/imagegen';
+import { generateImage, getImageKey, getImageModel } from '../lib/imagegen';
 import { openExternal } from '../lib/openExternal';
-import { storeShot } from '../store/shots';
+import { shareImage, storeShot } from '../store/shots';
 import { useVault } from '../store/vault';
 import { useToast } from './Toast';
 
@@ -33,12 +33,13 @@ export function useImageDraw() {
   /** Whether a key is set, so a button can say what it will do before it is pressed. */
   const [canDraw, setCanDraw] = useState(false);
 
-  // Re-read on focus; the key is set on another screen and the labels must catch up.
+  // Re-read on focus; the key/model are set on another screen and the labels must
+  // catch up. The free Pollinations model needs no key, so it draws in place too.
   useFocusEffect(
     useCallback(() => {
       let cancelled = false;
-      getImageKey().then((key) => {
-        if (!cancelled) setCanDraw(Boolean(key));
+      Promise.all([getImageKey(), getImageModel()]).then(([key, model]) => {
+        if (!cancelled) setCanDraw(Boolean(key) || model === 'pollinations');
       });
       return () => {
         cancelled = true;
@@ -98,6 +99,8 @@ export function useImageDraw() {
           return;
         }
         onImage(await storeShot(id, result.dataUri));
+        // Also drop the full image into the shared pool so the poster wall shows it.
+        shareImage(id, result.dataUri);
         toast(`「${label}」畫好了`, 'success');
       } catch {
         toast('存不下這張圖，再試一次', 'error');

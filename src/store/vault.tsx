@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 
 import { CATEGORIES, PACKS, PROMPTS } from '../data/corpus';
+import { STYLES } from '../data/styles';
 import type {
   Character,
   Format,
@@ -21,7 +22,7 @@ import type {
 } from '../data/types';
 import { emptyBench, type BenchState } from '../lib/compose';
 import type { TextSize, ThemePreference } from '../ui/ThemeProvider';
-import { pruneShots, removeShot } from './shots';
+import { pruneShots, removeShot, sharedKeys, SHARED_SCHEME } from './shots';
 
 const STORAGE_KEY = 'spellbox.v1';
 /** The web prototype's key, read once so an imported backup or a WebView user carries over. */
@@ -161,6 +162,38 @@ function omit<T>(source: Record<string, T>, key: string): Record<string, T> {
   return next;
 }
 
+// Which ids belong to prompts vs styles, so a shared image lands on the right wall.
+const PROMPT_IDS = new Set(PROMPTS.map((p) => p.i));
+const STYLE_IDS = new Set(STYLES.map((s) => s.id));
+
+/**
+ * Folds images generated on the poster wall (the shared pool) into state, so both
+ * surfaces show the same batch. Non-destructive: an id the app already has a shot for
+ * is left alone; only genuinely new ids get a `sbshared:` reference.
+ */
+function mergeShared(base: PersistedState, sharedIds: string[]): PersistedState {
+  if (!sharedIds.length) return base;
+  const shots = { ...base.shots };
+  const styleShots = { ...base.styleShots };
+  let changed = false;
+  for (const id of sharedIds) {
+    const uri = SHARED_SCHEME + id;
+    if (PROMPT_IDS.has(id)) {
+      if (!shots[id]) {
+        shots[id] = uri;
+        changed = true;
+      }
+    } else if (STYLE_IDS.has(id)) {
+      const list = styleShots[id] ?? [];
+      if (!list.includes(uri)) {
+        styleShots[id] = [uri, ...list];
+        changed = true;
+      }
+    }
+  }
+  return changed ? { ...base, shots, styleShots } : base;
+}
+
 export function VaultProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<PersistedState>(initialPersisted);
   const [ready, setReady] = useState(false);
@@ -173,13 +206,25 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
       try {
         const rawCurrent = await AsyncStorage.getItem(STORAGE_KEY);
         const raw = rawCurrent ?? (await AsyncStorage.getItem(LEGACY_KEY));
-        if (raw && !cancelled) {
+        let base = initialPersisted;
+        if (raw) {
           const parsed = JSON.parse(raw) as Partial<PersistedState>;
-          const merged = { ...initialPersisted, ...parsed };
-          setState(merged);
+          base = { ...initialPersisted, ...parsed };
+        }
+        // Bring in images generated on the poster wall (same-origin shared pool).
+        // Guarded so a storage hiccup here never blocks the app from loading.
+        let sharedIds: string[] = [];
+        try {
+          sharedIds = await sharedKeys();
+        } catch {
+          sharedIds = [];
+        }
+        const withShared = mergeShared(base, sharedIds);
+        if (!cancelled && (raw || sharedIds.length)) {
+          setState(withShared);
           pruneShots([
-            ...Object.values(merged.shots ?? {}),
-            ...Object.values(merged.styleShots ?? {}).flat(),
+            ...Object.values(withShared.shots ?? {}),
+            ...Object.values(withShared.styleShots ?? {}).flat(),
           ]);
         }
       } catch {

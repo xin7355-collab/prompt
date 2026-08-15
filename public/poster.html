@@ -339,7 +339,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.1.2';
+  var VERSION = 'v1.2.0';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -412,7 +412,10 @@
   // quota after a handful, so they go to IndexedDB and only the object URL is held
   // in memory. Everything survives a reload, which is the whole point of a wall you
   // come back to.
-  var DB_NAME = 'spellbox-poster';
+  // Shared with the app: same origin, same DB, keyed by entry id -> full blob. An image
+  // generated here shows up in 咒語盒, and vice versa.
+  var DB_NAME = 'spellbox-shared';
+  var OLD_DB_NAME = 'spellbox-poster';
   var STORE = 'shots';
   var dbPromise = null;
 
@@ -450,6 +453,44 @@
     shots[id] = URL.createObjectURL(blob);
     return tx('readwrite', function (s) { return s.put(blob, id); }).catch(function () {
       toast('圖已顯示，但存不進瀏覽器資料庫（可能空間已滿），重新整理後會消失', true);
+    });
+  }
+
+  // One-time move of images from the old poster-only DB into the shared pool, so
+  // nothing generated before sharing existed is lost. Idempotent via a localStorage
+  // flag so a later deletion can't be resurrected on the next load.
+  function migrateOldShots() {
+    return new Promise(function (resolve) {
+      try {
+        if (localStorage.getItem('spellbox.migrated.shared')) { resolve(); return; }
+      } catch (e) {}
+      if (typeof indexedDB === 'undefined') { resolve(); return; }
+      var done = function () {
+        try { localStorage.setItem('spellbox.migrated.shared', '1'); } catch (e) {}
+        resolve();
+      };
+      var req;
+      try { req = indexedDB.open(OLD_DB_NAME, 1); } catch (e) { resolve(); return; }
+      req.onupgradeneeded = function () {
+        if (!req.result.objectStoreNames.contains(STORE)) req.result.createObjectStore(STORE);
+      };
+      req.onerror = function () { resolve(); };
+      req.onsuccess = function () {
+        var store;
+        try { store = req.result.transaction(STORE, 'readonly').objectStore(STORE); }
+        catch (e) { done(); return; }
+        var pairs = [];
+        var cur = store.openCursor();
+        cur.onerror = function () { done(); };
+        cur.onsuccess = function (ev) {
+          var cursor = ev.target.result;
+          if (cursor) { pairs.push([cursor.key, cursor.value]); cursor.continue(); return; }
+          if (!pairs.length) { done(); return; }
+          Promise.all(pairs.map(function (kv) {
+            return tx('readwrite', function (s) { return s.put(kv[1], kv[0]); }).catch(function () {});
+          })).then(done, done);
+        };
+      };
     });
   }
 
@@ -1342,7 +1383,7 @@
   if ($('ver')) $('ver').textContent = VERSION;
   buildChips();
   renderFace();
-  loadShots().then(function () {
+  migrateOldShots().then(loadShots).then(function () {
     applyFilter();
     var restored = Object.keys(shots).length;
     if (restored) toast('已載回 ' + restored + ' 張之前生成的圖');
