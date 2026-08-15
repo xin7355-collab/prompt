@@ -13,11 +13,10 @@
   var STORE_KEY = 'spellbox.poster.key';
   var STORE_MODEL = 'spellbox.poster.model';
   var STORE_RATIO = 'spellbox.poster.ratio';
-  // 免費層可用的 Gemini 原生圖片模型（有每日上限）。imagen 系列要付費，不設為預設。
-  // 預設用 gemini-2.5-flash-image：這是目前 GA 的原生圖片模型，畫質最好、新帳號普遍
-  // 可用。舊的 gemini-2.0-flash-preview-image-generation 在部分新帳號已停用、會回 404；
-  // 遇到時按設定裡的「偵測可用模型」讓金鑰自己列出真正能用的名稱。
-  var DEFAULT_MODEL = 'gemini-2.5-flash-image';
+  // 預設用 'pollinations'：免金鑰、免費、直接在頁面出圖——Google API 的免費層已無法
+  // 生圖（所有圖片模型免費方案都「無法使用」），所以這是唯一開箱即免費的路。想要更高
+  // 畫質、或用上傳照片套風格，再到設定改成付費層的 gemini-2.5-flash-image。
+  var DEFAULT_MODEL = 'pollinations';
   var PAGE = 48;
 
   var STORE_FACE = 'spellbox.poster.face';
@@ -202,10 +201,45 @@
     return { message: message, seconds: delaySeconds(raw), perDay: perDay, perMin: perMin };
   }
 
+  // Aspect ratio -> pixel size for providers that take width/height (Pollinations).
+  function ratioToSize(ratio) {
+    switch (ratio) {
+      case '1:1': return { w: 1024, h: 1024 };
+      case '4:3': return { w: 1024, h: 768 };
+      case '9:16': return { w: 768, h: 1360 };
+      case '16:9': return { w: 1360, h: 768 };
+      case '3:4':
+      default: return { w: 768, h: 1024 };
+    }
+  }
+
   function generate(entry) {
     var key = read(STORE_KEY, '');
     var model = read(STORE_MODEL, DEFAULT_MODEL);
     var ratio = read(STORE_RATIO, '3:4');
+
+    // Pollinations: genuinely free and keyless. The prompt goes in the URL and the
+    // response *is* the image, so there's no account, no billing, no quota wall — the
+    // one path that draws in-page for free (the Gemini API's free tier can't). It's a
+    // public best-effort service, so it can be slow or briefly busy; a failed fetch
+    // just surfaces as a retryable error. Text-only, so an uploaded face can't ride along.
+    if (model === 'pollinations') {
+      var size = ratioToSize(ratio);
+      var seed = Math.floor(Math.random() * 1e9);
+      var pUrl = 'https://image.pollinations.ai/prompt/' +
+        encodeURIComponent(compose(entry)) +
+        '?width=' + size.w + '&height=' + size.h +
+        '&seed=' + seed + '&nologo=true&model=flux';
+      return fetch(pUrl).then(function (r) {
+        if (!r.ok) throw new Error('免費生圖服務忙碌中（回應 ' + r.status + '），稍等再按一次「⚡ 生成」。');
+        return r.blob();
+      }).then(function (blob) {
+        if (!blob || blob.type.indexOf('image') !== 0) {
+          throw new Error('免費生圖服務暫時沒回圖，稍等再試一次。');
+        }
+        return blob;
+      });
+    }
 
     // Two model families, two protocols. Imagen (paid) answers :predict with
     // instances/parameters; the Gemini native image models (free tier, with limits)
@@ -613,7 +647,9 @@
     if (has) return;
     var opt = document.createElement('option');
     opt.value = value;
-    opt.textContent = (value.indexOf('imagen') === 0 ? '付費 · ' : '免費 · ') + value;
+    opt.textContent = value === 'pollinations'
+      ? '免費・免金鑰 · Pollinations（直接出圖，推薦）'
+      : '付費層 · ' + value;
     select.insertBefore(opt, select.firstChild);
   }
 
@@ -661,16 +697,21 @@
 
         var select = $('modelInput');
         select.innerHTML = '';
+        // Keep the free keyless option at the top even after listing Google models.
+        var freeOpt = document.createElement('option');
+        freeOpt.value = 'pollinations';
+        freeOpt.textContent = '免費・免金鑰 · Pollinations（直接出圖，推薦）';
+        select.appendChild(freeOpt);
         image.forEach(function (name) {
           var opt = document.createElement('option');
           opt.value = name;
-          opt.textContent = (name.indexOf('imagen') === 0 ? '付費 · ' : '免費 · ') + name;
+          // These list because the key can see them, but generating needs the paid tier.
+          opt.textContent = '付費層 · ' + name;
           select.appendChild(opt);
         });
-        // 預設挑第一個免費（gemini）的；沒有免費的才退而用第一個。
-        var free = image.filter(function (n) { return n.indexOf('imagen') !== 0; });
-        select.value = free[0] || image[0];
-        toast('找到 ' + image.length + ' 個可用圖片模型，已自動填入，記得按「儲存」');
+        var gemini = image.filter(function (n) { return n.indexOf('imagen') !== 0; });
+        select.value = gemini[0] || image[0];
+        toast('找到 ' + image.length + ' 個 Google 圖片模型（生圖需付費層）。想免費就選最上面的 Pollinations，記得按「儲存」');
       })
       .catch(function (e) { toast('偵測失敗：' + (e.message || String(e)), true); })
       .then(function () { btn.disabled = false; btn.textContent = label; });

@@ -330,24 +330,24 @@ const html = `<!doctype html>
   <div class="sheet">
     <h2>生成設定</h2>
     <p>
-      金鑰只存在這台裝置的瀏覽器裡，直接送到 Google，不經過任何中間伺服器。
-      在 Google AI Studio 的畫布裡執行時可以留白，環境會自動帶入；
-      當成獨立檔案或網頁開啟時必須自己填，否則會被拒絕。
+      用預設的 <b>Pollinations（免費・免金鑰）</b>不用填任何東西，直接就能生圖。
+      下面的金鑰只有在你選付費層的 gemini／imagen 模型時才需要——金鑰只存在這台裝置的瀏覽器裡，
+      直接送到 Google，不經過任何中間伺服器。
     </p>
-    <label>Google API Key</label>
-    <input id="keyInput" type="password" placeholder="AIza…（在 aistudio.google.com/apikey 申請）" />
-    <label>模型（API 生成用，需付費層）</label>
+    <label>Google API Key（只有付費層模型才需要）</label>
+    <input id="keyInput" type="password" placeholder="AIza…（選付費層 Google 模型時才要填）" />
+    <label>模型</label>
     <select id="modelInput">
-      <option value="gemini-2.5-flash-image">gemini-2.5-flash-image（一張約 US$0.039，可套上傳照片）</option>
-      <option value="imagen-4.0-generate-001">imagen-4.0-generate-001（一張約 US$0.04）</option>
-      <option value="gemini-2.0-flash-preview-image-generation">gemini-2.0-flash-preview-image-generation（舊版）</option>
+      <option value="pollinations">免費・免金鑰 · Pollinations（直接出圖，推薦）</option>
+      <option value="gemini-2.5-flash-image">付費層 · gemini-2.5-flash-image（一張約 US$0.039，可套上傳照片）</option>
+      <option value="imagen-4.0-generate-001">付費層 · imagen-4.0-generate-001（一張約 US$0.04）</option>
+      <option value="gemini-2.0-flash-preview-image-generation">付費層 · gemini-2.0-flash-preview-image-generation（舊版）</option>
     </select>
-    <button class="btn" id="detectModels" type="button" style="margin-top:8px;flex:none;width:100%">偵測可用模型</button>
+    <button class="btn" id="detectModels" type="button" style="margin-top:8px;flex:none;width:100%">偵測可用 Google 模型</button>
     <p style="margin:8px 0 0;font-size:11px;line-height:1.7;color:var(--ink-faint)">
-      ⚠️ 重要：依 Google 官方定價，API <b>免費層無法生圖</b>（所有圖片模型的免費方案都標「無法使用」）。
-      用 API 金鑰的「⚡ 生成」需要在 Google Cloud 綁卡改<b>付費層</b>（用多少付多少，非預付開通費）。
-      <b>想完全免費 → 用每張卡片的「↗ Gemini」鈕</b>，把提示詞帶到 Gemini 網頁免費生。
-      上傳照片套風格只在 gemini 模型有效。
+      <b>Pollinations＝免費、免金鑰、直接出圖</b>，開箱即用（公用服務，忙碌時可能慢或要重按）。<br>
+      ⚠️ Google API 的<b>免費層無法生圖</b>（官方定價所有圖片模型免費方案都「無法使用」）；
+      gemini／imagen 這些要在 Google Cloud 綁卡改<b>付費層</b>才會動，但畫質較好、能用上傳照片套風格。
     </p>
     <label>畫面比例</label>
     <select id="ratioInput">
