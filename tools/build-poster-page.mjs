@@ -117,6 +117,10 @@ const html = `<!doctype html>
     letter-spacing: .06em; margin: 0;
   }
   .tagline { font-size: 11.5px; color: var(--ink-faint); letter-spacing: .04em; }
+  .ver {
+    font-family: var(--mono); font-size: 10px; color: var(--gold);
+    border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; letter-spacing: .04em;
+  }
   .spacer { flex: 1; }
   .ghost {
     background: transparent; border: 1px solid var(--line);
@@ -290,6 +294,7 @@ const html = `<!doctype html>
   <div class="bar">
     <div class="brandrow">
       <h1 class="wordmark">咒語盒 · 海報牆</h1>
+      <span class="ver" id="ver"></span>
       <span class="tagline" id="count"></span>
       <span class="spacer"></span>
       <button class="ghost" id="onlyShot">只看已生成</button>
