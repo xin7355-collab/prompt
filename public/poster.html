@@ -265,17 +265,18 @@
     </p>
     <label>Google API Key</label>
     <input id="keyInput" type="password" placeholder="AIza…（在 aistudio.google.com/apikey 申請）" />
-    <label>模型</label>
+    <label>模型（API 生成用，需付費層）</label>
     <select id="modelInput">
-      <option value="gemini-2.5-flash-image">免費 · gemini-2.5-flash-image（推薦，畫質最好）</option>
-      <option value="gemini-2.0-flash-preview-image-generation">免費 · gemini-2.0-flash-preview-image-generation（舊版，部分帳號已停用）</option>
-      <option value="imagen-4.0-generate-001">付費 · imagen-4.0-generate-001（要開通 Google 帳單）</option>
+      <option value="gemini-2.5-flash-image">gemini-2.5-flash-image（一張約 US$0.039，可套上傳照片）</option>
+      <option value="imagen-4.0-generate-001">imagen-4.0-generate-001（一張約 US$0.04）</option>
+      <option value="gemini-2.0-flash-preview-image-generation">gemini-2.0-flash-preview-image-generation（舊版）</option>
     </select>
     <button class="btn" id="detectModels" type="button" style="margin-top:8px;flex:none;width:100%">偵測可用模型</button>
     <p style="margin:8px 0 0;font-size:11px;line-height:1.7;color:var(--ink-faint)">
-      生成一直失敗、或出現「找不到模型」時，先填好金鑰再按「偵測可用模型」，
-      系統會問 Google 你這把金鑰實際能用哪些圖片模型，直接填好給你選。
-      免費模型有每日上限；名稱以 imagen 開頭要付費。上傳照片套風格只在免費（gemini）模型有效。
+      ⚠️ 重要：依 Google 官方定價，API <b>免費層無法生圖</b>（所有圖片模型的免費方案都標「無法使用」）。
+      用 API 金鑰的「⚡ 生成」需要在 Google Cloud 綁卡改<b>付費層</b>（用多少付多少，非預付開通費）。
+      <b>想完全免費 → 用每張卡片的「↗ Gemini」鈕</b>，把提示詞帶到 Gemini 網頁免費生。
+      上傳照片套風格只在 gemini 模型有效。
     </p>
     <label>畫面比例</label>
     <select id="ratioInput">
@@ -716,12 +717,35 @@
       }
     });
 
+    // Free path: the Gemini consumer web app generates images for free (the API's
+    // free tier does not — every image model is 免費方案「無法使用」). This copies the
+    // prompt and opens Gemini so you paste and generate there at no cost.
+    var gem = document.createElement('button');
+    gem.className = 'btn';
+    gem.textContent = '↗ Gemini';
+    gem.title = '免費：複製提示詞並開啟 Gemini 網頁，貼上就生圖';
+    gem.addEventListener('click', function () {
+      var text = 'Generate an image from this exact description:\n\n' + compose(entry);
+      // Open synchronously inside the gesture so iOS Safari doesn't block the tab.
+      window.open('https://gemini.google.com/app', '_blank', 'noopener');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { toast('提示詞已複製！到剛開的 Gemini 分頁長按→貼上，就免費生圖'); },
+          function () { toast('已開 Gemini，但複製失敗——回來按「複製」再貼過去', true); }
+        );
+      } else {
+        toast('已開 Gemini，回來按「複製」把提示詞貼過去');
+      }
+    });
+
     var draw = document.createElement('button');
     draw.className = 'btn primary';
     draw.textContent = '⚡ 生成';
+    draw.title = 'API 金鑰生成（需付費層，免費層無法生圖）';
     draw.addEventListener('click', function () { runDraw(entry); });
 
     actions.appendChild(copy);
+    actions.appendChild(gem);
     actions.appendChild(draw);
     body.appendChild(actions);
     card.appendChild(body);

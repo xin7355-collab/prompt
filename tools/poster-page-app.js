@@ -417,12 +417,35 @@
       }
     });
 
+    // Free path: the Gemini consumer web app generates images for free (the API's
+    // free tier does not — every image model is 免費方案「無法使用」). This copies the
+    // prompt and opens Gemini so you paste and generate there at no cost.
+    var gem = document.createElement('button');
+    gem.className = 'btn';
+    gem.textContent = '↗ Gemini';
+    gem.title = '免費：複製提示詞並開啟 Gemini 網頁，貼上就生圖';
+    gem.addEventListener('click', function () {
+      var text = 'Generate an image from this exact description:\n\n' + compose(entry);
+      // Open synchronously inside the gesture so iOS Safari doesn't block the tab.
+      window.open('https://gemini.google.com/app', '_blank', 'noopener');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { toast('提示詞已複製！到剛開的 Gemini 分頁長按→貼上，就免費生圖'); },
+          function () { toast('已開 Gemini，但複製失敗——回來按「複製」再貼過去', true); }
+        );
+      } else {
+        toast('已開 Gemini，回來按「複製」把提示詞貼過去');
+      }
+    });
+
     var draw = document.createElement('button');
     draw.className = 'btn primary';
     draw.textContent = '⚡ 生成';
+    draw.title = 'API 金鑰生成（需付費層，免費層無法生圖）';
     draw.addEventListener('click', function () { runDraw(entry); });
 
     actions.appendChild(copy);
+    actions.appendChild(gem);
     actions.appendChild(draw);
     body.appendChild(actions);
     card.appendChild(body);
