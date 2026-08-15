@@ -234,9 +234,17 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
     // new key gets refused until billing is switched on. Say that, rather than
     // echoing an English sentence about billed users.
     if (/billed|billing|paid tier|quota project/i.test(detail)) {
+      if (isImagen) {
+        return {
+          ok: false,
+          message: `imagen 系列要綁卡才能用。到「更多 → 生成圖片」把模型改成免費的 ${IMAGE_MODEL} 就好，不用開卡`,
+        };
+      }
+      // A gemini model returned a billing error → Google gated image output to the
+      // paid tier for this account. Surface Google's own words rather than guessing.
       return {
         ok: false,
-        message: `不用開信用卡！${model} 是 imagen 付費模型才要綁卡。到「更多 → 生成圖片」把模型改成免費的 ${IMAGE_MODEL} 就好`,
+        message: `模型 ${model} 在你的帳號被歸到付費層，免費金鑰被擋。Google 原話：${detail}`,
       };
     }
     if (response.status === 404) {

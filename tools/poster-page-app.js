@@ -230,9 +230,19 @@
             throw new Error('需要 API 金鑰。按右上角「⚙ 設定」貼上你的 Google 金鑰。（原始訊息：' + detail + '）');
           }
           if (/billed|billing|paid tier/i.test(detail)) {
+            if (isImagen) {
+              throw new Error(
+                'imagen 系列要綁信用卡才能用。改用免費的就好：按「⚙ 設定」→「偵測可用模型」→ ' +
+                '挑一個 gemini 開頭的 → 儲存 → 再生成。'
+              );
+            }
+            // A gemini model that still returns a billing error means Google has put
+            // image output behind the paid tier for THIS account. Don't blame imagen —
+            // show Google's own words so we can see the real reason.
             throw new Error(
-              '不用開信用卡！你現在選到的是 imagen（付費）模型才會這樣。' +
-              '按右上「⚙ 設定」→ 直接按「偵測可用模型」，它會自動幫你挑一個免費的 gemini 模型 → 按「儲存」→ 再點「⚡ 生成」就好。'
+              '模型「' + model + '」在你的帳號被 Google 歸到「付費層」，免費金鑰被擋下。' +
+              'Google 原話：「' + detail + '」。可到「⚙ 設定」→「偵測可用模型」換另一個免費模型試；' +
+              '若每個都要付費，代表你帳號的免費層目前沒開放圖片生成。'
             );
           }
           if (result.response.status === 404) {
@@ -556,10 +566,12 @@
   });
   $('saveSettings').addEventListener('click', function () {
     try {
+      var chosen = $('modelInput').value.trim() || DEFAULT_MODEL;
       localStorage.setItem(STORE_KEY, $('keyInput').value.trim());
-      localStorage.setItem(STORE_MODEL, $('modelInput').value.trim() || DEFAULT_MODEL);
+      localStorage.setItem(STORE_MODEL, chosen);
       localStorage.setItem(STORE_RATIO, $('ratioInput').value);
-      toast('已儲存');
+      // Name the saved model so it's obvious which one the next 生成 will use.
+      toast('已儲存，模型：' + chosen);
     } catch (e) {
       toast('存不進瀏覽器設定', true);
     }
