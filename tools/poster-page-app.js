@@ -126,6 +126,46 @@
     return m ? { mimeType: m[1], data: m[2] } : null;
   }
 
+  /** "51s" / "1m3s" / "1.5s" -> a human 中文 span like "51 秒" or "1 分 3 秒". */
+  function humanDelay(raw) {
+    var s = 0, m;
+    if ((m = /(\d+)m/.exec(raw))) s += parseInt(m[1], 10) * 60;
+    if ((m = /([\d.]+)s/.exec(raw))) s += Math.round(parseFloat(m[1]));
+    if (!s) return '';
+    if (s < 60) return s + ' 秒';
+    var mins = Math.floor(s / 60), secs = s % 60;
+    return secs ? mins + ' 分 ' + secs + ' 秒' : mins + ' 分鐘';
+  }
+
+  /**
+   * Turns a 429 (RESOURCE_EXHAUSTED) into a message that says which limit was hit
+   * and, crucially, when it lifts — the numbers come from Google's own error
+   * details (RetryInfo.retryDelay, QuotaFailure.violations[].quotaId), not a guess.
+   * A daily free quota resets at Pacific midnight; a per-minute limit lifts in seconds.
+   */
+  function quotaMessage(data) {
+    var details = (data.error && data.error.details) || [];
+    var delay = '', quotaId = '';
+    for (var i = 0; i < details.length; i++) {
+      var d = details[i] || {};
+      if (d.retryDelay) delay = humanDelay(d.retryDelay);
+      var v = d.violations && d.violations[0];
+      if (v && (v.quotaId || v.quotaMetric)) quotaId = v.quotaId || v.quotaMetric;
+    }
+    var perDay = /per\s*day|PerDay/i.test(quotaId);
+    var perMin = /per\s*minute|PerMinute/i.test(quotaId);
+
+    if (perDay) {
+      return '今天的免費額度用完了。免費層每天會重置一次——重置點是「太平洋時間午夜」，' +
+        '換算台灣大約是下午 3～4 點（依日光節約時間會差一小時）。' +
+        '想立刻解除，可到 Google Cloud 幫這把金鑰綁信用卡改用付費層；否則等重置後就能再生成。';
+    }
+    if (perMin) {
+      return '每分鐘的免費次數到了' + (delay ? '，約 ' + delay + '後恢復' : '') + '，稍等再按一次「⚡ 生成」。';
+    }
+    return '已達 Google 免費用量上限' + (delay ? '，Google 建議約 ' + delay + '後再試' : '，等一下再試') + '。';
+  }
+
   function generate(entry) {
     var key = read(STORE_KEY, '');
     var model = read(STORE_MODEL, DEFAULT_MODEL);
@@ -190,8 +230,8 @@
           }
           if (/billed|billing|paid tier/i.test(detail)) {
             throw new Error(
-              'imagen 系列要在 Google 開通付費才能用。到「⚙ 設定」把模型換成免費的：' +
-              'gemini-2.5-flash-image-preview（或 gemini-2.0-flash-preview-image-generation）'
+              'imagen 系列要在 Google 開通付費才能用。到「⚙ 設定」把模型換成免費的 ' +
+              'gemini-2.0-flash-preview-image-generation，或按「偵測可用模型」挑一個免費的。'
             );
           }
           if (result.response.status === 404) {
@@ -200,7 +240,7 @@
               '到「⚙ 設定」按「偵測可用模型」，讓系統列出這把金鑰真正能用的圖片模型，再選一個。'
             );
           }
-          if (result.response.status === 429) throw new Error('已達 Google 的免費用量上限，等一下再試。');
+          if (result.response.status === 429) throw new Error(quotaMessage(data));
           throw new Error(detail);
         }
 

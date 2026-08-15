@@ -78,7 +78,51 @@ interface ApiResponse {
     finishReason?: string;
   }[];
   promptFeedback?: { blockReason?: string };
-  error?: { message?: string; status?: string };
+  error?: {
+    message?: string;
+    status?: string;
+    /** RetryInfo carries retryDelay; QuotaFailure carries violations[].quotaId. */
+    details?: {
+      retryDelay?: string;
+      violations?: { quotaId?: string; quotaMetric?: string }[];
+    }[];
+  };
+}
+
+/** "51s" / "1m3s" -> a 中文 span like "51 秒" or "1 分 3 秒" (empty if unparseable). */
+function humanDelay(raw: string): string {
+  let s = 0;
+  const min = /(\d+)m/.exec(raw);
+  if (min) s += parseInt(min[1], 10) * 60;
+  const sec = /([\d.]+)s/.exec(raw);
+  if (sec) s += Math.round(parseFloat(sec[1]));
+  if (!s) return '';
+  if (s < 60) return `${s} 秒`;
+  const mins = Math.floor(s / 60);
+  const secs = s % 60;
+  return secs ? `${mins} 分 ${secs} 秒` : `${mins} 分鐘`;
+}
+
+/**
+ * A 429 means the quota is spent. Say which limit and when it lifts, taking the
+ * numbers from Google's own error details rather than guessing: a daily free quota
+ * resets at Pacific midnight (~15–16:00 台灣時間); a per-minute limit lifts in seconds.
+ */
+function quotaMessage(data: ApiResponse): string {
+  let delay = '';
+  let quotaId = '';
+  for (const d of data.error?.details ?? []) {
+    if (d.retryDelay) delay = humanDelay(d.retryDelay);
+    const v = d.violations?.[0];
+    if (v?.quotaId || v?.quotaMetric) quotaId = v.quotaId || v.quotaMetric || '';
+  }
+  if (/per\s*day|PerDay/i.test(quotaId)) {
+    return '今天的免費額度用完了。免費層每天重置一次（重置點是太平洋時間午夜，約台灣下午 3～4 點）。想立刻解除可在 Google Cloud 綁信用卡改用付費層，否則等重置後再生成';
+  }
+  if (/per\s*minute|PerMinute/i.test(quotaId)) {
+    return `每分鐘的免費次數到了${delay ? `，約 ${delay}後恢復` : ''}，稍等再試一次`;
+  }
+  return `已達 Google 免費用量上限${delay ? `，Google 建議約 ${delay}後再試` : '，等一下再試'}`;
 }
 
 /** Pulls the image out of whichever response shape came back. */
@@ -204,7 +248,7 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
       return { ok: false, message: `沒有權限用 ${model}：${detail}` };
     }
     if (response.status === 429) {
-      return { ok: false, message: '已達 Google 的用量上限，等一下再試' };
+      return { ok: false, message: quotaMessage(data) };
     }
     return { ok: false, message: detail };
   }
