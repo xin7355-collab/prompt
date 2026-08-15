@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { Alert, FlatList, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
@@ -13,6 +13,7 @@ import { fonts, radius, space } from '../../src/theme';
 import { useTheme } from '../../src/ui/ThemeProvider';
 import { PromptCard } from '../../src/ui/PromptCard';
 import { Chip, EmptyState, IconButton } from '../../src/ui/primitives';
+import { ShotViewer } from '../../src/ui/ShotViewer';
 import { useToast } from '../../src/ui/Toast';
 import { useImageDraw } from '../../src/ui/useImageDraw';
 import { AppText as Text } from '../../src/ui/AppText';
@@ -36,6 +37,9 @@ export default function LibraryScreen() {
   const [facets, setFacets] = useState<Facet[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [tagsOpen, setTagsOpen] = useState(false);
+
+  /** The prompt image open in the full-screen viewer (with download), if any. */
+  const [viewing, setViewing] = useState<{ uri: string; title: string; id: string } | null>(null);
 
   const { busy, draw } = useImageDraw();
 
@@ -127,12 +131,7 @@ export default function LibraryScreen() {
           }
           onSendToBench={() => openBench(item)}
           onEdit={() => router.push({ pathname: '/edit', params: { id: item.i } })}
-          onOpenShot={() =>
-            Alert.alert('移除成品圖', `要把「${item.t}」的成品圖刪掉嗎？`, [
-              { text: '取消', style: 'cancel' },
-              { text: '刪除', style: 'destructive', onPress: () => vault.clearShot(item.i) },
-            ])
-          }
+          onOpenShot={() => setViewing({ uri: shots[item.i], title: item.t, id: item.i })}
         />
       </View>
     ),
@@ -287,6 +286,17 @@ export default function LibraryScreen() {
             body={`換個分類或關鍵字，或按右上角的 ＋ 自己寫一則。\n${BRAND.taglineZh}。`}
           />
         }
+      />
+
+      <ShotViewer
+        uri={viewing?.uri ?? null}
+        title={viewing?.title ?? ''}
+        onClose={() => setViewing(null)}
+        onDelete={() => {
+          const target = viewing;
+          setViewing(null);
+          if (target) vault.clearShot(target.id);
+        }}
       />
     </View>
   );
