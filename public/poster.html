@@ -339,7 +339,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.1.1';
+  var VERSION = 'v1.1.2';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -806,8 +806,8 @@
     // Free path: the Gemini/ChatGPT consumer web apps generate images for free (the
     // API's free tier does not — every image model is 免費方案「無法使用」). These copy
     // the prompt and open the chosen site so you paste and generate there at no cost.
-    var gem = aiButton('↗ Gemini', 'https://gemini.google.com/app', entry);
-    var gpt = aiButton('↗ GPT', 'https://chatgpt.com/', entry);
+    var gem = aiButton('↗ Gemini', 'https://gemini.google.com/app', entry, false);
+    var gpt = aiButton('↗ GPT', 'https://chatgpt.com/', entry, true);
 
     var draw = document.createElement('button');
     draw.className = 'btn primary';
@@ -826,26 +826,34 @@
     return card;
   }
 
-  // A "copy prompt + open this AI's web app" button. iOS routes an https link to the
-  // installed app only via its own Universal Links — a web page can't force it — so
-  // whether it lands in the app or a browser tab is the OS's call, not ours.
-  function aiButton(label, url, entry) {
+  // A "open this AI's web app with the prompt" button.
+  //
+  // Two things the user asked for: open in Chrome (not Safari's in-app view), and
+  // carry the prompt in. We launch Chrome via its own URL scheme (googlechromes://),
+  // which iOS routes to the Chrome app when installed — falling back to whatever
+  // window.open does otherwise. The prompt is pre-filled via ?q= where the site reads
+  // it (ChatGPT does; Gemini ignores URL prompts), and always copied as the backup /
+  // the only way into Gemini.
+  function aiButton(label, base, entry, prefill) {
     var btn = document.createElement('button');
     btn.className = 'btn';
     btn.textContent = label;
-    btn.title = '複製提示詞並開啟 ' + label.replace('↗ ', '') + '，貼上就免費生圖';
+    btn.title = '用 Chrome 開啟 ' + label.replace('↗ ', '') + (prefill ? '，並帶入提示詞' : '，提示詞已複製貼上即可');
     btn.addEventListener('click', function () {
       var text = 'Generate an image from this exact description:\n\n' + compose(entry);
-      // Open synchronously inside the tap so iOS Safari doesn't block the tab.
-      window.open(url, '_blank', 'noopener');
+      var httpsUrl = prefill
+        ? base + (base.indexOf('?') >= 0 ? '&' : '?') + 'q=' + encodeURIComponent(text)
+        : base;
+      // Prefer the Chrome app; https -> googlechromes://. Open in a new context so the
+      // wall (and its generated images) stays put.
+      var chromeUrl = httpsUrl.replace(/^https:\/\//, 'googlechromes://');
+      window.open(chromeUrl, '_blank');
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(
-          function () { toast('提示詞已複製！到剛開的分頁長按→貼上，就免費生圖'); },
-          function () { toast('已開網頁，但複製失敗——回來按「複製」再貼過去', true); }
-        );
-      } else {
-        toast('已開網頁，回來按「複製」把提示詞貼過去');
+        navigator.clipboard.writeText(text).catch(function () {});
       }
+      toast(prefill
+        ? '用 Chrome 開啟並帶入提示詞（沒裝 Chrome 就開一般瀏覽器；提示詞也已複製）'
+        : 'Gemini 沒法用網址帶提示詞——已複製，貼上即可（若沒裝 Chrome 會開一般瀏覽器）');
     });
     return btn;
   }

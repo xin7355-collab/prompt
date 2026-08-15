@@ -134,16 +134,22 @@ export default function LibraryScreen() {
           onEdit={() => router.push({ pathname: '/edit', params: { id: item.i } })}
           onOpenShot={() => setViewing({ uri: shots[item.i], title: item.t, id: item.i })}
           onOpenAI={(site) => {
-            const url = site === 'gemini' ? 'https://gemini.google.com/app' : 'https://chatgpt.com/';
+            const prompt = `Generate an image from this exact description:\n\n${bodyOf(item, lang)}`;
+            const base =
+              site === 'gemini' ? 'https://gemini.google.com/app' : 'https://chatgpt.com/';
+            // ChatGPT reads ?q= (Gemini ignores URL prompts), so pre-fill GPT only.
+            const httpsUrl = site === 'gpt' ? `${base}?q=${encodeURIComponent(prompt)}` : base;
+            // Prefer the Chrome app via its URL scheme instead of Safari's in-app view.
+            const chromeUrl = httpsUrl.replace(/^https:\/\//, 'googlechromes://');
             // Open synchronously (before any await) or the browser blocks the tab.
-            const result = openExternal(url);
-            Clipboard.setStringAsync(
-              `Generate an image from this exact description:\n\n${bodyOf(item, lang)}`
-            ).catch(() => {});
+            const result = openExternal(chromeUrl);
+            Clipboard.setStringAsync(prompt).catch(() => {});
             toast(
               result === 'blocked'
-                ? '瀏覽器擋掉了新分頁，請允許彈出視窗'
-                : '提示詞已複製，到剛開的網頁貼上就免費生圖',
+                ? '瀏覽器擋掉了，請允許彈出視窗'
+                : site === 'gpt'
+                  ? '用 Chrome 開啟並帶入提示詞（也已複製）'
+                  : 'Gemini 沒法用網址帶提示詞——已複製，貼上即可',
               result === 'blocked' ? 'error' : 'success'
             );
           }}
