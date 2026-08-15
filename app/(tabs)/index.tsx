@@ -8,6 +8,7 @@ import { BRAND } from '../../src/brand';
 import { tagsOf } from '../../src/data/corpus';
 import type { Lang, ResolvedPrompt } from '../../src/data/types';
 import { bodyOf } from '../../src/lib/compose';
+import { openExternal } from '../../src/lib/openExternal';
 import { useCategoryCounts, useVault } from '../../src/store/vault';
 import { fonts, radius, space } from '../../src/theme';
 import { useTheme } from '../../src/ui/ThemeProvider';
@@ -132,10 +133,24 @@ export default function LibraryScreen() {
           onSendToBench={() => openBench(item)}
           onEdit={() => router.push({ pathname: '/edit', params: { id: item.i } })}
           onOpenShot={() => setViewing({ uri: shots[item.i], title: item.t, id: item.i })}
+          onOpenAI={(site) => {
+            const url = site === 'gemini' ? 'https://gemini.google.com/app' : 'https://chatgpt.com/';
+            // Open synchronously (before any await) or the browser blocks the tab.
+            const result = openExternal(url);
+            Clipboard.setStringAsync(
+              `Generate an image from this exact description:\n\n${bodyOf(item, lang)}`
+            ).catch(() => {});
+            toast(
+              result === 'blocked'
+                ? '瀏覽器擋掉了新分頁，請允許彈出視窗'
+                : '提示詞已複製，到剛開的網頁貼上就免費生圖',
+              result === 'blocked' ? 'error' : 'success'
+            );
+          }}
         />
       </View>
     ),
-    [columns, lang, fav, shots, busy, draw, vault, copy, openBench, router]
+    [columns, lang, fav, shots, busy, draw, vault, copy, openBench, router, toast]
   );
 
   /** See the note on the style wall's extraData: rows do not redraw without it. */

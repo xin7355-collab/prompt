@@ -45,6 +45,9 @@ const FORMATS: { value: Format; label: string; hint: string }[] = [
   { value: 'sd', label: 'Stable Diffusion', hint: '加上品質權重與獨立的 Negative prompt 欄' },
 ];
 
+/** App build stamp, shown in 更多. Bump on each deploy so a stale PWA cache is visible. */
+const APP_VERSION = 'v1.1.1';
+
 export default function MoreScreen() {
   const { c } = useTheme();
   const layout = useLayout();
@@ -143,6 +146,9 @@ export default function MoreScreen() {
       <Text style={[styles.sub, { color: c.textFaint }]}>
         {BRAND.zh} · {BRAND.en} — {BRAND.taglineZh}
       </Text>
+      {/* Visible build stamp: mobile PWAs cache hard, so "did the update land?" is a
+          glance here. Bump on each app deploy. */}
+      <Text style={[styles.version, { color: c.gold, borderColor: c.border }]}>{APP_VERSION}</Text>
 
       <Section title="輸出格式" hint={FORMATS.find((f) => f.value === vault.fmt)?.hint}>
         <View style={styles.formatRow}>
@@ -428,4 +434,15 @@ const styles = StyleSheet.create({
   dataButton: { flexGrow: 1, flexBasis: 140 },
 
   about: { fontFamily: fonts.ui, fontSize: 13, lineHeight: 21 },
+  version: {
+    alignSelf: 'flex-start',
+    marginTop: space.sm,
+    fontFamily: fonts.mono,
+    fontSize: 11,
+    borderWidth: 1,
+    borderRadius: radius.sm,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    overflow: 'hidden',
+  },
 });

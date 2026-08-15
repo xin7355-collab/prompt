@@ -9,7 +9,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.1.0';
+  var VERSION = 'v1.1.1';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -473,26 +473,11 @@
       }
     });
 
-    // Free path: the Gemini consumer web app generates images for free (the API's
-    // free tier does not — every image model is 免費方案「無法使用」). This copies the
-    // prompt and opens Gemini so you paste and generate there at no cost.
-    var gem = document.createElement('button');
-    gem.className = 'btn';
-    gem.textContent = '↗ Gemini';
-    gem.title = '免費：複製提示詞並開啟 Gemini 網頁，貼上就生圖';
-    gem.addEventListener('click', function () {
-      var text = 'Generate an image from this exact description:\n\n' + compose(entry);
-      // Open synchronously inside the gesture so iOS Safari doesn't block the tab.
-      window.open('https://gemini.google.com/app', '_blank', 'noopener');
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(
-          function () { toast('提示詞已複製！到剛開的 Gemini 分頁長按→貼上，就免費生圖'); },
-          function () { toast('已開 Gemini，但複製失敗——回來按「複製」再貼過去', true); }
-        );
-      } else {
-        toast('已開 Gemini，回來按「複製」把提示詞貼過去');
-      }
-    });
+    // Free path: the Gemini/ChatGPT consumer web apps generate images for free (the
+    // API's free tier does not — every image model is 免費方案「無法使用」). These copy
+    // the prompt and open the chosen site so you paste and generate there at no cost.
+    var gem = aiButton('↗ Gemini', 'https://gemini.google.com/app', entry);
+    var gpt = aiButton('↗ GPT', 'https://chatgpt.com/', entry);
 
     var draw = document.createElement('button');
     draw.className = 'btn primary';
@@ -502,12 +487,37 @@
 
     actions.appendChild(copy);
     actions.appendChild(gem);
+    actions.appendChild(gpt);
     actions.appendChild(draw);
     body.appendChild(actions);
     card.appendChild(body);
 
     paintShot(card, entry);
     return card;
+  }
+
+  // A "copy prompt + open this AI's web app" button. iOS routes an https link to the
+  // installed app only via its own Universal Links — a web page can't force it — so
+  // whether it lands in the app or a browser tab is the OS's call, not ours.
+  function aiButton(label, url, entry) {
+    var btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.textContent = label;
+    btn.title = '複製提示詞並開啟 ' + label.replace('↗ ', '') + '，貼上就免費生圖';
+    btn.addEventListener('click', function () {
+      var text = 'Generate an image from this exact description:\n\n' + compose(entry);
+      // Open synchronously inside the tap so iOS Safari doesn't block the tab.
+      window.open(url, '_blank', 'noopener');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { toast('提示詞已複製！到剛開的分頁長按→貼上，就免費生圖'); },
+          function () { toast('已開網頁，但複製失敗——回來按「複製」再貼過去', true); }
+        );
+      } else {
+        toast('已開網頁，回來按「複製」把提示詞貼過去');
+      }
+    });
+    return btn;
   }
 
   function cardFor(id) { return $('grid').querySelector('[data-id="' + CSS.escape(id) + '"]'); }

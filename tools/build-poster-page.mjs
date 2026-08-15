@@ -232,7 +232,8 @@ const html = `<!doctype html>
     background: linear-gradient(transparent, #0e0e10);
   }
 
-  .actions { display: flex; gap: 8px; margin-top: 13px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+  .actions .btn { flex: 1 1 auto; min-width: 62px; }
   .btn {
     flex: 1; border-radius: 9px; padding: 10px; font-size: 12px; font-weight: 700;
     letter-spacing: .12em; border: 1px solid var(--line); background: transparent; color: var(--ink-dim);

@@ -23,6 +23,8 @@ export interface PromptCardProps {
   onSendToBench(): void;
   onEdit(): void;
   onOpenShot(): void;
+  /** Copy the prompt and open the chosen AI's web app (free image generation). */
+  onOpenAI(site: 'gemini' | 'gpt'): void;
 }
 
 /**
@@ -42,6 +44,7 @@ function PromptCardImpl({
   onSendToBench,
   onEdit,
   onOpenShot,
+  onOpenAI,
 }: PromptCardProps) {
   const { c, accentFor } = useTheme();
   const accent = accentFor(prompt.c);
@@ -166,6 +169,32 @@ function PromptCardImpl({
           <Text style={{ fontSize: 15, color: c.textDim }}>✎</Text>
         </Pressable>
       </View>
+
+      {/* Copy the prompt and jump to a free AI image generator's web app. */}
+      <View style={styles.aiRow}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="複製提示詞並開啟 Gemini"
+          onPress={() => onOpenAI('gemini')}
+          style={({ pressed }) => [
+            styles.aiButton,
+            { borderColor: c.borderStrong, opacity: pressed ? 0.7 : 1 },
+          ]}
+        >
+          <Text style={[styles.actionLabel, { color: c.textDim }]}>↗ Gemini</Text>
+        </Pressable>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="複製提示詞並開啟 ChatGPT"
+          onPress={() => onOpenAI('gpt')}
+          style={({ pressed }) => [
+            styles.aiButton,
+            { borderColor: c.borderStrong, opacity: pressed ? 0.7 : 1 },
+          ]}
+        >
+          <Text style={[styles.actionLabel, { color: c.textDim }]}>↗ ChatGPT</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -268,6 +297,22 @@ const styles = StyleSheet.create({
     minHeight: 42,
     borderRadius: radius.md,
     borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  aiRow: {
+    flexDirection: 'row',
+    gap: space.sm - 2,
+    paddingHorizontal: space.md,
+    paddingBottom: space.md,
+  },
+  aiButton: {
+    ...noSelect,
+    flex: 1,
+    minHeight: 40,
+    borderWidth: 1.5,
+    borderRadius: radius.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
