@@ -13,6 +13,7 @@ import {
   getImageKey,
   getImageModel,
   IMAGE_MODEL,
+  IMAGE_MODELS,
   setImageKey,
   setImageModel,
 } from '../../src/lib/imagegen';
@@ -267,7 +268,7 @@ export default function MoreScreen() {
 
       <Section
         title="生成圖片"
-        hint={'選填。貼上自己的 Google AI Studio 金鑰（aistudio.google.com/apikey），風格牆的「⚡ 生成」就會直接畫出圖並存成封面。\n\n預設用免費的 gemini-2.5-flash-image-preview（有每日上限）。imagen 系列要在 Google 開通付費才能用——想用它就在下面模型欄填 imagen-4.0-generate-001，程式會自動改走付費 API。\n\n完全不想碰金鑰就別填——按「⚡ 生成」會複製提示詞並開啟你選的網站（Gemini、Copilot 影像都免費），只是多一步。\n\n金鑰只存在這台裝置，直接送到 Google，不經過任何中間伺服器。'}
+        hint={'預設用「免費 Pollinations」——不用金鑰、直接在風格牆按「⚡ 生成」就出圖。\n\n想要更高畫質可改用 gemini／imagen，但那些要付費層金鑰（Google API 免費層無法生圖）：貼上自己的 Google AI Studio 金鑰（aistudio.google.com/apikey）並在上面選對應模型。\n\n金鑰只存在這台裝置，直接送到 Google，不經過任何中間伺服器。'}
       >
         <Field
           label="Google API Key"
@@ -278,16 +279,39 @@ export default function MoreScreen() {
           autoCorrect={false}
           secureTextEntry
         />
-        <Field
-          label="圖片模型"
-          value={imageModel}
-          onChangeText={setImageModelState}
-          placeholder={IMAGE_MODEL}
-          autoCapitalize="none"
-          autoCorrect={false}
-          mono
-          hint={`預設 ${IMAGE_MODEL}。名字以 imagen 開頭的走 :predict，其餘走 :generateContent，App 會自己分辨，所以換模型只要改這一欄。留白就回到預設。`}
-        />
+        <Text style={styles.pickerLabel}>圖片模型</Text>
+        <View style={styles.modelRow}>
+          {IMAGE_MODELS.map((m) => {
+            const selected = (imageModel || IMAGE_MODEL) === m.value;
+            return (
+              <Pressable
+                key={m.value}
+                accessibilityRole="button"
+                accessibilityState={{ selected }}
+                onPress={async () => {
+                  setImageModelState(m.value);
+                  await setImageModel(m.value);
+                  toast(`圖片模型：${m.label}`);
+                }}
+                style={[
+                  styles.format,
+                  styles.modelChip,
+                  {
+                    backgroundColor: selected ? c.pine : c.surface,
+                    borderColor: selected ? c.pine : c.border,
+                  },
+                ]}
+              >
+                <Text style={[styles.formatLabel, { color: selected ? c.onAccent : c.text }]}>
+                  {m.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+        <Text style={styles.pickerHint}>
+          「免費 Pollinations」不用金鑰、直接出圖。gemini／imagen 畫質較好但要付費層金鑰（Google API 免費層無法生圖）。
+        </Text>
         <View style={styles.dataGrid}>
           <Button
             label="儲存"
@@ -392,6 +416,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.sm,
   },
   formatLabel: { fontFamily: fonts.uiMedium, fontSize: 13.5, fontWeight: '700' },
+
+  modelRow: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
+  modelChip: { flex: 0, flexGrow: 1, flexBasis: '46%', paddingHorizontal: space.sm },
+  pickerLabel: {
+    fontFamily: fonts.uiMedium, fontSize: 13.5, fontWeight: '700', marginBottom: space.sm,
+  },
+  pickerHint: { fontFamily: fonts.ui, fontSize: 12, lineHeight: 18, opacity: 0.7, marginTop: space.sm },
 
   dataGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   dataButton: { flexGrow: 1, flexBasis: 140 },

@@ -18,16 +18,21 @@ const KEY_STORAGE = 'spellbox.geminikey';
 const MODEL_STORAGE = 'spellbox.geminimodel';
 
 /**
- * Default model. A free-tier Gemini image model, so a brand-new key draws something
- * rather than hitting Imagen's billing wall on the first press. Imagen stays available
- * by typing its name — the request shape is chosen from the name, see below.
- *
- * Default is gemini-2.5-flash-image: the current GA native image model, best quality
- * and broadly available on new free keys. The older gemini-2.0-flash-preview-image-
- * generation is retired on some newer accounts (404); users there can switch in
- * settings, and the poster wall's "偵測可用模型" lists what a key can actually reach.
+ * Default model. 'pollinations' is free and keyless — it draws without an API key,
+ * because Google's API free tier can't generate images (every image model is
+ * "not available" on the free plan). The gemini/imagen models still work but need a
+ * paid-tier key; the request shape is chosen from the name (imagen -> :predict,
+ * gemini -> :generateContent), so switching model is all it takes.
  */
-export const IMAGE_MODEL = 'gemini-2.5-flash-image';
+export const IMAGE_MODEL = 'pollinations';
+
+/** The picker's choices, mirroring the poster wall. `paid` gates the key requirement. */
+export const IMAGE_MODELS: { value: string; label: string; paid: boolean }[] = [
+  { value: 'pollinations', label: '免費 Pollinations', paid: false },
+  { value: 'gemini-2.5-flash-image', label: 'gemini-2.5-flash（付費）', paid: true },
+  { value: 'imagen-4.0-generate-001', label: 'imagen-4（付費）', paid: true },
+  { value: 'gemini-2.0-flash-preview-image-generation', label: 'gemini-2.0（舊·付費）', paid: true },
+];
 
 const BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
@@ -149,6 +154,60 @@ function imageFrom(data: ApiResponse): { dataUri: string } | { reason?: string }
   };
 }
 
+/** Aspect ratio -> pixel size for providers that take width/height (Pollinations). */
+function ratioToSize(ratio?: string): { w: number; h: number } {
+  switch (ratio) {
+    case '1:1': return { w: 1024, h: 1024 };
+    case '4:3': return { w: 1024, h: 768 };
+    case '9:16': return { w: 768, h: 1360 };
+    case '16:9': return { w: 1360, h: 768 };
+    case '3:4':
+    default: return { w: 768, h: 1024 };
+  }
+}
+
+function blobToDataUri(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = () => reject(new Error('read failed'));
+    reader.readAsDataURL(blob);
+  });
+}
+
+/**
+ * Free, keyless generation via Pollinations: the prompt goes in the URL and the
+ * response is the image. No account, no billing, no quota wall — the one in-app path
+ * that draws for free (Google's API free tier can't). Best-effort public service, so
+ * it can be slow or briefly busy; failures come back as a retryable message.
+ */
+async function generatePollinations(prompt: string, ratio?: string): Promise<GenerateResult> {
+  const { w, h } = ratioToSize(ratio);
+  const seed = Math.floor(Math.random() * 1e9);
+  const url =
+    `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}` +
+    `?width=${w}&height=${h}&seed=${seed}&nologo=true&model=flux`;
+
+  let resp: Response;
+  try {
+    resp = await fetch(url);
+  } catch {
+    return { ok: false, message: '連不到免費生圖服務，檢查網路後再試一次' };
+  }
+  if (!resp.ok) {
+    return { ok: false, message: `免費生圖服務忙碌中（HTTP ${resp.status}），稍等再試一次` };
+  }
+  try {
+    const blob = await resp.blob();
+    if (!blob.type.startsWith('image')) {
+      return { ok: false, message: '免費生圖服務暫時沒回圖，稍等再試一次' };
+    }
+    return { ok: true, dataUri: await blobToDataUri(blob) };
+  } catch {
+    return { ok: false, message: '免費生圖服務回應無法讀取，稍等再試一次' };
+  }
+}
+
 /**
  * Generates one image. Returns a data URI ready to hand to `storeShot`.
  *
@@ -157,17 +216,21 @@ function imageFrom(data: ApiResponse): { dataUri: string } | { reason?: string }
  * regions are all routine and each needs a different response from the user.
  */
 export async function generateImage(prompt: string, ratio?: string): Promise<GenerateResult> {
+  if (!prompt.trim()) return { ok: false, message: '沒有可以生成的提示詞' };
+
+  const model = await getImageModel();
+
+  // Free, keyless path: return before any Google/key logic.
+  if (model === 'pollinations') return generatePollinations(prompt, ratio);
+
   const key = await getImageKey();
   if (!key) {
     return {
       ok: false,
       needsKey: true,
-      message: '還沒設定 Google API 金鑰。到「更多 → 生成圖片」貼上金鑰就能直接畫',
+      message: '這個模型需要付費層的 Google 金鑰。到「更多 → 生成圖片」貼上金鑰，或把模型改成「免費 Pollinations」',
     };
   }
-  if (!prompt.trim()) return { ok: false, message: '沒有可以生成的提示詞' };
-
-  const model = await getImageModel();
 
   /**
    * The two families speak different protocols. Imagen answers `:predict` with
