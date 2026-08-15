@@ -37,10 +37,35 @@
   var toastTimer = null;
   function toast(message, bad) {
     var el = $('toast');
-    el.textContent = message;
-    el.className = 'show' + (bad ? ' bad' : '');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { el.className = ''; }, bad ? 5200 : 2400);
+    el.onclick = null;
+    if (bad) {
+      // Errors used to fade in 5s — long enough to miss, so Google's exact words got
+      // lost. Now an error sticks on screen and a tap copies the full text, which is
+      // the only way to reliably capture a long API error on a phone.
+      el.textContent = message + '　—— 點一下複製';
+      el.className = 'show bad';
+      el.style.pointerEvents = 'auto';
+      el.style.cursor = 'pointer';
+      el.onclick = function () {
+        var done = function (text) {
+          el.textContent = text;
+          toastTimer = setTimeout(function () { el.className = ''; el.style.pointerEvents = 'none'; }, 1400);
+        };
+        try {
+          navigator.clipboard.writeText(message)
+            .then(function () { done('已複製錯誤訊息 ✓'); })
+            .catch(function () { done('複製失敗，請長按文字手動選取'); });
+        } catch (e) { done('複製失敗，請長按文字手動選取'); }
+      };
+      // A long backstop so a truly ignored error still clears eventually.
+      toastTimer = setTimeout(function () { el.className = ''; el.style.pointerEvents = 'none'; }, 60000);
+    } else {
+      el.textContent = message;
+      el.className = 'show';
+      el.style.pointerEvents = 'none';
+      toastTimer = setTimeout(function () { el.className = ''; }, 2400);
+    }
   }
 
   // ── Image storage ────────────────────────────────────────────────
