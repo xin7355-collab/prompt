@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppState } from 'react-native';
 import React, {
   createContext,
   useCallback,
@@ -236,6 +237,23 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  // Re-merge the shared pool whenever the app returns to the foreground, so images
+  // generated on the poster wall (a different tab, same origin) appear without a full
+  // restart. Non-destructive, so it never disturbs the app's own images.
+  useEffect(() => {
+    const refresh = () => {
+      sharedKeys()
+        .then((ids) => {
+          if (ids.length) setState((prev) => mergeShared(prev, ids));
+        })
+        .catch(() => {});
+    };
+    const sub = AppState.addEventListener('change', (next) => {
+      if (next === 'active') refresh();
+    });
+    return () => sub.remove();
   }, []);
 
   const writeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
