@@ -9,7 +9,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.0.0';
+  var VERSION = 'v1.1.0';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -25,7 +25,11 @@
   var PAGE = 48;
 
   var STORE_FACE = 'spellbox.poster.face';
+  // Per-card edited prompt, keyed by entry id. Empty/absent = use the built-in prompt.
+  var STORE_PROMPT_PREFIX = 'spellbox.poster.prompt.';
   var PAGE_UNUSED = 0;
+
+  function promptOverride(id) { return read(STORE_PROMPT_PREFIX + id, '') || ''; }
 
   var $ = function (id) { return document.getElementById(id); };
   var read = function (k, fallback) {
@@ -137,9 +141,11 @@
   // appended as an override, while a style clause needs the subject in front.
   function compose(entry) {
     var subject = $('subject').value.trim();
-    if (entry.f) return subject ? entry.p + ' Subject: ' + subject + '.' : entry.p;
-    if (!subject) return 'Create any subject that best demonstrates this style. ' + entry.p;
-    return subject + '. ' + entry.p;
+    // A card whose prompt was edited in the modal uses that text instead.
+    var p = promptOverride(entry.i) || entry.p;
+    if (entry.f) return subject ? p + ' Subject: ' + subject + '.' : p;
+    if (!subject) return 'Create any subject that best demonstrates this style. ' + p;
+    return subject + '. ' + p;
   }
 
   // ── Generation ───────────────────────────────────────────────────
@@ -371,8 +377,16 @@
     if (busy[entry.i]) {
       var overlay = document.createElement('div');
       overlay.className = 'overlay';
-      overlay.innerHTML = '<div class="spin"></div><div class="label">Generating…</div>';
+      overlay.innerHTML = '<div class="spin"></div><div class="label">生成中…</div>';
       shot.appendChild(overlay);
+      return;
+    }
+
+    if (queuedIds[entry.i]) {
+      var wait = document.createElement('div');
+      wait.className = 'overlay';
+      wait.innerHTML = '<div class="label">排隊中…</div>';
+      shot.appendChild(wait);
       return;
     }
 
@@ -418,6 +432,9 @@
     var name = document.createElement('div');
     name.className = 'name';
     name.textContent = entry.t;
+    name.title = '點一下：看／編輯提示詞、翻中文';
+    name.style.cursor = 'pointer';
+    name.addEventListener('click', function () { openPromptModal(entry); });
     body.appendChild(name);
 
     if (entry.s) {
@@ -435,9 +452,9 @@
 
     var prompt = document.createElement('div');
     prompt.className = 'prompt';
-    prompt.textContent = entry.p;
-    prompt.title = '點一下展開／收合';
-    prompt.addEventListener('click', function () { prompt.classList.toggle('open'); });
+    prompt.textContent = promptOverride(entry.i) || entry.p;
+    prompt.title = '點一下：看／編輯提示詞、翻中文';
+    prompt.addEventListener('click', function () { openPromptModal(entry); });
     body.appendChild(prompt);
 
     var actions = document.createElement('div');
@@ -500,8 +517,10 @@
     if (!card) return;
     paintShot(card, entry);
     var draw = card.querySelector('.btn.primary');
-    draw.disabled = !!busy[entry.i];
-    draw.textContent = busy[entry.i] ? '生成中' : '⚡ 生成';
+    var isBusy = !!busy[entry.i];
+    var isQueued = !!queuedIds[entry.i] && !isBusy;
+    draw.disabled = isBusy || isQueued;
+    draw.textContent = isBusy ? '生成中' : (isQueued ? '排隊中' : '⚡ 生成');
   }
 
   // Free-tier image models rate-limit hard, and every manual re-press during the
@@ -510,6 +529,13 @@
   // hit the limit, the free quota is effectively zero and we say so plainly.
   var MAX_AUTO_RETRY = 4;
 
+  // Serial generation queue. Tap several cards and they line up, drawn one at a time.
+  // One-at-a-time is deliberate: firing many at once only trips the free provider's
+  // rate limit harder, and "tap the next, it just queues" is exactly what was asked.
+  var drawQueue = [];
+  var queuedIds = {};
+  var running = false;
+
   function setOverlayLabel(entry, text) {
     var card = cardFor(entry.i);
     if (!card) return;
@@ -517,23 +543,17 @@
     if (label) label.textContent = text;
   }
 
-  function finishDraw(entry) {
-    delete busy[entry.i];
-    refreshCard(entry);
-    updateCount();
-  }
-
-  function attemptDraw(entry, attempt) {
+  function attemptDraw(entry, attempt, onDone) {
     generate(entry)
       .then(function (blob) { return putShot(entry.i, blob); })
-      .then(function () { toast('「' + entry.t + '」畫好了'); finishDraw(entry); })
+      .then(function () { toast('「' + entry.t + '」畫好了'); onDone(); })
       .catch(function (error) {
         // Only per-minute limits are worth waiting out; a daily cap or a real error
         // won't clear in seconds.
         var canWait = error && error.retryAfter && !error.perDay;
         if (canWait && attempt < MAX_AUTO_RETRY) {
           // +2s buffer so we clear the window; cap so one wait can't run away.
-          countdownRetry(entry, Math.min(error.retryAfter + 2, 45), attempt);
+          countdownRetry(entry, Math.min(error.retryAfter + 2, 45), attempt, onDone);
           return;
         }
         if (canWait) {
@@ -545,11 +565,11 @@
         } else {
           toast(error.message || String(error), true);
         }
-        finishDraw(entry);
+        onDone();
       });
   }
 
-  function countdownRetry(entry, secs, attempt) {
+  function countdownRetry(entry, secs, attempt, onDone) {
     var remaining = secs;
     setOverlayLabel(entry, '額度回血中，' + remaining + ' 秒後自動重試…');
     var timer = setInterval(function () {
@@ -560,15 +580,36 @@
       }
       clearInterval(timer);
       setOverlayLabel(entry, '重試中…');
-      attemptDraw(entry, attempt + 1);
+      attemptDraw(entry, attempt + 1, onDone);
     }, 1000);
   }
 
-  function runDraw(entry) {
-    if (busy[entry.i]) return;
+  function pumpQueue() {
+    if (running) return;
+    var entry = drawQueue.shift();
+    if (!entry) { updateCount(); return; }
+    running = true;
     busy[entry.i] = true;
     refreshCard(entry);
-    attemptDraw(entry, 0);
+    updateCount();
+    attemptDraw(entry, 0, function () {
+      running = false;
+      delete busy[entry.i];
+      delete queuedIds[entry.i];
+      refreshCard(entry);
+      updateCount();
+      pumpQueue();
+    });
+  }
+
+  function runDraw(entry) {
+    // Already drawing or already waiting in line → ignore the tap, don't double-add.
+    if (busy[entry.i] || queuedIds[entry.i]) return;
+    queuedIds[entry.i] = true;
+    drawQueue.push(entry);
+    refreshCard(entry);   // shows 排隊中 until its turn comes
+    updateCount();
+    pumpQueue();
   }
 
   // ── Filtering and paging ─────────────────────────────────────────
@@ -602,8 +643,11 @@
 
   function updateCount() {
     var withShot = Object.keys(shots).length;
+    // Everything still waiting or mid-draw counts as "in the queue" for the header.
+    var pending = drawQueue.length + (running ? 1 : 0);
     $('count').textContent =
       ENTRIES.length + ' 則 · 已生成 ' + withShot + ' 張' +
+      (pending ? ' · 排隊 ' + pending : '') +
       (state.list.length !== ENTRIES.length ? ' · 目前顯示 ' + state.list.length : '');
   }
 
@@ -859,8 +903,91 @@
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 900) showMore();
   }, { passive: true });
 
+  // ── Prompt editor ────────────────────────────────────────────────
+  // Tap a card's name or prompt to view/edit its prompt, save the edit (used by that
+  // card's generation), and translate it to Chinese.
+  var pmEntry = null;
+
+  function closePromptModal() { $('promptModal').classList.remove('show'); }
+
+  function openPromptModal(entry) {
+    pmEntry = entry;
+    $('pmTitle').textContent = entry.t + (entry.s ? '（' + entry.s + '）' : '');
+    $('pmText').value = promptOverride(entry.i) || entry.p;
+    var tr = $('pmTrans');
+    tr.textContent = '';
+    tr.style.display = 'none';
+    $('promptModal').classList.add('show');
+  }
+
+  function repaintPrompt(entry) {
+    var card = cardFor(entry.i);
+    if (!card) return;
+    var p = card.querySelector('.prompt');
+    if (p) p.textContent = promptOverride(entry.i) || entry.p;
+  }
+
+  $('pmClose').addEventListener('click', closePromptModal);
+  $('promptModal').addEventListener('click', function (e) {
+    if (e.target === $('promptModal')) closePromptModal();
+  });
+
+  $('pmSave').addEventListener('click', function () {
+    if (!pmEntry) return;
+    var v = $('pmText').value.trim();
+    try {
+      if (v && v !== pmEntry.p) localStorage.setItem(STORE_PROMPT_PREFIX + pmEntry.i, v);
+      else localStorage.removeItem(STORE_PROMPT_PREFIX + pmEntry.i);
+      toast('提示詞已儲存');
+    } catch (e) { toast('存不進瀏覽器設定', true); }
+    repaintPrompt(pmEntry);
+    closePromptModal();
+  });
+
+  $('pmReset').addEventListener('click', function () {
+    if (!pmEntry) return;
+    try { localStorage.removeItem(STORE_PROMPT_PREFIX + pmEntry.i); } catch (e) {}
+    $('pmText').value = pmEntry.p;
+    repaintPrompt(pmEntry);
+    toast('已還原成原本的提示詞');
+  });
+
+  // Translate to Traditional Chinese via MyMemory (free, keyless, CORS-open). If it
+  // fails (network/limit), fall back to opening Google Translate with the text.
+  $('pmTranslate').addEventListener('click', function () {
+    var text = $('pmText').value.trim();
+    if (!text) return;
+    var box = $('pmTrans');
+    var btn = $('pmTranslate');
+    box.style.display = 'block';
+    box.textContent = '翻譯中…';
+    btn.disabled = true;
+    fetch('https://api.mymemory.translated.net/get?langpair=en|zh-TW&q=' +
+          encodeURIComponent(text.slice(0, 480)))
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var t = d && d.responseData && d.responseData.translatedText;
+        if (!t) throw new Error('empty');
+        box.textContent = t;
+      })
+      .catch(function () {
+        box.textContent = '自動翻譯失敗（網路或額度）。';
+        var a = document.createElement('button');
+        a.className = 'btn';
+        a.style.marginTop = '8px';
+        a.textContent = '↗ 用 Google 翻譯開啟';
+        a.addEventListener('click', function () {
+          window.open('https://translate.google.com/?sl=en&tl=zh-TW&op=translate&text=' +
+            encodeURIComponent(text), '_blank', 'noopener');
+        });
+        box.appendChild(document.createElement('br'));
+        box.appendChild(a);
+      })
+      .then(function () { btn.disabled = false; });
+  });
+
   document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') { closeLightbox(); closeSettings(); }
+    if (event.key === 'Escape') { closeLightbox(); closeSettings(); closePromptModal(); }
   });
 
   // ── Boot ─────────────────────────────────────────────────────────

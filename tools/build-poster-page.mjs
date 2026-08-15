@@ -262,11 +262,18 @@ const html = `<!doctype html>
   .sheet p { font-size: 12px; line-height: 1.8; color: var(--ink-dim); margin: 0 0 16px; }
   .sheet label { display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em;
                  color: var(--ink-faint); text-transform: uppercase; margin: 14px 0 6px; }
-  .sheet input, .sheet select {
+  .sheet input, .sheet select, .sheet textarea {
     width: 100%; background: #0e0e10; border: 1px solid var(--line); border-radius: 9px;
     padding: 10px 12px; font-size: 13px; outline: none;
   }
+  .sheet textarea {
+    font-family: var(--mono); font-size: 12px; line-height: 1.6; resize: vertical; min-height: 120px;
+  }
   .sheet .row { display: flex; gap: 9px; margin-top: 18px; }
+  .pm-trans {
+    display: none; margin-top: 12px; background: #0e0e10; border: 1px solid var(--line-soft);
+    border-radius: 9px; padding: 12px 13px; font-size: 13px; line-height: 1.8; color: var(--ink);
+  }
 
   #toast {
     position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 14px);
@@ -294,11 +301,11 @@ const html = `<!doctype html>
   <div class="bar">
     <div class="brandrow">
       <h1 class="wordmark">咒語盒 · 海報牆</h1>
-      <span class="ver" id="ver"></span>
       <span class="tagline" id="count"></span>
       <span class="spacer"></span>
       <button class="ghost" id="onlyShot">只看已生成</button>
       <button class="ghost" id="openSettings">⚙ 設定</button>
+      <span class="ver" id="ver"></span>
     </div>
     <div class="controls">
       <input class="field" id="subject" placeholder="主題（選填）— 例：一隻黑貓坐在窗邊。填了會套用到「風格句」那類卡片" />
@@ -366,6 +373,23 @@ const html = `<!doctype html>
       <button class="btn primary" id="saveSettings">儲存</button>
       <button class="btn" id="clearImages">清空所有生成圖</button>
       <button class="btn" id="closeSettings">關閉</button>
+    </div>
+  </div>
+</div>
+
+<div class="scrim" id="promptModal">
+  <div class="sheet">
+    <h2 id="pmTitle">提示詞</h2>
+    <label>提示詞（可編輯，會用在這張卡的生成）</label>
+    <textarea id="pmText" rows="7" spellcheck="false"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button class="btn" id="pmTranslate" type="button">翻中文</button>
+    </div>
+    <div id="pmTrans" class="pm-trans"></div>
+    <div class="row">
+      <button class="btn primary" id="pmSave">儲存</button>
+      <button class="btn" id="pmReset">還原預設</button>
+      <button class="btn" id="pmClose">關閉</button>
     </div>
   </div>
 </div>

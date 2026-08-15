@@ -10,6 +10,11 @@ on:
       - 'app/**'
       - 'src/**'
       - 'assets/**'
+      # public/ and tools/ feed the exported site directly (e.g. poster.html and its
+      # generator). Without these, poster-only changes committed fine but never
+      # redeployed, so the live wall silently lagged the repo.
+      - 'public/**'
+      - 'tools/**'
       - 'app.json'
       - 'app.config.js'
       - 'package.json'
