@@ -230,9 +230,13 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
     if (response.status === 400 && /API key/i.test(detail)) {
       return { ok: false, needsKey: true, message: '金鑰無效，請到「更多」重新貼一次' };
     }
-    // The one people actually hit: Imagen is not on Google's free tier, so a brand
-    // new key gets refused until billing is switched on. Say that, rather than
-    // echoing an English sentence about billed users.
+    // 429 first: a quota message can mention "billing" ("enable billing to raise
+    // quota"), which must not be mistaken for the hard paid-tier block below.
+    if (response.status === 429) {
+      return { ok: false, message: quotaMessage(data) };
+    }
+    // Imagen is not on Google's free tier, so a brand new key gets refused until
+    // billing is switched on. Say that, rather than echoing an English sentence.
     if (/billed|billing|paid tier|quota project/i.test(detail)) {
       if (isImagen) {
         return {
@@ -255,9 +259,6 @@ export async function generateImage(prompt: string, ratio?: string): Promise<Gen
     }
     if (response.status === 403) {
       return { ok: false, message: `沒有權限用 ${model}：${detail}` };
-    }
-    if (response.status === 429) {
-      return { ok: false, message: quotaMessage(data) };
     }
     return { ok: false, message: detail };
   }

@@ -229,6 +229,9 @@
           if (!key && (result.response.status === 401 || result.response.status === 403)) {
             throw new Error('需要 API 金鑰。按右上角「⚙ 設定」貼上你的 Google 金鑰。（原始訊息：' + detail + '）');
           }
+          // 429 first: a quota message can mention "billing" ("enable billing to raise
+          // quota"), which must not be mistaken for a hard paid-tier block below.
+          if (result.response.status === 429) throw new Error(quotaMessage(data));
           if (/billed|billing|paid tier/i.test(detail)) {
             if (isImagen) {
               throw new Error(
@@ -251,7 +254,6 @@
               '到「⚙ 設定」按「偵測可用模型」，讓系統列出這把金鑰真正能用的圖片模型，再選一個。'
             );
           }
-          if (result.response.status === 429) throw new Error(quotaMessage(data));
           throw new Error(detail);
         }
 
