@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -46,7 +46,7 @@ const FORMATS: { value: Format; label: string; hint: string }[] = [
 ];
 
 /** App build stamp, shown in 更多. Bump on each deploy so a stale PWA cache is visible. */
-const APP_VERSION = 'v1.2.2';
+const APP_VERSION = 'v1.2.3';
 
 export default function MoreScreen() {
   const { c } = useTheme();
@@ -254,17 +254,20 @@ export default function MoreScreen() {
 
       <Section
         title="海報牆"
-        hint="另一種介面：634 則全部攤成卡片牆，按 DRAW 就在卡片裡生成，圖存在瀏覽器裡下次還在。需要 Google 金鑰。"
+        hint="另一種介面：634 則全部攤成卡片牆，按「⚡ 生成」直接在卡片裡免費出圖。從這裡打開會跟 App 共用同一批圖（海報牆生的，App 也看得到）。海報牆裡有「← 咒語盒」可以回來。"
       >
         <Button
-          label="打開海報牆"
+          label="打開海報牆（共用圖庫）"
           onPress={() => {
-            // A plain static page beside the app rather than a route inside it, so
-            // it opens in its own tab and keeps its own storage.
-            //
-            // Deliberately relative: an absolute path is resolved against the origin,
-            // and a file:// origin has none, so the offline copy could never find its
-            // sibling. Relative resolves against the document either way.
+            // Navigate in the SAME window on web, not a new tab. On an installed iOS
+            // PWA a new tab is a separate storage box, so it could never share images
+            // with the app; same-window keeps the poster wall in this same box.
+            // Relative on purpose: resolves against the document, so a file:// copy
+            // still finds its sibling.
+            if (Platform.OS === 'web' && typeof window !== 'undefined') {
+              window.location.assign('poster.html');
+              return;
+            }
             if (openExternal('poster.html') === 'blocked') {
               toast('瀏覽器擋掉了新分頁，請允許彈出視窗', 'error');
             }

@@ -125,6 +125,7 @@ const html = `<!doctype html>
   .ghost {
     background: transparent; border: 1px solid var(--line);
     border-radius: 999px; padding: 7px 14px; font-size: 12px; color: var(--ink-dim);
+    text-decoration: none; display: inline-block;
   }
   .ghost:hover { color: var(--ink); border-color: var(--ink-faint); }
   .ghost.on { background: var(--gold); border-color: var(--gold); color: #241c00; font-weight: 700; }
@@ -156,6 +157,18 @@ const html = `<!doctype html>
     border-radius: 999px; padding: 8px 13px; font-size: 12px; color: var(--ink-dim); cursor: pointer;
   }
   .face-hint { font-size: 11px; color: var(--ink-faint); line-height: 1.5; }
+
+  .views { display: flex; align-items: center; gap: 7px; margin-top: 10px; flex-wrap: wrap; }
+  .views-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--ink-faint);
+    text-transform: uppercase; margin-right: 2px;
+  }
+  .view-btn {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 13px; font-size: 12.5px; color: var(--ink-dim); cursor: pointer;
+  }
+  .view-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .view-btn.on { background: var(--gold); border-color: var(--gold); color: #241c00; font-weight: 700; }
 
   .chips {
     display: flex; gap: 7px; overflow-x: auto; padding: 12px 0 13px;
@@ -301,7 +314,8 @@ const html = `<!doctype html>
 <header>
   <div class="bar">
     <div class="brandrow">
-      <h1 class="wordmark">咒語盒 · 海報牆</h1>
+      <a class="ghost" id="backToApp" href="./">← 咒語盒</a>
+      <h1 class="wordmark">海報牆</h1>
       <span class="tagline" id="count"></span>
       <span class="spacer"></span>
       <button class="ghost" id="onlyShot">只看已生成</button>
@@ -318,6 +332,15 @@ const html = `<!doctype html>
       <input id="faceInput" type="file" accept="image/*" hidden />
       <button id="faceClear" class="face-clear" type="button">移除</button>
       <span id="faceHint" class="face-hint"></span>
+    </div>
+    <div class="views" id="views">
+      <span class="views-label">視角</span>
+      <button class="view-btn on" type="button" data-view="">預設</button>
+      <button class="view-btn" type="button" data-view="front">正面</button>
+      <button class="view-btn" type="button" data-view="side">側面</button>
+      <button class="view-btn" type="button" data-view="back">背面</button>
+      <button class="view-btn" type="button" data-view="threequarter">3/4 側</button>
+      <button class="view-btn" type="button" data-view="turnaround">三視圖</button>
     </div>
     <div class="chips" id="chips"></div>
   </div>

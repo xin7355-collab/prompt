@@ -9,7 +9,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.2.2';
+  var VERSION = 'v1.2.3';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -40,6 +40,21 @@
   // 都會帶上這張臉，直接套進那個風格 —— 不用每張卡各別上傳。存進 localStorage 是
   // 為了重開還在。
   var subjectImage = read(STORE_FACE, '') || null;
+
+  // 視角：選了就在提示詞後面加上對應的角度。對「影片／3D 建模要正側背多角度」很有用，
+  // 「三視圖」一張就給你正側背，是最省事的角色參考。存 localStorage 重開還在。
+  var STORE_VIEW = 'spellbox.poster.view';
+  var viewAngle = read(STORE_VIEW, '') || '';
+  var VIEW_PHRASES = {
+    front: ' Front view, character facing the camera directly, full body, neutral gray background.',
+    side: ' Side profile view (90 degrees), full body, neutral gray background.',
+    back: ' Back view, seen directly from behind, full body, neutral gray background.',
+    threequarter: ' Three-quarter view (45 degrees), full body, neutral gray background.',
+    turnaround:
+      ' Character turnaround reference sheet: the SAME character shown in front view, ' +
+      'side profile view and back view, lined up in a row, identical outfit and design, ' +
+      'T-pose, neutral gray background, even lighting — a clean model sheet for 3D/video modeling.',
+  };
 
   // ── Toast ────────────────────────────────────────────────────────
   var toastTimer = null;
@@ -184,9 +199,10 @@
     var subject = $('subject').value.trim();
     // A card whose prompt was edited in the modal uses that text instead.
     var p = promptOverride(entry.i) || entry.p;
-    if (entry.f) return subject ? p + ' Subject: ' + subject + '.' : p;
-    if (!subject) return 'Create any subject that best demonstrates this style. ' + p;
-    return subject + '. ' + p;
+    var view = VIEW_PHRASES[viewAngle] || '';
+    if (entry.f) return (subject ? p + ' Subject: ' + subject + '.' : p) + view;
+    if (!subject) return 'Create any subject that best demonstrates this style. ' + p + view;
+    return subject + '. ' + p + view;
   }
 
   // ── Generation ───────────────────────────────────────────────────
@@ -1041,9 +1057,25 @@
     if (event.key === 'Escape') { closeLightbox(); closeSettings(); closePromptModal(); }
   });
 
+  // 視角快捷鈕：選一個就把角度加進之後每張卡的生成提示詞。
+  function setupViews() {
+    var btns = document.querySelectorAll('#views .view-btn');
+    Array.prototype.forEach.call(btns, function (b) {
+      b.classList.toggle('on', (b.getAttribute('data-view') || '') === viewAngle);
+      b.addEventListener('click', function () {
+        viewAngle = b.getAttribute('data-view') || '';
+        try { localStorage.setItem(STORE_VIEW, viewAngle); } catch (e) {}
+        Array.prototype.forEach.call(btns, function (x) { x.classList.remove('on'); });
+        b.classList.add('on');
+        toast(viewAngle ? '視角：' + b.textContent + ' —— 會加進之後的生成' : '視角：預設（不加角度）');
+      });
+    });
+  }
+
   // ── Boot ─────────────────────────────────────────────────────────
   if ($('ver')) $('ver').textContent = VERSION;
   buildChips();
+  setupViews();
   renderFace();
   migrateOldShots().then(loadShots).then(function () {
     applyFilter();
