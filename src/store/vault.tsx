@@ -132,6 +132,8 @@ interface VaultValue extends PersistedState {
 
   addStyleShot(styleId: string, uri: string): void;
   removeStyleShot(styleId: string, uri: string): void;
+  /** Re-merge the shared image pool (e.g. after returning from the poster wall). */
+  refreshShared(): void;
   toggleStyleFavourite(styleId: string): void;
   setSubject(subject: string): void;
   setSendTo(name: string): void;
@@ -491,6 +493,16 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
     setBench(emptyBench);
   }, [patch]);
 
+  // Pull in any images added to the shared pool since the last merge — used when
+  // returning from the embedded poster wall, which writes into the same pool.
+  const refreshShared = useCallback(() => {
+    sharedKeys()
+      .then((ids) => {
+        if (ids.length) setState((prev) => mergeShared(prev, ids));
+      })
+      .catch(() => {});
+  }, []);
+
   const exportPayload = useCallback(
     () =>
       JSON.stringify(
@@ -540,6 +552,7 @@ export function VaultProvider({ children }: { children: React.ReactNode }) {
     clearShot,
     addStyleShot,
     removeStyleShot,
+    refreshShared,
     toggleStyleFavourite,
     setSubject,
     setSendTo,

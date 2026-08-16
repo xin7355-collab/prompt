@@ -362,7 +362,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.2.3';
+  var VERSION = 'v1.3.0';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -1422,6 +1422,17 @@
         b.classList.add('on');
         toast(viewAngle ? '視角：' + b.textContent + ' —— 會加進之後的生成' : '視角：預設（不加角度）');
       });
+    });
+  }
+
+  // When embedded in the app (an iframe), the built-in「← 咒語盒」must ask the parent
+  // to close this screen, not navigate the iframe to the app inside itself.
+  var embedded = false;
+  try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+  if (embedded && $('backToApp')) {
+    $('backToApp').addEventListener('click', function (e) {
+      e.preventDefault();
+      try { window.parent.postMessage('spellbox-poster-back', '*'); } catch (err) {}
     });
   }
 

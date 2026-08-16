@@ -46,7 +46,7 @@ const FORMATS: { value: Format; label: string; hint: string }[] = [
 ];
 
 /** App build stamp, shown in 更多. Bump on each deploy so a stale PWA cache is visible. */
-const APP_VERSION = 'v1.2.3';
+const APP_VERSION = 'v1.3.0';
 
 export default function MoreScreen() {
   const { c } = useTheme();
@@ -259,13 +259,11 @@ export default function MoreScreen() {
         <Button
           label="打開海報牆（共用圖庫）"
           onPress={() => {
-            // Navigate in the SAME window on web, not a new tab. On an installed iOS
-            // PWA a new tab is a separate storage box, so it could never share images
-            // with the app; same-window keeps the poster wall in this same box.
-            // Relative on purpose: resolves against the document, so a file:// copy
-            // still finds its sibling.
-            if (Platform.OS === 'web' && typeof window !== 'undefined') {
-              window.location.assign('poster.html');
+            // Open it embedded (an iframe route) so it shares this app's storage box —
+            // a new tab / navigation gets its own box on an installed iOS PWA and could
+            // never share images. Native has no iframe, so fall back to an external open.
+            if (Platform.OS === 'web') {
+              router.push('/poster');
               return;
             }
             if (openExternal('poster.html') === 'blocked') {
