@@ -50,7 +50,7 @@ export default function StylesScreen() {
   /** The image open in the full-screen viewer, if any. */
   const [viewing, setViewing] = useState<{ uri: string; title: string; id: string } | null>(null);
 
-  const { busy: drawing, canDraw, site, draw: runDraw, hint } = useImageDraw();
+  const { busy: drawing, queued, canDraw, site, draw: runDraw, hint } = useImageDraw();
 
   const familyCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -119,6 +119,7 @@ export default function StylesScreen() {
               shotCount={shots.length}
               favourite={styleFav.includes(item.id)}
               busy={drawing[item.id]}
+              queued={queued[item.id]}
               drawHint={hint}
               onOpen={() => openStyle(item)}
               onViewImage={() => setViewing({ uri: shots[0], title: item.n, id: item.id })}
@@ -130,7 +131,7 @@ export default function StylesScreen() {
         </View>
       );
     },
-    [columns, styleShots, styleFav, site, drawing, canDraw, openStyle, draw, copyPrompt, vault]
+    [columns, styleShots, styleFav, site, drawing, queued, canDraw, openStyle, draw, copyPrompt, vault]
   );
 
   const savedCount = useMemo(
@@ -147,8 +148,8 @@ export default function StylesScreen() {
    * does not appear until the page is reloaded.
    */
   const extraData = useMemo(
-    () => ({ drawing, styleShots, styleFav, canDraw, site }),
-    [drawing, styleShots, styleFav, canDraw, site]
+    () => ({ drawing, queued, styleShots, styleFav, canDraw, site }),
+    [drawing, queued, styleShots, styleFav, canDraw, site]
   );
 
   return (

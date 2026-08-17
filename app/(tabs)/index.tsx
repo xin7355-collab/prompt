@@ -42,7 +42,7 @@ export default function LibraryScreen() {
   /** The prompt image open in the full-screen viewer (with download), if any. */
   const [viewing, setViewing] = useState<{ uri: string; title: string; id: string } | null>(null);
 
-  const { busy, draw } = useImageDraw();
+  const { busy, queued, draw } = useImageDraw();
 
   const categories = useCategoryCounts(prompts);
 
@@ -120,6 +120,7 @@ export default function LibraryScreen() {
           favourite={fav.includes(item.i)}
           shotUri={shots[item.i]}
           busy={busy[item.i]}
+          queued={queued[item.i]}
           onToggleFavourite={() => vault.toggleFavourite(item.i)}
           onCopy={() => copy(item, lang)}
           onDraw={() =>
@@ -155,11 +156,14 @@ export default function LibraryScreen() {
         />
       </View>
     ),
-    [columns, lang, fav, shots, busy, draw, vault, copy, openBench, router, toast]
+    [columns, lang, fav, shots, busy, queued, draw, vault, copy, openBench, router, toast]
   );
 
   /** See the note on the style wall's extraData: rows do not redraw without it. */
-  const extraData = useMemo(() => ({ fav, shots, busy, lang }), [fav, shots, busy, lang]);
+  const extraData = useMemo(
+    () => ({ fav, shots, busy, queued, lang }),
+    [fav, shots, busy, queued, lang]
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: c.bg }}>

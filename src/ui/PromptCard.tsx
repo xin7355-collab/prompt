@@ -15,8 +15,10 @@ export interface PromptCardProps {
   lang: Lang;
   favourite: boolean;
   shotUri?: string;
-  /** True while this prompt's image is being generated. */
+  /** True while this prompt's image is queued or being generated. */
   busy?: boolean;
+  /** True while this prompt is waiting its turn in the queue (busy but not yet drawing). */
+  queued?: boolean;
   onToggleFavourite(): void;
   onCopy(): void;
   onDraw(): void;
@@ -38,6 +40,7 @@ function PromptCardImpl({
   favourite,
   shotUri,
   busy,
+  queued,
   onToggleFavourite,
   onCopy,
   onDraw,
@@ -130,7 +133,7 @@ function PromptCardImpl({
           ]}
         >
           <Text style={[styles.actionLabel, { color: c.onAccent }]} numberOfLines={1}>
-            {busy ? '生成中' : '⚡ 生成'}
+            {busy ? (queued ? '排隊中' : '生成中') : '⚡ 生成'}
           </Text>
         </Pressable>
         <Pressable

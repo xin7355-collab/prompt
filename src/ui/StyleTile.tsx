@@ -14,8 +14,10 @@ export interface StyleTileProps {
   shotUri?: string;
   shotCount: number;
   favourite: boolean;
-  /** True while this tile's image is being generated. */
+  /** True while this tile's image is queued or being generated. */
   busy?: boolean;
+  /** True while this tile is waiting its turn in the queue (busy but not yet drawing). */
+  queued?: boolean;
   onOpen(): void;
   /** Called instead of onOpen when the cover is a real image the user can view. */
   onViewImage(): void;
@@ -32,6 +34,7 @@ function StyleTileImpl({
   shotCount,
   favourite,
   busy,
+  queued,
   onOpen,
   onViewImage,
   onDraw,
@@ -61,8 +64,14 @@ function StyleTileImpl({
 
         {busy && (
           <View style={[styles.busy, { backgroundColor: c.scrim }]}>
-            <ActivityIndicator color="#FFFFFF" />
-            <Text style={styles.busyLabel}>生成中…</Text>
+            {queued ? (
+              <Text style={styles.busyLabel}>排隊中…</Text>
+            ) : (
+              <>
+                <ActivityIndicator color="#FFFFFF" />
+                <Text style={styles.busyLabel}>生成中…</Text>
+              </>
+            )}
           </View>
         )}
 
@@ -132,7 +141,7 @@ function StyleTileImpl({
           ]}
         >
           <Text style={[styles.drawLabel, { color: c.onAccent }]} numberOfLines={1}>
-            {busy ? '生成中' : '⚡ 生成'}
+            {busy ? (queued ? '排隊中' : '生成中') : '⚡ 生成'}
           </Text>
         </Pressable>
       </View>
