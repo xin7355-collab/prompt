@@ -362,7 +362,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.3.3';
+  var VERSION = 'v1.3.4';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -551,7 +551,10 @@
   function compose(entry) {
     var subject = $('subject').value.trim();
     // A card whose prompt was edited in the modal uses that text instead.
-    var p = promptOverride(entry.i) || entry.p;
+    // Loosen any unfilled {{fill-in}} down to its hint word: over half the library
+    // carries a {{主體}}/{{商品}}/{{文字}} slot, and sending literal braces to the
+    // image model paints noise — which reads as "this prompt does nothing".
+    var p = (promptOverride(entry.i) || entry.p).replace(/\{\{([^}]+)\}\}/g, '$1');
     var view = VIEW_PHRASES[viewAngle] || '';
     if (entry.f) return (subject ? p + ' Subject: ' + subject + '.' : p) + view;
     if (!subject) return 'Create any subject that best demonstrates this style. ' + p + view;

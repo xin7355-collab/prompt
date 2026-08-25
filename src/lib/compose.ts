@@ -36,6 +36,17 @@ export function placeholdersIn(text: string): string[] {
   return [...new Set([...found].map((m) => m[1].trim()))];
 }
 
+/**
+ * Drop unfilled {{fill-in}} markers down to their hint word, so a half-finished prompt
+ * never reaches an image model with literal braces in it. Over half the library carries
+ * a {{主體}} / {{商品}} / {{文字}} slot; drawn in place without this, the model sees the
+ * characters "{{主體}}" and paints noise — which reads as "this prompt does nothing".
+ * "寵物抓拍：{{品種}}趴在窗邊" → "寵物抓拍：品種趴在窗邊", which the model can actually draw.
+ */
+export function fillLoose(text: string): string {
+  return text.replace(PLACEHOLDER, (_, name) => String(name).trim());
+}
+
 /** The prompt body for the active language, falling back to Chinese when English is blank. */
 export function bodyOf(prompt: Pick<Prompt, 'zh' | 'en'>, lang: Lang): string {
   return (lang === 'zh' ? prompt.zh : prompt.en) || prompt.zh || prompt.en || '';

@@ -8,7 +8,7 @@ import { BRAND } from '../../src/brand';
 import { tagsOf } from '../../src/data/corpus';
 import type { Lang, ResolvedPrompt } from '../../src/data/types';
 import { aiSiteUrl } from '../../src/lib/aiSites';
-import { bodyOf } from '../../src/lib/compose';
+import { bodyOf, fillLoose } from '../../src/lib/compose';
 import { openExternal } from '../../src/lib/openExternal';
 import { useCategoryCounts, useVault } from '../../src/store/vault';
 import { fonts, radius, space } from '../../src/theme';
@@ -127,7 +127,8 @@ export default function LibraryScreen() {
           onDraw={() =>
             draw({
               id: item.i,
-              text: bodyOf(item, lang),
+              // Loosen {{fill-ins}} so the free draw never sends literal braces.
+              text: fillLoose(bodyOf(item, lang)),
               label: item.t,
               onImage: (stored) => vault.setShot(item.i, stored),
             })
@@ -137,7 +138,7 @@ export default function LibraryScreen() {
           onOpenShot={() => setViewing({ uri: shots[item.i], title: item.t, id: item.i })}
           onOpenAI={(site) => {
             // Strip unfilled {{placeholders}} so the AI doesn't see literal braces.
-            const raw = bodyOf(item, lang).replace(/\{\{([^}]+)\}\}/g, '$1');
+            const raw = fillLoose(bodyOf(item, lang));
             const prompt = `Generate an image from this exact description:\n\n${raw}`;
             const base = aiSiteUrl(site);
             // Open in the Chrome app (not Safari's in-app view). Copy, don't push the
