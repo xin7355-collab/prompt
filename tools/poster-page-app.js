@@ -9,7 +9,7 @@
   // Visible build stamp, shown in the header, so "did the new version load?" is a
   // glance instead of a guess (mobile Safari caches hard). Bump on every deploy;
   // the patch digit carries at 9 → v1.0.9 then v1.1.0.
-  var VERSION = 'v1.3.2';
+  var VERSION = 'v1.3.3';
 
   var DATA = JSON.parse(document.getElementById('payload').textContent);
   var ENTRIES = DATA.entries;
@@ -535,6 +535,8 @@
     // the prompt and open the chosen site so you paste and generate there at no cost.
     var gem = aiButton('↗ Gemini', 'https://gemini.google.com/app', entry);
     var gpt = aiButton('↗ GPT', 'https://chatgpt.com/', entry);
+    var meta = aiButton('↗ Meta', 'https://www.meta.ai/', entry);
+    var veo = aiButton('↗ VEO', 'https://veoaifree.com/', entry);
 
     var draw = document.createElement('button');
     draw.className = 'btn primary';
@@ -545,6 +547,8 @@
     actions.appendChild(copy);
     actions.appendChild(gem);
     actions.appendChild(gpt);
+    actions.appendChild(meta);
+    actions.appendChild(veo);
     actions.appendChild(draw);
     body.appendChild(actions);
     card.appendChild(body);

@@ -46,7 +46,7 @@ const FORMATS: { value: Format; label: string; hint: string }[] = [
 ];
 
 /** App build stamp, shown in 更多. Bump on each deploy so a stale PWA cache is visible. */
-const APP_VERSION = 'v1.3.2';
+const APP_VERSION = 'v1.3.3';
 
 export default function MoreScreen() {
   const { c } = useTheme();

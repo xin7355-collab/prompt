@@ -20,6 +20,14 @@ import { useLayout } from '../../src/ui/useLayout';
 /** Ratios worth a one-tap chip on the wall. The full set lives on the bench. */
 const QUICK_RATIOS = ['1:1', '4:5', '9:16', '16:9', '3:2'];
 
+/**
+ * How many tiles one 批量 tap enqueues. The wall can show 200-plus styles; firing all
+ * of them would queue for an hour and hammer the free endpoint, so a batch takes the
+ * top of whatever the filters currently show and the user narrows first, taps again for
+ * more. The serial queue means these draw one at a time regardless.
+ */
+const BATCH_CAP = 12;
+
 type Facet = 'fav' | 'shot';
 
 /**
@@ -88,6 +96,27 @@ export default function StylesScreen() {
       }),
     [runDraw, subject, lang, ratio, vault]
   );
+
+  /**
+   * Queue the visible styles for the current subject, one after another. Only makes
+   * sense in draw-in-place mode: in hand-off mode each draw would open a browser tab,
+   * so a "batch" would be a dozen tabs, not a dozen images.
+   */
+  const batchDraw = useCallback(() => {
+    if (!canDraw) {
+      toast('批量要先能「直接生成」：到更多把模型設為免費 Pollinations，或貼上金鑰', 'error');
+      return;
+    }
+    const targets = visible.slice(0, BATCH_CAP);
+    if (!targets.length) {
+      toast('目前沒有可生成的風格', 'error');
+      return;
+    }
+    targets.forEach(draw);
+    const more =
+      visible.length > BATCH_CAP ? `（先排前 ${BATCH_CAP} 個，要更多再按一次）` : '';
+    toast(`已排入 ${targets.length} 張，依序生成中${more}`, 'success');
+  }, [canDraw, visible, draw, toast]);
 
   const copyPrompt = useCallback(
     async (visual: VisualStyle) => {
@@ -260,6 +289,11 @@ export default function StylesScreen() {
           onPress={() => toggleFacet('shot')}
         />
         <Chip label="⚄ 隨機" onPress={surprise} />
+        {/* Batch only makes sense when 生成 draws in place; in hand-off mode it would
+            just open a dozen tabs, so hide it there. */}
+        {canDraw && (
+          <Chip label={`⚡ 批量 ${Math.min(visible.length, BATCH_CAP)}`} onPress={batchDraw} />
+        )}
         <TextInput
           value={query}
           onChangeText={setQuery}

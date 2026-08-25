@@ -7,6 +7,7 @@ import * as Clipboard from 'expo-clipboard';
 import { BRAND } from '../../src/brand';
 import { tagsOf } from '../../src/data/corpus';
 import type { Lang, ResolvedPrompt } from '../../src/data/types';
+import { aiSiteUrl } from '../../src/lib/aiSites';
 import { bodyOf } from '../../src/lib/compose';
 import { openExternal } from '../../src/lib/openExternal';
 import { useCategoryCounts, useVault } from '../../src/store/vault';
@@ -138,8 +139,7 @@ export default function LibraryScreen() {
             // Strip unfilled {{placeholders}} so the AI doesn't see literal braces.
             const raw = bodyOf(item, lang).replace(/\{\{([^}]+)\}\}/g, '$1');
             const prompt = `Generate an image from this exact description:\n\n${raw}`;
-            const base =
-              site === 'gemini' ? 'https://gemini.google.com/app' : 'https://chatgpt.com/';
+            const base = aiSiteUrl(site);
             // Open in the Chrome app (not Safari's in-app view). Copy, don't push the
             // prompt through the URL: ?q= makes ChatGPT auto-send and Gemini ignores it.
             const chromeUrl = base.replace(/^https:\/\//, 'googlechromes://');

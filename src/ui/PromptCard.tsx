@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { categoryOf, tagsOf } from '../data/corpus';
 import type { Lang, ResolvedPrompt } from '../data/types';
+import { AI_SITES, type AiSite } from '../lib/aiSites';
 import { bodyOf } from '../lib/compose';
 import { fonts, radius, space } from '../theme';
 import { useTheme } from './ThemeProvider';
@@ -26,7 +27,7 @@ export interface PromptCardProps {
   onEdit(): void;
   onOpenShot(): void;
   /** Copy the prompt and open the chosen AI's web app (free image generation). */
-  onOpenAI(site: 'gemini' | 'gpt'): void;
+  onOpenAI(site: AiSite): void;
 }
 
 /**
@@ -173,30 +174,25 @@ function PromptCardImpl({
         </Pressable>
       </View>
 
-      {/* Copy the prompt and jump to a free AI image generator's web app. */}
+      {/* Copy the prompt and jump to a free AI image generator's web app. Two per row,
+          wrapping — text-heavy prompts come out best pasted into these, not on Flux. */}
       <View style={styles.aiRow}>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="複製提示詞並開啟 Gemini"
-          onPress={() => onOpenAI('gemini')}
-          style={({ pressed }) => [
-            styles.aiButton,
-            { borderColor: c.borderStrong, opacity: pressed ? 0.7 : 1 },
-          ]}
-        >
-          <Text style={[styles.actionLabel, { color: c.textDim }]}>↗ Gemini</Text>
-        </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="複製提示詞並開啟 ChatGPT"
-          onPress={() => onOpenAI('gpt')}
-          style={({ pressed }) => [
-            styles.aiButton,
-            { borderColor: c.borderStrong, opacity: pressed ? 0.7 : 1 },
-          ]}
-        >
-          <Text style={[styles.actionLabel, { color: c.textDim }]}>↗ ChatGPT</Text>
-        </Pressable>
+        {AI_SITES.map((s) => (
+          <Pressable
+            key={s.k}
+            accessibilityRole="button"
+            accessibilityLabel={`複製提示詞並開啟 ${s.label.replace('↗ ', '')}：${s.note}`}
+            onPress={() => onOpenAI(s.k)}
+            style={({ pressed }) => [
+              styles.aiButton,
+              { borderColor: c.borderStrong, opacity: pressed ? 0.7 : 1 },
+            ]}
+          >
+            <Text style={[styles.actionLabel, { color: c.textDim }]} numberOfLines={1}>
+              {s.label}
+            </Text>
+          </Pressable>
+        ))}
       </View>
     </View>
   );
@@ -306,13 +302,16 @@ const styles = StyleSheet.create({
 
   aiRow: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: space.sm - 2,
     paddingHorizontal: space.md,
     paddingBottom: space.md,
   },
   aiButton: {
     ...noSelect,
-    flex: 1,
+    // Two per row, wrapping: flex-basis just under half leaves room for the gap.
+    flexBasis: '47%',
+    flexGrow: 1,
     minHeight: 40,
     borderWidth: 1.5,
     borderRadius: radius.md,
