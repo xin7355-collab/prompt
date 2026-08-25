@@ -14,12 +14,16 @@ export const EXTRA_CATEGORIES: Category[] = [
   { id: 'tryon', zh: '試穿試髮·九宮格', en: 'TRY-ON GRID' },
   { id: 'figure', zh: '公仔·周邊模型', en: 'FIGURE' },
   { id: 'creative', zh: '創意·趣味企劃', en: 'PLAYFUL' },
+  { id: 'consist', zh: '角色一致性·多視角', en: 'CHARACTER SHEET' },
+  { id: 'apps', zh: 'AI 玩法·應用', en: 'PLAYBOOK' },
 ];
 
 export const EXTRA_ACCENTS: Record<string, { light: string; dark: string }> = {
   tryon: { light: '#2F7D8C', dark: '#5FC2D2' },
   figure: { light: '#8A6D3B', dark: '#D6B173' },
   creative: { light: '#B5522E', dark: '#F09268' },
+  consist: { light: '#3D6E4F', dark: '#7ED0A0' },
+  apps: { light: '#6B4FA0', dark: '#B79BEA' },
 };
 
 const P = (i: string, c: string, t: string, k: string, zh: string, en: string): Prompt =>
@@ -30,6 +34,18 @@ const GRID_ZH =
   '以我上傳的照片為基準，完整保留人物的臉部特徵、五官比例、膚色與臉型，九格必須是同一個人、可辨識為本人。九格的臉部角度、表情、光線方向、背景與構圖完全相同，';
 const GRID_EN =
   'Use my uploaded photo as the base and preserve the subject’s facial features, proportions, skin tone and face shape exactly — all nine cells must read as the same, recognisable person. Face angle, expression, lighting direction, background and framing are identical across all nine cells; ';
+
+/**
+ * The identity lock for a *character* rather than a photo of a person: same face, hair,
+ * build, outfit and art style across every view. This is the backbone of the 多視角
+ * turnaround / expression / pose sheets a modeller needs — one character, many angles,
+ * nothing drifting between them. Route these to Gemini (Nano Banana), which holds a
+ * character across angles better than the free Flux endpoint can.
+ */
+const CHAR_ZH =
+  '以我上傳的角色圖為唯一基準，完整保留人物的臉部特徵、髮型、體型比例、服裝與配色，所有視角都必須是同一個角色、可辨識為同一人；維持一致的畫風、線條與上色方式，';
+const CHAR_EN =
+  'Use my uploaded character as the single source of truth and preserve the face, hairstyle, body proportions, outfit and colour scheme exactly — every view must read as the same, identifiable character; keep the art style, linework and shading consistent, ';
 
 export const EXTRA_PROMPTS: Prompt[] = [
   // ── 試穿試髮 · 九宮格（圖生圖，先上傳自己的照片）──────────────────
@@ -231,6 +247,74 @@ export const EXTRA_PROMPTS: Prompt[] = [
   P('x803', 'social', 'YouTube 縮圖三版', '縮圖,社群,測試,對照',
     '同一支影片主題 {{主題}} 的三種縮圖版本並列：一為人物大表情特寫加粗體標題留白區，二為畫面對比分割的前後對照，三為物件特寫加箭頭指引。三版都是 16:9、高飽和、主體佔比大、縮到手機尺寸仍清楚，用於 A/B 測試點擊率。',
     'Three thumbnail variants for the same video topic {{topic}}, side by side: one a large expressive face with a clear area for a bold headline, one a split before-and-after comparison, one an object close-up with a directional arrow. All three 16:9, highly saturated, subject filling the frame, still legible at phone size — for A/B testing click-through.'),
+
+  // ── 角色一致性 · 多視角（圖生圖，先上傳角色圖；建議送 Gemini／Nano Banana）──────
+  // For the owner's video / 3D-modelling work: one character locked, rotated and
+  // re-posed across a sheet. Nano Banana holds identity across angles; Flux does not.
+  P('x901', 'consist', '三視圖·建模設定稿', '三視圖,轉身,建模,3D,參考,一致性',
+    CHAR_ZH + '產出角色三視圖設定稿：正面、正側面、背面三個視角並排，全身站姿、雙臂微張的 A-pose，相機為正交視角（無透視變形），三個視角的身高、比例與腳底基準線完全對齊，純白或淺灰無縫背景，均勻無陰影打光，方便直接用於 3D 建模與角色設定。不要在畫面上加任何文字或標註。',
+    CHAR_EN + 'produce a character turnaround model sheet: front, straight-side and back views placed side by side, full-body A-pose with arms slightly away from the body, an orthographic camera with no perspective distortion, with height, proportion and ground baseline perfectly aligned across all three views, on a clean white or light-grey seamless background with flat even shadowless lighting, ready for 3D modelling and character setup. No text or labels in the image.'),
+
+  P('x902', 'consist', '六視角·三六〇轉身表', '六視角,轉身,rotation,建模,參考,一致性',
+    CHAR_ZH + '產出六視角轉身表：正面、左前四十五度、正側面、後側四十五度、背面、微俯視，六格排成 2×3，全身站姿、比例與服裝一致，正交視角，淺灰無縫背景，均勻打光，作為 360 度轉身與環繞建模參考。不要在畫面上加文字。',
+    CHAR_EN + 'produce a six-view rotation sheet: front, front-three-quarter (45° left), straight side, back-three-quarter (45°), back and a slight top-down view, laid out as a 2x3 grid, full-body with consistent proportions and outfit, orthographic camera, light-grey seamless background, even lighting — a 360° turnaround reference for modelling. No text in the image.'),
+
+  P('x903', 'consist', '表情表·九宮格', '表情,表情表,expression,一致性,參考',
+    CHAR_ZH + '產出表情表：同一角色的頭部特寫九宮格，九種表情——中性、微笑、大笑、生氣、驚訝、難過、害羞、得意、疲憊，臉部角度、打光與髮型完全一致，只有表情改變，3×3 排列，淺灰背景。不要在畫面上加文字。',
+    CHAR_EN + 'produce an expression sheet: a 3x3 grid of head close-ups of the same character showing nine expressions — neutral, smile, laugh, angry, surprised, sad, shy, smug and tired — with face angle, lighting and hairstyle identical and only the expression changing, on a light-grey background. No text in the image.'),
+
+  P('x904', 'consist', '動作姿勢表·六式', '姿勢,動作,pose,動畫,參考,一致性',
+    CHAR_ZH + '產出動作姿勢表：同一角色的全身六格，姿勢分別為站立 A-pose、行走、奔跑、坐下、揮手、戰鬥預備，畫風、服裝與比例一致，淺灰無縫背景，均勻打光，作為動畫與綁定的姿勢參考。不要在畫面上加文字。',
+    CHAR_EN + 'produce a pose sheet: six full-body cells of the same character in a standing A-pose, walking, running, sitting, waving and a combat-ready stance, with art style, outfit and proportions consistent, on a light-grey seamless background with even lighting — a pose reference for animation and rigging. No text in the image.'),
+
+  P('x905', 'consist', '多人合影·一致性技巧', '多人,合照,一致性,cast,命名,技巧',
+    '多人一致性技巧：先把每個人的照片放在同一張圖上、並在每個人旁邊標註姓名再上傳，模型才不會混臉或多長出人來。以這張標註圖為唯一基準，完整保留每個人的臉部特徵並對應正確姓名，人數不增不減，讓這些人一起自然出現在同一個場景：{{場景，如：海邊咖啡廳的合影}}，光線與風格統一。',
+    'Multi-person consistency trick: first place everyone’s photo onto one image and label each person with their name before uploading — this stops the model from blending faces or inventing extra people. Using that labelled sheet as the single source of truth, preserve each person’s face and keep the correct name-to-face mapping, add or remove nobody, and place them together naturally in one scene: {{scene, e.g. a seaside café group photo}}, with unified lighting and style.'),
+
+  P('x906', 'consist', '角色多型態·命名圖鑑', '角色,變體,多型態,命名,一致性,IP',
+    CHAR_ZH + '依這個角色的設計，衍生十種不同型態（可改變顏色、物種、大小或服裝主題），排成一張角色圖鑑，並替每一個型態命名（標題文字用繁體中文），整體畫風維持一致，可直接切成貼圖或周邊。',
+    CHAR_EN + 'from this character’s design, derive ten different forms (varying colour, species, size or costume theme), lay them out as one character encyclopedia and give each form a name (captions in Traditional Chinese), keeping the overall art style consistent — ready to slice into stickers or merchandise.'),
+
+  P('x907', 'consist', '換風格·保臉不變', '換風格,一致性,風格轉換,保臉',
+    '以我上傳的照片為唯一基準，完整保留人物的臉部特徵、五官比例與姿勢，只把畫面風格改成 {{目標風格，如：二次元動畫／3D 卡通／賽博龐克}}，其餘的臉、姿勢、構圖與背景都不要改變，維持可辨識為同一個人。',
+    'Use my uploaded photo as the single source of truth and fully preserve the face, feature proportions and pose; change only the visual style to {{target style, e.g. anime / 3D cartoon / cyberpunk}}, leaving the face, pose, composition and background unchanged, still recognisable as the same person.'),
+
+  P('x908', 'consist', '一鍵專業形象照', '形象照,大頭照,證件照,職場,寫實',
+    '以我上傳的正面清晰照片為唯一基準，完整保留本人臉部特徵，生成一張專業形象照：如同專業攝影棚拍攝，乾淨柔和的背景、柔和的棚燈與淺景深，得體的商務服裝，自然自信的表情，膚質保留真實質感、不要過度磨皮。',
+    'Use my uploaded clear front-facing photo as the single source of truth and fully preserve my facial features; generate a professional headshot as if taken in a pro studio — clean soft background, soft studio lighting with shallow depth of field, tasteful business attire, a natural confident expression, and real skin texture with no plastic over-smoothing.'),
+
+  // ── AI 玩法 · 應用（多為文字密集，建議送 Gemini／ChatGPT 生成，繁中較穩）──────
+  P('x921', 'apps', '極簡品牌標誌', 'logo,標誌,品牌,極簡,設計',
+    '設計一個極簡抽象的品牌標誌：概念是 {{品牌或概念}}，幾何形狀組合、造型簡化到極致，只使用這幾個顏色 {{色碼，如 #1E88E5 與純白}}，簡約現代 minimal tech 風格，置中構圖，純白或透明背景，不要多餘裝飾與文字說明。',
+    'Design a minimal, abstract brand logo: the concept is {{brand or concept}}, built from combined geometric shapes reduced to the essentials, using only these colours {{hex codes, e.g. #1E88E5 and pure white}}, in a clean modern minimal-tech style, centred, on a pure white or transparent background, with no extra ornament or explanatory text.'),
+
+  P('x922', 'apps', '電商商品詳情圖', '電商,商品,詳情頁,產品,行銷',
+    '生成一張 {{產品名稱}} 的電商商品詳情圖：包含產品外觀主圖、三到四個主要賣點、規格參數表與一個使用情境，版面乾淨專業，所有文字使用正確的繁體中文，適合直接放到商品頁。',
+    'Generate an e-commerce product detail image for {{product name}}: a hero shot of the product, three to four key selling points, a spec table and one usage scene, with a clean professional layout and all text in correct Traditional Chinese, ready to drop onto a product page.'),
+
+  P('x923', 'apps', '漫畫分鏡·四頁', '漫畫,分鏡,故事,四頁,繁中',
+    '畫出四頁連貫的日式漫畫，情節完整、分鏡清楚，每頁三到四格，對白使用正確的繁體中文，故事是：{{故事大綱}}。畫風統一，鏡頭有遠有近，情緒到位。',
+    'Draw four connected pages of Japanese-style manga with a complete plot and clear panel layout, three to four panels per page, dialogue in correct Traditional Chinese, telling the story: {{story outline}}. Keep the art style consistent, vary the shot distance, and land the emotion.'),
+
+  P('x924', 'apps', '知識圖鑑一張圖', '圖鑑,知識,資訊圖,教學,繁中',
+    '製作一張知識圖鑑：主題是 {{主題，如：世界咖啡圖鑑／二十四節氣穿搭}}，日式雜誌排版，圖文並茂、條理分明，說明文字使用繁體中文，資訊密度高但版面清爽，解析度高。',
+    'Create a single-image illustrated encyclopedia: the topic is {{topic, e.g. a world coffee guide / a 24-solar-terms outfit guide}}, in a Japanese-magazine layout, richly illustrated and well organised, with captions in Traditional Chinese, high information density but a clean layout, high resolution.'),
+
+  P('x925', 'apps', '電影分鏡表·八格', '分鏡,storyboard,運鏡,影片,腳本',
+    CHAR_ZH + '以這個角色為原型，製作八格電影分鏡表，每格包含鏡頭編號、構圖、運鏡、場景描述、角色動作與台詞（繁體中文），風格統一，主題是：{{主題}}。',
+    CHAR_EN + 'using this character as the lead, make an eight-panel film storyboard where each panel carries a shot number, composition, camera move, scene description, character action and dialogue (in Traditional Chinese), in a consistent style, on the theme: {{theme}}.'),
+
+  P('x926', 'apps', '藍圖風技術示意圖', '藍圖,技術圖,blueprint,產品,線稿',
+    '根據我上傳的圖片，製作一張高度細節化的藍圖風格技術示意圖：乾淨俐落的藍色墨線線稿，背景為仿舊的米色工程用紙，標註主要尺寸、零件與剖面，排版嚴謹，像正式的工程圖。',
+    'From my uploaded image, produce a highly detailed blueprint-style technical drawing: crisp blue ink line-work on an aged beige engineering-paper background, annotating the main dimensions, parts and a cross-section, rigorously laid out like a formal engineering drawing.'),
+
+  P('x927', 'apps', 'IP 側臉世界觀海報', 'IP,海報,側臉,世界觀,收藏',
+    '製作 {{IP 或主題}} 的收藏版海報：人物側臉剪影中生長出完整的世界觀與經典場景，整體偏電影海報質感，加上夢幻水彩插畫風，氛圍安靜宏大、神聖而懷舊，標題文字自然融入畫面。',
+    'Make a collector’s poster for {{IP or theme}}: inside the silhouette of a character’s profile grows the full world and its iconic scenes, with an overall cinematic-poster quality plus a dreamy watercolour-illustration style, a quiet, grand, sacred and nostalgic mood, and the title text woven naturally into the image.'),
+
+  P('x928', 'apps', '個人色彩分析報告', '色彩分析,個人色彩,穿搭,美妝,自拍',
+    '以我上傳的自拍為基準，生成一份完整的個人色彩分析報告圖：判斷四季色彩型、最適合與應避免的顏色色票、以及妝容、髮色與穿搭建議，版面像時尚雜誌，所有文字使用繁體中文。',
+    'Using my uploaded selfie as the base, generate a complete personal colour-analysis report image: identify the seasonal colour type, swatches of the most flattering and the colours to avoid, plus makeup, hair-colour and outfit advice, in a fashion-magazine layout with all text in Traditional Chinese.'),
 ];
 
 export const EXTRA_PACKS: Pack[] = [

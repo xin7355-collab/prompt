@@ -138,6 +138,8 @@ export const categoryAccent: Record<string, { light: string; dark: string }> = {
   tryon: { light: '#2F7D8C', dark: '#5FC2D2' },
   figure: { light: '#8A6D3B', dark: '#D6B173' },
   creative: { light: '#B5522E', dark: '#F09268' },
+  consist: { light: '#3D6E4F', dark: '#7ED0A0' },
+  apps: { light: '#6B4FA0', dark: '#B79BEA' },
 };
 
 /** 4pt base scale — every margin and gap in the app is one of these. */
