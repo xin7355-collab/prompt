@@ -47,6 +47,31 @@ export function fillLoose(text: string): string {
   return text.replace(PLACEHOLDER, (_, name) => String(name).trim());
 }
 
+/**
+ * Placeholder names that all mean "the thing to draw", so one subject box can answer
+ * them. The library also carries slots a single box can't ({{商品}}, {{文字}}, {{賀詞}},
+ * {{品種}}…); those are deliberately left to fillLoose.
+ */
+const SUBJECT_SLOTS = new Set([
+  'subject', 'theme', 'character',
+  '主體', '主体', '主角', '主題', '主题', '角色', '對象', '对象',
+]);
+
+/**
+ * Fill the generic "what to draw" slots from one subject box, then loosen whatever is
+ * left. This is what lets the library's ⚡ 生成 honour a typed subject the way the style
+ * wall does — "一隻黑貓" drops into {{主體}} while {{商品}} still falls back to its hint.
+ */
+export function fillSubject(text: string, subject: string): string {
+  const s = subject.trim();
+  if (!s) return fillLoose(text);
+  const filled = text.replace(PLACEHOLDER, (whole, name) => {
+    const key = String(name).trim();
+    return SUBJECT_SLOTS.has(key) || SUBJECT_SLOTS.has(key.toLowerCase()) ? s : whole;
+  });
+  return fillLoose(filled);
+}
+
 /** The prompt body for the active language, falling back to Chinese when English is blank. */
 export function bodyOf(prompt: Pick<Prompt, 'zh' | 'en'>, lang: Lang): string {
   return (lang === 'zh' ? prompt.zh : prompt.en) || prompt.zh || prompt.en || '';

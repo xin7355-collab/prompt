@@ -8,7 +8,7 @@ import { BRAND } from '../../src/brand';
 import { tagsOf } from '../../src/data/corpus';
 import type { Lang, ResolvedPrompt } from '../../src/data/types';
 import { aiSiteUrl } from '../../src/lib/aiSites';
-import { bodyOf, fillLoose } from '../../src/lib/compose';
+import { bodyOf, fillSubject } from '../../src/lib/compose';
 import { openExternal } from '../../src/lib/openExternal';
 import { useCategoryCounts, useVault } from '../../src/store/vault';
 import { fonts, radius, space } from '../../src/theme';
@@ -32,7 +32,7 @@ export default function LibraryScreen() {
   const layout = useLayout();
 
   const vault = useVault();
-  const { prompts, lang, fav, shots } = vault;
+  const { prompts, lang, fav, shots, subject } = vault;
 
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('all');
@@ -127,8 +127,9 @@ export default function LibraryScreen() {
           onDraw={() =>
             draw({
               id: item.i,
-              // Loosen {{fill-ins}} so the free draw never sends literal braces.
-              text: fillLoose(bodyOf(item, lang)),
+              // Drop the typed subject into {{主體}}-type slots; loosen the rest so the
+              // free draw never sends literal braces.
+              text: fillSubject(bodyOf(item, lang), vault.subject),
               label: item.t,
               onImage: (stored) => vault.setShot(item.i, stored),
             })
@@ -137,8 +138,8 @@ export default function LibraryScreen() {
           onEdit={() => router.push({ pathname: '/edit', params: { id: item.i } })}
           onOpenShot={() => setViewing({ uri: shots[item.i], title: item.t, id: item.i })}
           onOpenAI={(site) => {
-            // Strip unfilled {{placeholders}} so the AI doesn't see literal braces.
-            const raw = fillLoose(bodyOf(item, lang));
+            // Fill the subject slots, strip the rest, so the AI never sees literal braces.
+            const raw = fillSubject(bodyOf(item, lang), vault.subject);
             const prompt = `Generate an image from this exact description:\n\n${raw}`;
             const base = aiSiteUrl(site);
             // Open in the Chrome app (not Safari's in-app view). Copy, don't push the
@@ -202,6 +203,21 @@ export default function LibraryScreen() {
 
           <IconButton glyph="◎" label="從照片反推提示詞" onChrome onPress={() => router.push('/reverse')} />
           <IconButton glyph="＋" label="新增提示詞" onChrome onPress={() => router.push('/edit')} />
+        </View>
+
+        {/* Subject box: drops into any prompt carrying a {{主題}}/{{主體}} slot when you
+            hit ⚡ 生成, mirroring the 風格牆. Empty is fine — those slots just fall back to
+            their hint word. Shared with the wall, so a subject set here carries across. */}
+        <View style={[styles.subjectRow, layout.gutter]}>
+          <TextInput
+            value={subject}
+            onChangeText={vault.setSubject}
+            placeholder="想畫的主題（自動填入含 {{主題}} 的提示詞）例：一隻黑貓"
+            placeholderTextColor={c.textFaint}
+            returnKeyType="done"
+            accessibilityLabel="要生成的主題"
+            style={[styles.subject, { backgroundColor: c.surface, color: c.text, borderColor: c.border }]}
+          />
         </View>
 
         <View style={[styles.searchRow, layout.gutter]}>
@@ -383,6 +399,16 @@ const styles = StyleSheet.create({
   langSwitch: { flexDirection: 'row', borderRadius: radius.md, padding: 3 },
   langOption: { paddingHorizontal: 10, paddingVertical: 7, borderRadius: radius.sm },
   langLabel: { fontFamily: fonts.mono, fontSize: 11, fontWeight: '700' },
+
+  subjectRow: { paddingBottom: space.sm },
+  subject: {
+    height: 44,
+    borderWidth: 1,
+    borderRadius: radius.md,
+    paddingHorizontal: space.md,
+    fontFamily: fonts.ui,
+    fontSize: 15,
+  },
 
   searchRow: { paddingBottom: space.md, justifyContent: 'center' },
   searchGlyph: { position: 'absolute', left: 12, zIndex: 1, fontSize: 17 },
